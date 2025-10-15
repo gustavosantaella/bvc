@@ -1616,3 +1616,47 @@ TypeError: timezone() argument 1 must be datetime.timedelta, not str
 2025-10-15 19:17:31,208 - src.ws.bvc - INFO - Server data received: 32 symbols
 2025-10-15 19:17:33,404 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 0 updated, 32 skipped
 2025-10-15 19:17:33,404 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 19:17:58,491 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 19:18:01,308 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 19:18:03,545 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 0 updated, 32 skipped
+2025-10-15 19:18:03,545 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 19:18:23,561 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 19:18:31,242 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 19:18:33,458 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 0 updated, 32 skipped
+2025-10-15 19:18:33,458 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 19:18:53,463 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 19:19:01,258 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 19:19:03,454 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 0 updated, 32 skipped
+2025-10-15 19:19:03,455 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 19:19:03,458 - src.ws.bvc - ERROR - WebSocket error: no close frame received or sent
+2025-10-15 19:19:03,458 - src.ws.bvc - WARNING - Connection lost (1/10): no close frame received or sent
+2025-10-15 19:19:03,458 - src.ws.bvc - INFO - Reconnecting in 5 seconds...
+2025-10-15 19:19:08,528 - src.ws.bvc - ERROR - WebSocket error: server rejected WebSocket connection: HTTP 502
+2025-10-15 19:19:08,528 - src.ws.bvc - WARNING - Connection lost (2/10): server rejected WebSocket connection: HTTP 502
+2025-10-15 19:19:08,528 - src.ws.bvc - INFO - Reconnecting in 5 seconds...
+2025-10-15 19:19:13,612 - src.ws.bvc - ERROR - WebSocket error: server rejected WebSocket connection: HTTP 502
+2025-10-15 19:19:13,612 - src.ws.bvc - WARNING - Connection lost (3/10): server rejected WebSocket connection: HTTP 502
+2025-10-15 19:19:13,612 - src.ws.bvc - INFO - Reconnecting in 5 seconds...
+2025-10-15 19:19:18,740 - src.ws.bvc - ERROR - WebSocket error: server rejected WebSocket connection: HTTP 502
+2025-10-15 19:19:18,740 - src.ws.bvc - WARNING - Connection lost (4/10): server rejected WebSocket connection: HTTP 502
+2025-10-15 19:19:18,740 - src.ws.bvc - INFO - Reconnecting in 5 seconds...
+2025-10-15 19:19:23,849 - src.ws.bvc - ERROR - WebSocket error: server rejected WebSocket connection: HTTP 502
+2025-10-15 19:19:23,849 - src.ws.bvc - WARNING - Connection lost (5/10): server rejected WebSocket connection: HTTP 502
+2025-10-15 19:19:23,849 - src.ws.bvc - INFO - Reconnecting in 5 seconds...
+2025-10-15 19:19:28,934 - src.ws.bvc - ERROR - WebSocket error: server rejected WebSocket connection: HTTP 502
+2025-10-15 19:19:28,934 - src.ws.bvc - WARNING - Connection lost (6/10): server rejected WebSocket connection: HTTP 502
+2025-10-15 19:19:28,934 - src.ws.bvc - INFO - Reconnecting in 5 seconds...
+2025-10-15 19:19:34,027 - src.ws.bvc - ERROR - WebSocket error: server rejected WebSocket connection: HTTP 502
+2025-10-15 19:19:34,028 - src.ws.bvc - WARNING - Connection lost (7/10): server rejected WebSocket connection: HTTP 502
+2025-10-15 19:19:34,028 - src.ws.bvc - INFO - Reconnecting in 5 seconds...
+2025-10-15 19:19:39,107 - src.ws.bvc - ERROR - WebSocket error: server rejected WebSocket connection: HTTP 502
+2025-10-15 19:19:39,107 - src.ws.bvc - WARNING - Connection lost (8/10): server rejected WebSocket connection: HTTP 502
+2025-10-15 19:19:39,107 - src.ws.bvc - INFO - Reconnecting in 5 seconds...
+2025-10-15 19:19:44,183 - src.ws.bvc - ERROR - WebSocket error: server rejected WebSocket connection: HTTP 502
+2025-10-15 19:19:44,183 - src.ws.bvc - WARNING - Connection lost (9/10): server rejected WebSocket connection: HTTP 502
+2025-10-15 19:19:44,183 - src.ws.bvc - INFO - Reconnecting in 5 seconds...
+2025-10-15 19:19:49,267 - src.ws.bvc - ERROR - WebSocket error: server rejected WebSocket connection: HTTP 502
+2025-10-15 19:19:49,267 - src.ws.bvc - WARNING - Connection lost (10/10): server rejected WebSocket connection: HTTP 502
+2025-10-15 19:19:49,267 - src.ws.bvc - INFO - Reconnecting in 5 seconds...
+2025-10-15 19:19:54,271 - src.ws.bvc - ERROR - Maximum reconnection attempts reached
+2025-10-15 19:19:54,271 - src.ws.bvc - INFO - BVC WebSocket client stopped

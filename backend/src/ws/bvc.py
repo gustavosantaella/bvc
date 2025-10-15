@@ -5,7 +5,25 @@ import ssl
 import json
 import logging
 from typing import Optional, List, Dict, Any
-from config.time import get_current_time, set_time_zone
+from dotenv import load_dotenv
+
+load_dotenv()
+
+import sys
+
+# Handle imports for both direct execution and module import
+try:
+    from src.config.time import get_current_time, set_time_zone
+    from src.database.mongo import db
+except ImportError:
+    # When running directly, add src to path first
+    import sys
+    from pathlib import Path
+
+    src_dir = Path(__file__).parent.parent
+    sys.path.insert(0, str(src_dir))
+    from config.time import get_current_time, set_time_zone
+    from database.mongo import db
 
 
 set_time_zone()
@@ -74,6 +92,7 @@ class BVCWebSocketClient:
             if message == "2":
                 # Ping message, respond with pong
                 logger.debug("Ping received, sending pong")
+                print("Ping received, sending pong")
                 return "3"  # Return response
 
             elif message and message.startswith("42"):
@@ -140,7 +159,6 @@ class BVCWebSocketClient:
             symbols_data: List of symbol data to save
         """
         try:
-            from ..database.mongo import db
 
             if db is None:
                 logger.error("Database not initialized")
@@ -259,6 +277,7 @@ class BVCWebSocketClient:
 
                 # Send initial handshake message
                 await websocket.send("40")
+                print("Handshake message sent (40)")
                 logger.debug("Handshake message sent (40)")
 
                 # Main receive loop
@@ -302,7 +321,7 @@ class BVCWebSocketClient:
         reconnect_attempts = 0
 
         logger.info(f"Starting BVC WebSocket client: {self.ws_url}")
-
+        print("IS RUNNING", self.is_running)
         while self.is_running and reconnect_attempts < self.max_reconnect_attempts:
             try:
                 await self._connect_and_listen()
@@ -350,8 +369,24 @@ async def connect_to_ws_bvc() -> None:
     Recommended to use BVCWebSocketClient directly for more control.
     """
     client = BVCWebSocketClient()
+    print("Starting BVC WebSocket client...")
     await client.start()
 
 
 if __name__ == "__main__":
-    asyncio.run(connect_to_ws_bvc())
+    try:
+        from database.mongo import start_db
+
+        start_db()
+        logger.info("[OK] Database connected successfully")
+    except Exception as e:
+        logger.error(f"[ERROR] Error connecting to database: {e}", exc_info=True)
+        sys.exit(1)
+
+    # Start the WebSocket client
+    logger.info("Starting BVC WebSocket client...")
+    try:
+        asyncio.run(connect_to_ws_bvc())
+    except Exception as e:
+        logger.error(f"[ERROR] Error starting BVC WebSocket client: {e}", exc_info=True)
+        sys.exit(1)
