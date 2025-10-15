@@ -117,6 +117,9 @@ async def main():
         raise
 
 
+# Export app for Vercel
+from src.app_module import http_server as app
+
 if __name__ == "__main__":
     try:
         asyncio.run(main())
