@@ -2,6 +2,7 @@ import asyncio
 import websockets
 from os import getenv
 import ssl
+import json
 
 async def connect_to_ws_bvc():
     WS_URL = getenv("WS_BVC")
@@ -37,9 +38,24 @@ async def connect_to_ws_bvc():
         additional_headers=headers
     ) as websocket:
         print("Connected to the WS server of BVC")
-        await websocket.send(message="3")
-        print("Sended")
+        await websocket.send(message="40")
+        print("Sended 40")
         
         while True:
             message = await websocket.recv()
-            print(f"Received: {message}")
+            if message == "2":
+                print("Sending '3' message.")
+                await websocket.send(message="3")
+            else:
+                if message and message[:2] == '42':
+                    data = message[2::]
+                    data = json.loads(data)
+                    if data[0] == 'serverData': 
+                        print(data[1])
+                        symbols = list(map(lambda e: e['simbolo'], data[1]))
+                        print(symbols)
+                        print(len(symbols))
+                        
+                        
+def save_message():
+    pass
