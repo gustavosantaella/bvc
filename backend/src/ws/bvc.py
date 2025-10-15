@@ -268,7 +268,7 @@ class BVCWebSocketClient:
                         )
 
                         current_hour = get_current_time().hour
-                        if current_hour < 9 or current_hour > 13:
+                        if current_hour < 9 or current_hour == 13:
                             if self.is_running:
                                 logger.info(
                                     f"The time must be between 9am and 1pm. {get_current_time()}"

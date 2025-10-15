@@ -2,3 +2,74 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom Scrollbar Styles */
+@layer utilities {
+  /* Webkit browsers (Chrome, Safari, Edge) */
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  /* Blue scrollbar for main table */
+  .scrollbar-thumb-blue-500::-webkit-scrollbar-thumb {
+    background: #3b82f6;
+  }
+
+  .scrollbar-thumb-blue-500::-webkit-scrollbar-thumb:hover {
+    background: #2563eb;
+  }
+
+  /* Green scrollbar for history table */
+  .scrollbar-thumb-green-500::-webkit-scrollbar-thumb {
+    background: #10b981;
+  }
+
+  .scrollbar-thumb-green-500::-webkit-scrollbar-thumb:hover {
+    background: #059669;
+  }
+
+  .scrollbar-track-gray-200::-webkit-scrollbar-track {
+    background: #e5e7eb;
+  }
+
+  /* Firefox */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
+  }
+
+  .scrollbar-thumb-blue-500 {
+    scrollbar-color: #3b82f6 #e5e7eb;
+  }
+
+  .scrollbar-thumb-green-500 {
+    scrollbar-color: #10b981 #e5e7eb;
+  }
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Ensure body takes full height */
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
