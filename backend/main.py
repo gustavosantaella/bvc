@@ -5,6 +5,8 @@ import logging
 import sys
 import io
 from src.config.time import set_time_zone
+from src.ws.bvc import connect_to_ws_bvc
+import asyncio
 
 # Load environment variables
 load_dotenv()
@@ -34,8 +36,6 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-# Export app for Vercel
-
 # Initialize database for Vercel serverless environment
 # This ensures DB is connected when the module is imported
 if db is None:  # Only initialize if not already connected
@@ -46,6 +46,11 @@ if db is None:  # Only initialize if not already connected
         logger.error(
             f"[ERROR] Error connecting to database for Vercel: {e}", exc_info=True
         )
+
+# Export app for Vercel
+from src.app_module import http_server as app
+
+asyncio.run(connect_to_ws_bvc())
 
 if __name__ == "__main__":
     # Connect to database
@@ -68,6 +73,3 @@ if __name__ == "__main__":
         port=8000,
         reload=False,
     )
-else:
-    # For Vercel
-    from src.app_module import http_server as app

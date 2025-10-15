@@ -3,20 +3,12 @@
     {
       "src": "main.py",
       "use": "@vercel/python"
-    },
-    {
-      "src": "src/ws/bvc.py",
-      "use": "@vercel/python"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
       "dest": "main.py"
-    },
-    {
-      "src": "/ws/bvc",
-      "dest": "src/ws/bvc.py"
     }
   ]
 }

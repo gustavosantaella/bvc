@@ -45,4 +45,30 @@ uvicorn "app:app" --host "0.0.0.0" --port "8000" --reload
 
 ## Step 3 - Send requests
 
-Go to the fastapi docs and use your api endpoints - <http://127.0.0.1/docs>
+Go to the fastapi docs and use your api endpoints - <http://127.0.0.1:8000/docs>
+
+## Deployment
+
+This project has two separate components:
+
+1. **API HTTP** (`main.py`) → Deploy to **Vercel**
+2. **WebSocket Client** (`src/ws/bvc.py`) → Deploy to **Railway** or **Render**
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed deployment instructions.
+
+### Quick Start
+
+**Deploy API to Vercel:**
+```bash
+vercel --prod
+```
+
+**Deploy WebSocket to Railway:**
+```bash
+# Install Railway CLI
+npm i -g @railway/cli
+
+# Login and deploy
+railway login
+railway up
+```

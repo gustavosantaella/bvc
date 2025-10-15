@@ -1,0 +1,25 @@
+# Ignore for Railway deployment
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+ENV/
+env/
+.env.local
+.env.*.local
+.git/
+.gitignore
+*.log
+app.log
+*.md
+!DEPLOYMENT.md
+!README.md
+
