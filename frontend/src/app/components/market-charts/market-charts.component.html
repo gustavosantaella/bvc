@@ -80,8 +80,52 @@
     class="space-y-6"
   >
     <!-- Gráfico de Precio -->
-    <div class="bg-white rounded-xl shadow-lg p-6">
-      <div class="h-80">
+    <div
+      class="bg-white rounded-xl shadow-lg p-6 transition-all duration-300"
+      [class.col-span-2]="isChartExpanded('price')"
+      [class.opacity-50]="isChartMinimized('price')"
+    >
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-semibold text-gray-700">Gráfico de Precio</h3>
+        <button
+          (click)="toggleExpandChart('price')"
+          class="p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200 group"
+          [title]="isChartExpanded('price') ? 'Minimizar' : 'Expandir'"
+        >
+          <svg
+            *ngIf="!isChartExpanded('price')"
+            class="w-5 h-5 text-gray-600 group-hover:text-blue-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"
+            />
+          </svg>
+          <svg
+            *ngIf="isChartExpanded('price')"
+            class="w-5 h-5 text-blue-600 group-hover:text-gray-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+      <div
+        [class.h-80]="!isChartExpanded('price')"
+        [class.h-96]="isChartExpanded('price')"
+      >
         <canvas #priceChart></canvas>
       </div>
     </div>
@@ -89,15 +133,109 @@
     <!-- Grid de 2 gráficos -->
     <div class="grid md:grid-cols-2 gap-6">
       <!-- Gráfico de Volumen -->
-      <div class="bg-white rounded-xl shadow-lg p-6">
-        <div class="h-80">
+      <div
+        class="bg-white rounded-xl shadow-lg p-6 transition-all duration-300"
+        [class.md:col-span-2]="isChartExpanded('volume')"
+        [class.opacity-50]="isChartMinimized('volume')"
+        [class.scale-95]="isChartMinimized('volume')"
+      >
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-lg font-semibold text-gray-700">
+            Gráfico de Volumen
+          </h3>
+          <button
+            (click)="toggleExpandChart('volume')"
+            class="p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200 group"
+            [title]="isChartExpanded('volume') ? 'Minimizar' : 'Expandir'"
+          >
+            <svg
+              *ngIf="!isChartExpanded('volume')"
+              class="w-5 h-5 text-gray-600 group-hover:text-indigo-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"
+              />
+            </svg>
+            <svg
+              *ngIf="isChartExpanded('volume')"
+              class="w-5 h-5 text-indigo-600 group-hover:text-gray-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+        <div
+          [class.h-80]="!isChartExpanded('volume')"
+          [class.h-96]="isChartExpanded('volume')"
+        >
           <canvas #volumeChart></canvas>
         </div>
       </div>
 
       <!-- Gráfico de Variación -->
-      <div class="bg-white rounded-xl shadow-lg p-6">
-        <div class="h-80">
+      <div
+        class="bg-white rounded-xl shadow-lg p-6 transition-all duration-300"
+        [class.md:col-span-2]="isChartExpanded('variation')"
+        [class.opacity-50]="isChartMinimized('variation')"
+        [class.scale-95]="isChartMinimized('variation')"
+      >
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-lg font-semibold text-gray-700">
+            Gráfico de Variación
+          </h3>
+          <button
+            (click)="toggleExpandChart('variation')"
+            class="p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200 group"
+            [title]="isChartExpanded('variation') ? 'Minimizar' : 'Expandir'"
+          >
+            <svg
+              *ngIf="!isChartExpanded('variation')"
+              class="w-5 h-5 text-gray-600 group-hover:text-purple-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"
+              />
+            </svg>
+            <svg
+              *ngIf="isChartExpanded('variation')"
+              class="w-5 h-5 text-purple-600 group-hover:text-gray-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+        <div
+          [class.h-80]="!isChartExpanded('variation')"
+          [class.h-96]="isChartExpanded('variation')"
+        >
           <canvas #variationChart></canvas>
         </div>
       </div>

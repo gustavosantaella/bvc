@@ -37,6 +37,9 @@ export class MarketChartsComponent implements OnInit, OnChanges {
   volumeChart: Chart | null = null;
   variationChart: Chart | null = null;
 
+  // Control de expansión de gráficos
+  expandedChart: 'price' | 'volume' | 'variation' | null = null;
+
   // Exponer Math para uso en el template
   Math = Math;
 
@@ -92,6 +95,28 @@ export class MarketChartsComponent implements OnInit, OnChanges {
       }, 0);
     }
     return this.getLastHistory()?.effective_amount || 0;
+  }
+
+  toggleExpandChart(chartType: 'price' | 'volume' | 'variation') {
+    if (this.expandedChart === chartType) {
+      this.expandedChart = null;
+    } else {
+      this.expandedChart = chartType;
+    }
+    // Esperar a que el DOM se actualice y luego redimensionar los gráficos
+    setTimeout(() => {
+      if (this.priceChart) this.priceChart.resize();
+      if (this.volumeChart) this.volumeChart.resize();
+      if (this.variationChart) this.variationChart.resize();
+    }, 300);
+  }
+
+  isChartExpanded(chartType: 'price' | 'volume' | 'variation'): boolean {
+    return this.expandedChart === chartType;
+  }
+
+  isChartMinimized(chartType: 'price' | 'volume' | 'variation'): boolean {
+    return this.expandedChart !== null && this.expandedChart !== chartType;
   }
 
   ngOnInit() {
