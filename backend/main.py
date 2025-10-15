@@ -120,6 +120,16 @@ async def main():
 # Export app for Vercel
 from src.app_module import http_server as app
 
+# Initialize database for Vercel serverless environment
+# This ensures DB is connected when the module is imported
+if db is None:  # Only initialize if not already connected
+    try:
+        start_db()
+        logger.info("[OK] Database connected for Vercel")
+    except Exception as e:
+        logger.error(
+            f"[ERROR] Error connecting to database for Vercel: {e}", exc_info=True
+        )
 
 if __name__ == "__main__":
     try:
@@ -130,6 +140,3 @@ if __name__ == "__main__":
     except Exception as e:
         logger.error(f"[ERROR] Fatal error: {e}", exc_info=True)
         sys.exit(1)
-else:
-    print("Running on Vercel")
-    asyncio.run(main())

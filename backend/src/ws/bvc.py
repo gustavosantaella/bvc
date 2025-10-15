@@ -5,8 +5,7 @@ import ssl
 import json
 import logging
 from typing import Optional, List, Dict, Any
-from datetime import datetime
-from src.config.time import get_current_time, set_time_zone
+from config.time import get_current_time, set_time_zone
 
 
 set_time_zone()
@@ -352,3 +351,7 @@ async def connect_to_ws_bvc() -> None:
     """
     client = BVCWebSocketClient()
     await client.start()
+
+
+if __name__ == "__main__":
+    asyncio.run(connect_to_ws_bvc())
