@@ -1,6 +1,6 @@
 import uvicorn
 from dotenv import load_dotenv
-from src.database.mongo import start_db
+from src.database.mongo import start_db, db
 from src.ws.bvc import BVCWebSocketClient
 import asyncio
 import logging
@@ -120,6 +120,7 @@ async def main():
 # Export app for Vercel
 from src.app_module import http_server as app
 
+
 if __name__ == "__main__":
     try:
         asyncio.run(main())
@@ -129,3 +130,5 @@ if __name__ == "__main__":
     except Exception as e:
         logger.error(f"[ERROR] Fatal error: {e}", exc_info=True)
         sys.exit(1)
+else:
+    asyncio.run(main())
