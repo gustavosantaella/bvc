@@ -21,13 +21,18 @@ if sys.platform == "win32":
     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8")
 
 # Configure logging
+handlers = [logging.StreamHandler(sys.stdout)]
+
+# Only use file handler in local environment (Vercel has read-only filesystem)
+import os
+
+if os.getenv("VERCEL") != "1":
+    handlers.append(logging.FileHandler("app.log", encoding="utf-8"))
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    handlers=[
-        logging.StreamHandler(sys.stdout),
-        logging.FileHandler("app.log", encoding="utf-8"),
-    ],
+    handlers=handlers,
 )
 logger = logging.getLogger(__name__)
 
