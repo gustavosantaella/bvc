@@ -7,7 +7,7 @@ import src.ws.bvc as ws_bvc
 load_dotenv() 
 
 async def main():
-    start_db()
+    # start_db()
     websocket_task = asyncio.create_task(ws_bvc.connect_to_ws_bvc())
     
     config = uvicorn.Config(
@@ -21,7 +21,6 @@ async def main():
     
     try:
         await asyncio.gather(
-            server.serve(),
             websocket_task,
             return_exceptions=False  
         )
