@@ -6,11 +6,12 @@ import {
   MarketService,
   HistoryInterface,
 } from '../../services/http/market.service';
+import { MarketChartsComponent } from '../../components/market-charts/market-charts.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet],
+  imports: [CommonModule, RouterOutlet, MarketChartsComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
