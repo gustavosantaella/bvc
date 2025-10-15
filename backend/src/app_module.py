@@ -1,10 +1,11 @@
 from nest.core import PyNestFactory, Module
-        
+
 from .app_controller import AppController
 from .app_service import AppService
+from src.http.market.maket_module import MarketModule
 
 
-@Module(imports=[], controllers=[AppController], providers=[AppService])
+@Module(imports=[MarketModule], controllers=[AppController], providers=[AppService])
 class AppModule:
     pass
 
@@ -15,8 +16,18 @@ app = PyNestFactory.create(
     title="PyNest Application",
     version="1.0.0",
     debug=True,
+    prefix="/api",
 )
+
+# Configure CORS
+from fastapi.middleware.cors import CORSMiddleware
 
 http_server = app.get_server()
 
-                
+http_server.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)

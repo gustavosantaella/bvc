@@ -1,0 +1,1521 @@
+2025-10-15 09:00:29,395 - __main__ - INFO - ==================================================
+2025-10-15 09:00:29,395 - __main__ - INFO - Iniciando aplicaci�n BVC
+2025-10-15 09:00:29,395 - __main__ - INFO - ==================================================
+2025-10-15 09:00:29,438 - src.database.mongo.setup_indexes - ERROR - Error al crear �ndices: Server at localhost:27017 reports wire version 7, but this version of PyMongo requires at least 8 (MongoDB 4.2).
+Traceback (most recent call last):
+  File "C:\laragon\www\bvc\backend\src\database\mongo\setup_indexes.py", line 24, in setup_market_data_indexes
+    collection.create_index(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\collection.py", line 2387, in create_index
+    return (self._create_indexes([index], session, **cmd_options))[0]
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\_csot.py", line 125, in csot_wrapper
+    return func(self, *args, **kwargs)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\collection.py", line 2240, in _create_indexes
+    with self._conn_for_writes(session, operation=_Op.CREATE_INDEXES) as conn:
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\collection.py", line 578, in _conn_for_writes
+    return self._database.client._conn_for_writes(session, operation)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 1850, in _conn_for_writes
+    server = self._select_server(writable_server_selector, session, operation)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 1833, in _select_server
+    server = topology.select_server(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\topology.py", line 409, in select_server
+    server = self._select_server(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\topology.py", line 387, in _select_server
+    servers = self.select_servers(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\topology.py", line 294, in select_servers
+    server_descriptions = self._select_servers_loop(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\topology.py", line 375, in _select_servers_loop
+    self._description.check_compatible()
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\topology_description.py", line 168, in check_compatible
+    raise ConfigurationError(self._incompatible_err)
+pymongo.errors.ConfigurationError: Server at localhost:27017 reports wire version 7, but this version of PyMongo requires at least 8 (MongoDB 4.2).
+2025-10-15 09:00:29,458 - src.ws.bvc - INFO - Iniciando cliente WebSocket BVC: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 09:00:30,223 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 s�mbolos
+2025-10-15 09:00:30,225 - src.ws.bvc - ERROR - Error al guardar datos: Server at localhost:27017 reports wire version 7, but this version of PyMongo requires at least 8 (MongoDB 4.2).
+Traceback (most recent call last):
+  File "C:\laragon\www\bvc\backend\src\ws\bvc.py", line 150, in _save_data
+    result = collection.insert_many(symbols_data)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\_csot.py", line 125, in csot_wrapper
+    return func(self, *args, **kwargs)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\collection.py", line 975, in insert_many
+    blk.execute(write_concern, session, _Op.INSERT)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\bulk.py", line 751, in execute
+    return self.execute_command(generator, write_concern, session, operation)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\bulk.py", line 604, in execute_command
+    _ = client._retryable_write(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 2082, in _retryable_write
+    return self._retry_with_session(retryable, func, s, bulk, operation, operation_id)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 1968, in _retry_with_session
+    return self._retry_internal(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\_csot.py", line 125, in csot_wrapper
+    return func(self, *args, **kwargs)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 2014, in _retry_internal
+    ).run()
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 2765, in run
+    return self._read() if self._is_read else self._write()
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 2875, in _write
+    self._server = self._get_server()
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 2858, in _get_server
+    return self._client._select_server(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 1833, in _select_server
+    server = topology.select_server(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\topology.py", line 409, in select_server
+    server = self._select_server(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\topology.py", line 387, in _select_server
+    servers = self.select_servers(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\topology.py", line 294, in select_servers
+    server_descriptions = self._select_servers_loop(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\topology.py", line 375, in _select_servers_loop
+    self._description.check_compatible()
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\topology_description.py", line 168, in check_compatible
+    raise ConfigurationError(self._incompatible_err)
+pymongo.errors.ConfigurationError: Server at localhost:27017 reports wire version 7, but this version of PyMongo requires at least 8 (MongoDB 4.2).
+2025-10-15 09:00:30,227 - src.ws.bvc - INFO - Guardados 31 s�mbolos en la base de datos
+2025-10-15 09:01:00,230 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 s�mbolos
+2025-10-15 09:01:00,231 - src.ws.bvc - ERROR - Error al guardar datos: Server at localhost:27017 reports wire version 7, but this version of PyMongo requires at least 8 (MongoDB 4.2).
+Traceback (most recent call last):
+  File "C:\laragon\www\bvc\backend\src\ws\bvc.py", line 150, in _save_data
+    result = collection.insert_many(symbols_data)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\_csot.py", line 125, in csot_wrapper
+    return func(self, *args, **kwargs)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\collection.py", line 975, in insert_many
+    blk.execute(write_concern, session, _Op.INSERT)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\bulk.py", line 751, in execute
+    return self.execute_command(generator, write_concern, session, operation)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\bulk.py", line 604, in execute_command
+    _ = client._retryable_write(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 2082, in _retryable_write
+    return self._retry_with_session(retryable, func, s, bulk, operation, operation_id)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 1968, in _retry_with_session
+    return self._retry_internal(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\_csot.py", line 125, in csot_wrapper
+    return func(self, *args, **kwargs)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 2014, in _retry_internal
+    ).run()
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 2765, in run
+    return self._read() if self._is_read else self._write()
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 2875, in _write
+    self._server = self._get_server()
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 2858, in _get_server
+    return self._client._select_server(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 1833, in _select_server
+    server = topology.select_server(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\topology.py", line 409, in select_server
+    server = self._select_server(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\topology.py", line 387, in _select_server
+    servers = self.select_servers(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\topology.py", line 294, in select_servers
+    server_descriptions = self._select_servers_loop(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\topology.py", line 375, in _select_servers_loop
+    self._description.check_compatible()
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\topology_description.py", line 168, in check_compatible
+    raise ConfigurationError(self._incompatible_err)
+pymongo.errors.ConfigurationError: Server at localhost:27017 reports wire version 7, but this version of PyMongo requires at least 8 (MongoDB 4.2).
+2025-10-15 09:01:00,233 - src.ws.bvc - INFO - Guardados 31 s�mbolos en la base de datos
+2025-10-15 09:01:30,241 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 s�mbolos
+2025-10-15 09:01:30,242 - src.ws.bvc - ERROR - Error al guardar datos: Server at localhost:27017 reports wire version 7, but this version of PyMongo requires at least 8 (MongoDB 4.2).
+Traceback (most recent call last):
+  File "C:\laragon\www\bvc\backend\src\ws\bvc.py", line 150, in _save_data
+    result = collection.insert_many(symbols_data)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\_csot.py", line 125, in csot_wrapper
+    return func(self, *args, **kwargs)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\collection.py", line 975, in insert_many
+    blk.execute(write_concern, session, _Op.INSERT)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\bulk.py", line 751, in execute
+    return self.execute_command(generator, write_concern, session, operation)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\bulk.py", line 604, in execute_command
+    _ = client._retryable_write(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 2082, in _retryable_write
+    return self._retry_with_session(retryable, func, s, bulk, operation, operation_id)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 1968, in _retry_with_session
+    return self._retry_internal(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\_csot.py", line 125, in csot_wrapper
+    return func(self, *args, **kwargs)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 2014, in _retry_internal
+    ).run()
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 2765, in run
+    return self._read() if self._is_read else self._write()
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 2875, in _write
+    self._server = self._get_server()
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 2858, in _get_server
+    return self._client._select_server(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 1833, in _select_server
+    server = topology.select_server(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\topology.py", line 409, in select_server
+    server = self._select_server(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\topology.py", line 387, in _select_server
+    servers = self.select_servers(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\topology.py", line 294, in select_servers
+    server_descriptions = self._select_servers_loop(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\topology.py", line 375, in _select_servers_loop
+    self._description.check_compatible()
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\topology_description.py", line 168, in check_compatible
+    raise ConfigurationError(self._incompatible_err)
+pymongo.errors.ConfigurationError: Server at localhost:27017 reports wire version 7, but this version of PyMongo requires at least 8 (MongoDB 4.2).
+2025-10-15 09:01:30,244 - src.ws.bvc - INFO - Guardados 31 s�mbolos en la base de datos
+2025-10-15 09:02:00,249 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 s�mbolos
+2025-10-15 09:02:00,250 - src.ws.bvc - ERROR - Error al guardar datos: Server at localhost:27017 reports wire version 7, but this version of PyMongo requires at least 8 (MongoDB 4.2).
+Traceback (most recent call last):
+  File "C:\laragon\www\bvc\backend\src\ws\bvc.py", line 150, in _save_data
+    result = collection.insert_many(symbols_data)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\_csot.py", line 125, in csot_wrapper
+    return func(self, *args, **kwargs)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\collection.py", line 975, in insert_many
+    blk.execute(write_concern, session, _Op.INSERT)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\bulk.py", line 751, in execute
+    return self.execute_command(generator, write_concern, session, operation)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\bulk.py", line 604, in execute_command
+    _ = client._retryable_write(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 2082, in _retryable_write
+    return self._retry_with_session(retryable, func, s, bulk, operation, operation_id)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 1968, in _retry_with_session
+    return self._retry_internal(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\_csot.py", line 125, in csot_wrapper
+    return func(self, *args, **kwargs)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 2014, in _retry_internal
+    ).run()
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 2765, in run
+    return self._read() if self._is_read else self._write()
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 2875, in _write
+    self._server = self._get_server()
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 2858, in _get_server
+    return self._client._select_server(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 1833, in _select_server
+    server = topology.select_server(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\topology.py", line 409, in select_server
+    server = self._select_server(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\topology.py", line 387, in _select_server
+    servers = self.select_servers(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\topology.py", line 294, in select_servers
+    server_descriptions = self._select_servers_loop(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\topology.py", line 375, in _select_servers_loop
+    self._description.check_compatible()
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\topology_description.py", line 168, in check_compatible
+    raise ConfigurationError(self._incompatible_err)
+pymongo.errors.ConfigurationError: Server at localhost:27017 reports wire version 7, but this version of PyMongo requires at least 8 (MongoDB 4.2).
+2025-10-15 09:02:00,252 - src.ws.bvc - INFO - Guardados 31 s�mbolos en la base de datos
+2025-10-15 09:02:29,820 - src.ws.bvc - WARNING - Timeout al recibir mensaje
+2025-10-15 09:02:30,282 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 s�mbolos
+2025-10-15 09:02:30,283 - src.ws.bvc - ERROR - Error al guardar datos: Server at localhost:27017 reports wire version 7, but this version of PyMongo requires at least 8 (MongoDB 4.2).
+Traceback (most recent call last):
+  File "C:\laragon\www\bvc\backend\src\ws\bvc.py", line 150, in _save_data
+    result = collection.insert_many(symbols_data)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\_csot.py", line 125, in csot_wrapper
+    return func(self, *args, **kwargs)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\collection.py", line 975, in insert_many
+    blk.execute(write_concern, session, _Op.INSERT)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\bulk.py", line 751, in execute
+    return self.execute_command(generator, write_concern, session, operation)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\bulk.py", line 604, in execute_command
+    _ = client._retryable_write(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 2082, in _retryable_write
+    return self._retry_with_session(retryable, func, s, bulk, operation, operation_id)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 1968, in _retry_with_session
+    return self._retry_internal(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\_csot.py", line 125, in csot_wrapper
+    return func(self, *args, **kwargs)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 2014, in _retry_internal
+    ).run()
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 2765, in run
+    return self._read() if self._is_read else self._write()
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 2875, in _write
+    self._server = self._get_server()
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 2858, in _get_server
+    return self._client._select_server(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 1833, in _select_server
+    server = topology.select_server(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\topology.py", line 409, in select_server
+    server = self._select_server(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\topology.py", line 387, in _select_server
+    servers = self.select_servers(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\topology.py", line 294, in select_servers
+    server_descriptions = self._select_servers_loop(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\topology.py", line 375, in _select_servers_loop
+    self._description.check_compatible()
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\topology_description.py", line 168, in check_compatible
+    raise ConfigurationError(self._incompatible_err)
+pymongo.errors.ConfigurationError: Server at localhost:27017 reports wire version 7, but this version of PyMongo requires at least 8 (MongoDB 4.2).
+2025-10-15 09:02:30,285 - src.ws.bvc - INFO - Guardados 31 s�mbolos en la base de datos
+2025-10-15 09:02:54,832 - src.ws.bvc - WARNING - Timeout al recibir mensaje
+2025-10-15 09:03:00,282 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 s�mbolos
+2025-10-15 09:03:00,284 - src.ws.bvc - ERROR - Error al guardar datos: Server at localhost:27017 reports wire version 7, but this version of PyMongo requires at least 8 (MongoDB 4.2).
+Traceback (most recent call last):
+  File "C:\laragon\www\bvc\backend\src\ws\bvc.py", line 150, in _save_data
+    result = collection.insert_many(symbols_data)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\_csot.py", line 125, in csot_wrapper
+    return func(self, *args, **kwargs)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\collection.py", line 975, in insert_many
+    blk.execute(write_concern, session, _Op.INSERT)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\bulk.py", line 751, in execute
+    return self.execute_command(generator, write_concern, session, operation)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\bulk.py", line 604, in execute_command
+    _ = client._retryable_write(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 2082, in _retryable_write
+    return self._retry_with_session(retryable, func, s, bulk, operation, operation_id)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 1968, in _retry_with_session
+    return self._retry_internal(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\_csot.py", line 125, in csot_wrapper
+    return func(self, *args, **kwargs)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 2014, in _retry_internal
+    ).run()
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 2765, in run
+    return self._read() if self._is_read else self._write()
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 2875, in _write
+    self._server = self._get_server()
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 2858, in _get_server
+    return self._client._select_server(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\mongo_client.py", line 1833, in _select_server
+    server = topology.select_server(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\topology.py", line 409, in select_server
+    server = self._select_server(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\topology.py", line 387, in _select_server
+    servers = self.select_servers(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\topology.py", line 294, in select_servers
+    server_descriptions = self._select_servers_loop(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\synchronous\topology.py", line 375, in _select_servers_loop
+    self._description.check_compatible()
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\topology_description.py", line 168, in check_compatible
+    raise ConfigurationError(self._incompatible_err)
+pymongo.errors.ConfigurationError: Server at localhost:27017 reports wire version 7, but this version of PyMongo requires at least 8 (MongoDB 4.2).
+2025-10-15 09:03:00,287 - src.ws.bvc - INFO - Guardados 31 s�mbolos en la base de datos
+2025-10-15 09:03:41,779 - __main__ - INFO - ==================================================
+2025-10-15 09:03:41,779 - __main__ - INFO - Iniciando aplicaci�n BVC
+2025-10-15 09:03:41,780 - __main__ - INFO - ==================================================
+2025-10-15 09:03:41,906 - src.ws.bvc - INFO - Iniciando cliente WebSocket BVC: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 09:04:00,335 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 s�mbolos
+2025-10-15 09:04:00,345 - src.ws.bvc - INFO - Guardados 31 s�mbolos en la base de datos
+2025-10-15 09:04:22,472 - __main__ - INFO - ==================================================
+2025-10-15 09:04:22,472 - __main__ - INFO - Iniciando aplicaci�n BVC
+2025-10-15 09:04:22,473 - __main__ - INFO - ==================================================
+2025-10-15 09:04:22,490 - src.ws.bvc - INFO - Iniciando cliente WebSocket BVC: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 09:04:30,357 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 s�mbolos
+2025-10-15 09:04:30,384 - src.ws.bvc - INFO - Guardados 31 s�mbolos en la base de datos
+2025-10-15 09:05:00,341 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 s�mbolos
+2025-10-15 09:05:00,345 - src.ws.bvc - INFO - Guardados 31 s�mbolos en la base de datos
+2025-10-15 09:05:30,353 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 s�mbolos
+2025-10-15 09:05:30,359 - src.ws.bvc - INFO - Guardados 31 s�mbolos en la base de datos
+2025-10-15 09:05:57,699 - src.ws.bvc - WARNING - Timeout al recibir mensaje
+2025-10-15 09:06:00,436 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 s�mbolos
+2025-10-15 09:06:00,441 - src.ws.bvc - INFO - Guardados 31 s�mbolos en la base de datos
+2025-10-15 09:06:20,942 - __main__ - INFO - ==================================================
+2025-10-15 09:06:20,942 - __main__ - INFO - Iniciando aplicación BVC
+2025-10-15 09:06:20,943 - __main__ - INFO - ==================================================
+2025-10-15 09:06:20,953 - __main__ - INFO - [OK] Base de datos conectada exitosamente
+2025-10-15 09:06:20,953 - __main__ - INFO - [OK] Cliente WebSocket inicializado
+2025-10-15 09:06:20,954 - src.ws.bvc - INFO - Iniciando cliente WebSocket BVC: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 09:06:21,102 - src.ws.bvc - INFO - [OK] Conectado al servidor WebSocket de BVC
+2025-10-15 09:06:30,397 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 símbolos
+2025-10-15 09:06:30,414 - src.ws.bvc - INFO - Guardados 31 símbolos en la base de datos
+2025-10-15 09:06:31,933 - __main__ - INFO - [WARNING] Programa detenido por el usuario (Ctrl+C)
+2025-10-15 09:06:34,033 - __main__ - INFO - ==================================================
+2025-10-15 09:06:34,033 - __main__ - INFO - Iniciando aplicación BVC
+2025-10-15 09:06:34,033 - __main__ - INFO - ==================================================
+2025-10-15 09:06:34,039 - __main__ - INFO - [OK] Base de datos conectada exitosamente
+2025-10-15 09:06:34,040 - __main__ - INFO - [OK] Cliente WebSocket inicializado
+2025-10-15 09:06:34,041 - src.ws.bvc - INFO - Iniciando cliente WebSocket BVC: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 09:06:34,193 - src.ws.bvc - INFO - [OK] Conectado al servidor WebSocket de BVC
+2025-10-15 09:06:38,292 - __main__ - INFO - [WARNING] Programa detenido por el usuario (Ctrl+C)
+2025-10-15 09:06:40,108 - __main__ - INFO - ==================================================
+2025-10-15 09:06:40,109 - __main__ - INFO - Iniciando aplicación BVC
+2025-10-15 09:06:40,109 - __main__ - INFO - ==================================================
+2025-10-15 09:06:40,115 - __main__ - INFO - [OK] Base de datos conectada exitosamente
+2025-10-15 09:06:40,116 - __main__ - INFO - [OK] Cliente WebSocket inicializado
+2025-10-15 09:06:40,116 - src.ws.bvc - INFO - Iniciando cliente WebSocket BVC: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 09:06:40,250 - src.ws.bvc - INFO - [OK] Conectado al servidor WebSocket de BVC
+2025-10-15 09:07:00,268 - src.ws.bvc - WARNING - Timeout al recibir mensaje
+2025-10-15 09:07:00,415 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 símbolos
+2025-10-15 09:07:00,445 - src.ws.bvc - INFO - Guardados 31 símbolos en la base de datos
+2025-10-15 09:07:25,259 - src.ws.bvc - WARNING - Timeout al recibir mensaje
+2025-10-15 09:07:30,424 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 símbolos
+2025-10-15 09:07:30,430 - src.ws.bvc - INFO - Guardados 31 símbolos en la base de datos
+2025-10-15 09:07:50,617 - src.ws.bvc - WARNING - Timeout al recibir mensaje
+2025-10-15 09:08:00,458 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 símbolos
+2025-10-15 09:08:00,464 - src.ws.bvc - INFO - Guardados 31 símbolos en la base de datos
+2025-10-15 09:08:30,425 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 símbolos
+2025-10-15 09:08:30,429 - src.ws.bvc - INFO - Guardados 31 símbolos en la base de datos
+2025-10-15 09:09:00,420 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 símbolos
+2025-10-15 09:09:00,424 - src.ws.bvc - INFO - Guardados 31 símbolos en la base de datos
+2025-10-15 09:09:30,331 - src.ws.bvc - WARNING - Timeout al recibir mensaje
+2025-10-15 09:09:30,471 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 símbolos
+2025-10-15 09:09:30,475 - src.ws.bvc - INFO - Guardados 31 símbolos en la base de datos
+2025-10-15 09:09:55,345 - src.ws.bvc - WARNING - Timeout al recibir mensaje
+2025-10-15 09:10:00,440 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 símbolos
+2025-10-15 09:10:00,444 - src.ws.bvc - INFO - Guardados 31 símbolos en la base de datos
+2025-10-15 09:10:21,275 - src.ws.bvc - WARNING - Timeout al recibir mensaje
+2025-10-15 09:10:30,490 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 símbolos
+2025-10-15 09:10:30,496 - src.ws.bvc - INFO - Guardados 31 símbolos en la base de datos
+2025-10-15 09:11:00,557 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 símbolos
+2025-10-15 09:11:00,561 - src.ws.bvc - INFO - Guardados 31 símbolos en la base de datos
+2025-10-15 09:11:30,475 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 símbolos
+2025-10-15 09:11:30,479 - src.ws.bvc - INFO - Guardados 31 símbolos en la base de datos
+2025-10-15 09:12:00,396 - src.ws.bvc - WARNING - Timeout al recibir mensaje
+2025-10-15 09:12:00,565 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 símbolos
+2025-10-15 09:12:00,569 - src.ws.bvc - INFO - Guardados 31 símbolos en la base de datos
+2025-10-15 09:12:25,415 - src.ws.bvc - WARNING - Timeout al recibir mensaje
+2025-10-15 09:12:30,547 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 símbolos
+2025-10-15 09:12:30,551 - src.ws.bvc - INFO - Guardados 31 símbolos en la base de datos
+2025-10-15 09:12:50,678 - src.ws.bvc - WARNING - Timeout al recibir mensaje
+2025-10-15 09:13:00,646 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 símbolos
+2025-10-15 09:13:00,650 - src.ws.bvc - INFO - Guardados 31 símbolos en la base de datos
+2025-10-15 09:13:30,569 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 símbolos
+2025-10-15 09:13:30,573 - src.ws.bvc - INFO - Guardados 31 símbolos en la base de datos
+2025-10-15 09:14:00,578 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 símbolos
+2025-10-15 09:14:00,585 - src.ws.bvc - INFO - Guardados 31 símbolos en la base de datos
+2025-10-15 09:14:30,473 - src.ws.bvc - WARNING - Timeout al recibir mensaje
+2025-10-15 09:14:30,559 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 símbolos
+2025-10-15 09:14:30,565 - src.ws.bvc - INFO - Guardados 31 símbolos en la base de datos
+2025-10-15 09:14:55,489 - src.ws.bvc - WARNING - Timeout al recibir mensaje
+2025-10-15 09:15:00,622 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 símbolos
+2025-10-15 09:15:00,627 - src.ws.bvc - INFO - Guardados 31 símbolos en la base de datos
+2025-10-15 09:15:21,383 - src.ws.bvc - WARNING - Timeout al recibir mensaje
+2025-10-15 09:15:30,607 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 símbolos
+2025-10-15 09:15:30,611 - src.ws.bvc - INFO - Guardados 31 símbolos en la base de datos
+2025-10-15 09:16:00,695 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 símbolos
+2025-10-15 09:16:00,698 - src.ws.bvc - INFO - Guardados 31 símbolos en la base de datos
+2025-10-15 09:16:30,667 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 símbolos
+2025-10-15 09:16:30,676 - src.ws.bvc - INFO - Guardados 31 símbolos en la base de datos
+2025-10-15 09:17:00,551 - src.ws.bvc - WARNING - Timeout al recibir mensaje
+2025-10-15 09:17:00,617 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 símbolos
+2025-10-15 09:17:00,621 - src.ws.bvc - INFO - Guardados 31 símbolos en la base de datos
+2025-10-15 09:17:25,564 - src.ws.bvc - WARNING - Timeout al recibir mensaje
+2025-10-15 09:17:30,622 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 símbolos
+2025-10-15 09:17:30,628 - src.ws.bvc - INFO - Guardados 31 símbolos en la base de datos
+2025-10-15 09:17:50,791 - src.ws.bvc - WARNING - Timeout al recibir mensaje
+2025-10-15 09:18:00,637 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 símbolos
+2025-10-15 09:18:00,641 - src.ws.bvc - INFO - Guardados 31 símbolos en la base de datos
+2025-10-15 09:18:30,656 - src.ws.bvc - INFO - Datos del servidor recibidos: 31 símbolos
+2025-10-15 09:18:30,661 - src.ws.bvc - INFO - Guardados 31 símbolos en la base de datos
+2025-10-15 09:18:46,455 - __main__ - INFO - [WARNING] Programa detenido por el usuario (Ctrl+C)
+2025-10-15 09:23:54,103 - __main__ - INFO - ==================================================
+2025-10-15 09:23:54,103 - __main__ - INFO - Starting BVC application
+2025-10-15 09:23:54,103 - __main__ - INFO - ==================================================
+2025-10-15 09:23:54,110 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 09:23:54,110 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 09:23:54,110 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 09:23:54,254 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 09:24:00,854 - src.ws.bvc - INFO - Server data received: 31 symbols
+2025-10-15 09:24:00,917 - src.ws.bvc - INFO - Processed 31 symbols: 31 new, 0 updated, 0 skipped
+2025-10-15 09:24:00,917 - src.ws.bvc - INFO - Saved 31 symbols to database
+2025-10-15 09:24:30,892 - src.ws.bvc - INFO - Server data received: 31 symbols
+2025-10-15 09:24:30,956 - src.ws.bvc - INFO - Processed 31 symbols: 0 new, 31 updated, 0 skipped
+2025-10-15 09:24:30,957 - src.ws.bvc - INFO - Saved 31 symbols to database
+2025-10-15 09:25:00,884 - src.ws.bvc - INFO - Server data received: 31 symbols
+2025-10-15 09:25:00,952 - src.ws.bvc - INFO - Processed 31 symbols: 0 new, 31 updated, 0 skipped
+2025-10-15 09:25:00,953 - src.ws.bvc - INFO - Saved 31 symbols to database
+2025-10-15 09:25:29,273 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 09:25:30,860 - src.ws.bvc - INFO - Server data received: 31 symbols
+2025-10-15 09:25:30,925 - src.ws.bvc - INFO - Processed 31 symbols: 0 new, 31 updated, 0 skipped
+2025-10-15 09:25:30,925 - src.ws.bvc - INFO - Saved 31 symbols to database
+2025-10-15 09:25:54,281 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 09:26:00,878 - src.ws.bvc - INFO - Server data received: 31 symbols
+2025-10-15 09:26:00,948 - src.ws.bvc - INFO - Processed 31 symbols: 0 new, 31 updated, 0 skipped
+2025-10-15 09:26:00,949 - src.ws.bvc - INFO - Saved 31 symbols to database
+2025-10-15 09:26:03,199 - __main__ - INFO - [WARNING] Program stopped by user (Ctrl+C)
+2025-10-15 09:30:15,798 - __main__ - INFO - ==================================================
+2025-10-15 09:30:15,799 - __main__ - INFO - Starting BVC application
+2025-10-15 09:30:15,799 - __main__ - INFO - ==================================================
+2025-10-15 09:30:15,806 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 09:30:15,806 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 09:30:15,807 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 09:30:15,927 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 09:30:31,026 - src.ws.bvc - INFO - Server data received: 31 symbols
+2025-10-15 09:30:31,095 - src.ws.bvc - INFO - Processed 31 symbols: 31 new, 0 updated, 0 skipped
+2025-10-15 09:30:31,095 - src.ws.bvc - INFO - Saved 31 symbols to database
+2025-10-15 09:31:00,940 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 09:31:01,050 - src.ws.bvc - INFO - Server data received: 31 symbols
+2025-10-15 09:31:01,109 - src.ws.bvc - INFO - Processed 31 symbols: 0 new, 31 updated, 0 skipped
+2025-10-15 09:31:01,109 - src.ws.bvc - INFO - Saved 31 symbols to database
+2025-10-15 09:31:25,947 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 09:31:31,079 - src.ws.bvc - INFO - Server data received: 31 symbols
+2025-10-15 09:31:31,143 - src.ws.bvc - INFO - Processed 31 symbols: 0 new, 31 updated, 0 skipped
+2025-10-15 09:31:31,144 - src.ws.bvc - INFO - Saved 31 symbols to database
+2025-10-15 09:31:51,279 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 09:32:01,083 - src.ws.bvc - INFO - Server data received: 31 symbols
+2025-10-15 09:32:01,152 - src.ws.bvc - INFO - Processed 31 symbols: 0 new, 31 updated, 0 skipped
+2025-10-15 09:32:01,152 - src.ws.bvc - INFO - Saved 31 symbols to database
+2025-10-15 09:32:31,170 - src.ws.bvc - INFO - Server data received: 31 symbols
+2025-10-15 09:32:31,236 - src.ws.bvc - INFO - Processed 31 symbols: 0 new, 31 updated, 0 skipped
+2025-10-15 09:32:31,237 - src.ws.bvc - INFO - Saved 31 symbols to database
+2025-10-15 09:33:01,131 - src.ws.bvc - INFO - Server data received: 31 symbols
+2025-10-15 09:33:01,193 - src.ws.bvc - INFO - Processed 31 symbols: 0 new, 31 updated, 0 skipped
+2025-10-15 09:33:01,193 - src.ws.bvc - INFO - Saved 31 symbols to database
+2025-10-15 09:33:31,027 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 09:33:31,137 - src.ws.bvc - INFO - Server data received: 31 symbols
+2025-10-15 09:33:31,230 - src.ws.bvc - INFO - Processed 31 symbols: 0 new, 31 updated, 0 skipped
+2025-10-15 09:33:31,230 - src.ws.bvc - INFO - Saved 31 symbols to database
+2025-10-15 09:33:56,039 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 09:34:01,119 - src.ws.bvc - INFO - Server data received: 31 symbols
+2025-10-15 09:34:01,200 - src.ws.bvc - INFO - Processed 31 symbols: 0 new, 31 updated, 0 skipped
+2025-10-15 09:34:01,201 - src.ws.bvc - INFO - Saved 31 symbols to database
+2025-10-15 09:34:22,229 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 09:34:31,190 - src.ws.bvc - INFO - Server data received: 31 symbols
+2025-10-15 09:34:31,282 - src.ws.bvc - INFO - Processed 31 symbols: 0 new, 31 updated, 0 skipped
+2025-10-15 09:34:31,282 - src.ws.bvc - INFO - Saved 31 symbols to database
+2025-10-15 09:35:01,195 - src.ws.bvc - INFO - Server data received: 31 symbols
+2025-10-15 09:35:01,264 - src.ws.bvc - INFO - Processed 31 symbols: 0 new, 31 updated, 0 skipped
+2025-10-15 09:35:01,266 - src.ws.bvc - INFO - Saved 31 symbols to database
+2025-10-15 09:35:24,196 - __main__ - INFO - [WARNING] Program stopped by user (Ctrl+C)
+2025-10-15 09:35:35,151 - __main__ - INFO - ==================================================
+2025-10-15 09:35:35,153 - __main__ - INFO - Starting BVC application
+2025-10-15 09:35:35,153 - __main__ - INFO - ==================================================
+2025-10-15 09:35:35,159 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 09:35:35,160 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 09:35:35,160 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 09:35:35,301 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 09:35:55,307 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 09:36:01,253 - src.ws.bvc - INFO - Server data received: 31 symbols
+2025-10-15 09:36:01,334 - src.ws.bvc - INFO - Processed 31 symbols: 31 new, 0 updated, 0 skipped
+2025-10-15 09:36:01,334 - src.ws.bvc - INFO - Saved 31 symbols to database
+2025-10-15 09:36:22,186 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 09:36:31,278 - src.ws.bvc - INFO - Server data received: 31 symbols
+2025-10-15 09:36:31,302 - src.ws.bvc - INFO - Processed 31 symbols: 0 new, 0 updated, 31 skipped
+2025-10-15 09:36:31,303 - src.ws.bvc - INFO - Saved 31 symbols to database
+2025-10-15 09:37:01,259 - src.ws.bvc - INFO - Server data received: 31 symbols
+2025-10-15 09:37:01,281 - src.ws.bvc - INFO - Processed 31 symbols: 0 new, 0 updated, 31 skipped
+2025-10-15 09:37:01,281 - src.ws.bvc - INFO - Saved 31 symbols to database
+2025-10-15 09:37:30,276 - src.ws.bvc - INFO - Server data received: 31 symbols
+2025-10-15 09:37:30,297 - src.ws.bvc - INFO - Processed 31 symbols: 0 new, 0 updated, 31 skipped
+2025-10-15 09:37:30,297 - src.ws.bvc - INFO - Saved 31 symbols to database
+2025-10-15 09:38:00,269 - src.ws.bvc - INFO - Server data received: 31 symbols
+2025-10-15 09:38:00,294 - src.ws.bvc - INFO - Processed 31 symbols: 0 new, 0 updated, 31 skipped
+2025-10-15 09:38:00,294 - src.ws.bvc - INFO - Saved 31 symbols to database
+2025-10-15 09:38:25,403 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 09:38:30,289 - src.ws.bvc - INFO - Server data received: 31 symbols
+2025-10-15 09:38:30,313 - src.ws.bvc - INFO - Processed 31 symbols: 0 new, 0 updated, 31 skipped
+2025-10-15 09:38:30,314 - src.ws.bvc - INFO - Saved 31 symbols to database
+2025-10-15 09:38:50,472 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 09:38:54,119 - __main__ - INFO - [WARNING] Program stopped by user (Ctrl+C)
+2025-10-15 09:43:55,794 - __main__ - INFO - ==================================================
+2025-10-15 09:43:55,794 - __main__ - INFO - Starting BVC application
+2025-10-15 09:43:55,795 - __main__ - INFO - ==================================================
+2025-10-15 09:43:55,801 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 09:43:55,802 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 09:43:55,802 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 09:43:55,931 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 09:44:00,435 - src.ws.bvc - INFO - Server data received: 25 symbols
+2025-10-15 09:44:00,491 - src.ws.bvc - INFO - Processed 25 symbols: 0 new, 25 updated, 0 skipped
+2025-10-15 09:44:00,493 - src.ws.bvc - INFO - Saved 25 symbols to database
+2025-10-15 09:44:30,455 - src.ws.bvc - INFO - Server data received: 25 symbols
+2025-10-15 09:44:30,490 - src.ws.bvc - INFO - Processed 25 symbols: 0 new, 9 updated, 16 skipped
+2025-10-15 09:44:30,490 - src.ws.bvc - INFO - Saved 25 symbols to database
+2025-10-15 09:45:00,478 - src.ws.bvc - INFO - Server data received: 25 symbols
+2025-10-15 09:45:00,508 - src.ws.bvc - INFO - Processed 25 symbols: 0 new, 2 updated, 23 skipped
+2025-10-15 09:45:00,508 - src.ws.bvc - INFO - Saved 25 symbols to database
+2025-10-15 09:45:30,565 - src.ws.bvc - INFO - Server data received: 25 symbols
+2025-10-15 09:45:30,586 - src.ws.bvc - INFO - Processed 25 symbols: 0 new, 0 updated, 25 skipped
+2025-10-15 09:45:30,586 - src.ws.bvc - INFO - Saved 25 symbols to database
+2025-10-15 09:45:55,995 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 09:46:00,502 - src.ws.bvc - INFO - Server data received: 25 symbols
+2025-10-15 09:46:00,521 - src.ws.bvc - INFO - Processed 25 symbols: 0 new, 1 updated, 24 skipped
+2025-10-15 09:46:00,521 - src.ws.bvc - INFO - Saved 25 symbols to database
+2025-10-15 09:46:21,407 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 09:46:30,514 - src.ws.bvc - INFO - Server data received: 25 symbols
+2025-10-15 09:46:30,531 - src.ws.bvc - INFO - Processed 25 symbols: 0 new, 0 updated, 25 skipped
+2025-10-15 09:46:30,531 - src.ws.bvc - INFO - Saved 25 symbols to database
+2025-10-15 09:46:50,744 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 09:47:00,528 - src.ws.bvc - INFO - Server data received: 25 symbols
+2025-10-15 09:47:00,548 - src.ws.bvc - INFO - Processed 25 symbols: 0 new, 4 updated, 21 skipped
+2025-10-15 09:47:00,549 - src.ws.bvc - INFO - Saved 25 symbols to database
+2025-10-15 09:47:01,770 - __main__ - INFO - [WARNING] Program stopped by user (Ctrl+C)
+2025-10-15 09:47:10,184 - __main__ - INFO - ==================================================
+2025-10-15 09:47:10,185 - __main__ - INFO - Starting BVC application
+2025-10-15 09:47:10,185 - __main__ - INFO - ==================================================
+2025-10-15 09:47:10,192 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 09:47:10,194 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 09:47:10,194 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 09:47:10,344 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 09:47:10,654 - __main__ - INFO - [WARNING] Program stopped by user (Ctrl+C)
+2025-10-15 09:48:15,887 - __main__ - INFO - ==================================================
+2025-10-15 09:48:15,887 - __main__ - INFO - Starting BVC application
+2025-10-15 09:48:15,887 - __main__ - INFO - ==================================================
+2025-10-15 09:48:15,893 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 09:48:15,893 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 09:48:15,894 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 09:48:16,567 - pynest - INFO - [34mAppService Detected [0m
+2025-10-15 09:48:16,568 - pynest - INFO - [32mAppModule Detected [0m
+2025-10-15 09:48:16,642 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 09:48:30,559 - src.ws.bvc - INFO - Server data received: 25 symbols
+2025-10-15 09:48:30,599 - src.ws.bvc - INFO - Processed 25 symbols: 25 new, 0 updated, 0 skipped
+2025-10-15 09:48:30,599 - src.ws.bvc - INFO - Saved 25 symbols to database
+2025-10-15 09:49:00,636 - src.ws.bvc - INFO - Server data received: 25 symbols
+2025-10-15 09:49:00,644 - src.ws.bvc - ERROR - Error saving data: '$set' is empty. You must specify a field like so: {$set: {<field>: ...}}, full error: {'index': 0, 'code': 9, 'errmsg': "'$set' is empty. You must specify a field like so: {$set: {<field>: ...}}"}
+Traceback (most recent call last):
+  File "C:\laragon\www\bvc\backend\src\ws\bvc.py", line 220, in _save_data
+    collection.update_one(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\collection.py", line 1028, in update_one
+    self._update_retryable(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\collection.py", line 877, in _update_retryable
+    return self.__database.client._retryable_write(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\mongo_client.py", line 1552, in _retryable_write
+    return self._retry_with_session(retryable, func, s, None)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\mongo_client.py", line 1438, in _retry_with_session
+    return self._retry_internal(retryable, func, session, bulk)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\mongo_client.py", line 1470, in _retry_internal
+    return func(session, sock_info, retryable)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\collection.py", line 869, in _update
+    return self._update(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\collection.py", line 846, in _update
+    _check_write_command_response(result)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\helpers.py", line 241, in _check_write_command_response
+    _raise_last_write_error(write_errors)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\pymongo\helpers.py", line 211, in _raise_last_write_error
+    raise WriteError(error.get("errmsg"), error.get("code"), error)
+pymongo.errors.WriteError: '$set' is empty. You must specify a field like so: {$set: {<field>: ...}}, full error: {'index': 0, 'code': 9, 'errmsg': "'$set' is empty. You must specify a field like so: {$set: {<field>: ...}}"}
+2025-10-15 09:49:00,647 - src.ws.bvc - INFO - Saved 25 symbols to database
+2025-10-15 09:49:21,096 - __main__ - INFO - [WARNING] Program stopped by user (Ctrl+C)
+2025-10-15 09:49:21,449 - __main__ - ERROR - Uncaught exception: 
+2025-10-15 09:49:21,449 - __main__ - ERROR - Uncaught exception: Task was destroyed but it is pending!
+2025-10-15 09:49:21,450 - __main__ - ERROR - Uncaught exception: 'NoneType' object has no attribute 'send'
+2025-10-15 09:49:21,450 - src.ws.bvc - ERROR - Critical error: coroutine ignored GeneratorExit
+Traceback (most recent call last):
+  File "C:\laragon\www\bvc\backend\src\ws\bvc.py", line 300, in start
+RuntimeError: coroutine ignored GeneratorExit
+2025-10-15 09:49:24,181 - __main__ - INFO - ==================================================
+2025-10-15 09:49:24,182 - __main__ - INFO - Starting BVC application
+2025-10-15 09:49:24,182 - __main__ - INFO - ==================================================
+2025-10-15 09:49:24,189 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 09:49:24,189 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 09:49:24,190 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 09:49:24,717 - pynest - INFO - [34mAppService Detected [0m
+2025-10-15 09:49:24,717 - pynest - INFO - [32mAppModule Detected [0m
+2025-10-15 09:49:24,805 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 09:49:30,599 - src.ws.bvc - INFO - Server data received: 25 symbols
+2025-10-15 09:49:30,651 - src.ws.bvc - INFO - Processed 25 symbols: 0 new, 6 updated, 19 skipped
+2025-10-15 09:49:30,652 - src.ws.bvc - INFO - Saved 25 symbols to database
+2025-10-15 09:50:00,681 - src.ws.bvc - INFO - Server data received: 25 symbols
+2025-10-15 09:50:00,709 - src.ws.bvc - INFO - Processed 25 symbols: 0 new, 0 updated, 25 skipped
+2025-10-15 09:50:00,709 - src.ws.bvc - INFO - Saved 25 symbols to database
+2025-10-15 09:50:30,608 - src.ws.bvc - INFO - Server data received: 25 symbols
+2025-10-15 09:50:30,630 - src.ws.bvc - INFO - Processed 25 symbols: 0 new, 1 updated, 24 skipped
+2025-10-15 09:50:30,630 - src.ws.bvc - INFO - Saved 25 symbols to database
+2025-10-15 09:50:59,859 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 09:51:00,630 - src.ws.bvc - INFO - Server data received: 25 symbols
+2025-10-15 09:51:00,653 - src.ws.bvc - INFO - Processed 25 symbols: 0 new, 1 updated, 24 skipped
+2025-10-15 09:51:00,654 - src.ws.bvc - INFO - Saved 25 symbols to database
+2025-10-15 09:51:24,844 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 09:51:30,662 - src.ws.bvc - INFO - Server data received: 25 symbols
+2025-10-15 09:51:30,688 - src.ws.bvc - INFO - Processed 25 symbols: 0 new, 2 updated, 23 skipped
+2025-10-15 09:51:30,689 - src.ws.bvc - INFO - Saved 25 symbols to database
+2025-10-15 09:51:50,848 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 09:52:00,688 - src.ws.bvc - INFO - Server data received: 25 symbols
+2025-10-15 09:52:00,724 - src.ws.bvc - INFO - Processed 25 symbols: 0 new, 10 updated, 15 skipped
+2025-10-15 09:52:00,724 - src.ws.bvc - INFO - Saved 25 symbols to database
+2025-10-15 09:52:30,680 - src.ws.bvc - INFO - Server data received: 25 symbols
+2025-10-15 09:52:30,698 - src.ws.bvc - INFO - Processed 25 symbols: 0 new, 0 updated, 25 skipped
+2025-10-15 09:52:30,698 - src.ws.bvc - INFO - Saved 25 symbols to database
+2025-10-15 09:53:00,672 - src.ws.bvc - INFO - Server data received: 25 symbols
+2025-10-15 09:53:00,696 - src.ws.bvc - INFO - Processed 25 symbols: 0 new, 0 updated, 25 skipped
+2025-10-15 09:53:00,696 - src.ws.bvc - INFO - Saved 25 symbols to database
+2025-10-15 09:53:15,319 - __main__ - INFO - [WARNING] Program stopped by user (Ctrl+C)
+2025-10-15 09:54:12,176 - __main__ - INFO - ==================================================
+2025-10-15 09:54:12,176 - __main__ - INFO - Starting BVC application
+2025-10-15 09:54:12,176 - __main__ - INFO - ==================================================
+2025-10-15 09:54:12,183 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 09:54:12,183 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 09:54:12,187 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 09:54:12,711 - __main__ - ERROR - Error in main execution: cannot import name 'MarketModule' from 'src.http.market' (unknown location)
+Traceback (most recent call last):
+  File "C:\laragon\www\bvc\backend\main.py", line 96, in main
+    await asyncio.gather(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\uvicorn\server.py", line 69, in serve
+    await self._serve(sockets)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\uvicorn\server.py", line 76, in _serve
+    config.load()
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\uvicorn\config.py", line 434, in load
+    self.loaded_app = import_from_string(self.app)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\uvicorn\importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "C:\laragon\bin\python\python-3.10\lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "C:\laragon\www\bvc\backend\src\app_module.py", line 5, in <module>
+    from .http.market import MarketModule
+ImportError: cannot import name 'MarketModule' from 'src.http.market' (unknown location)
+2025-10-15 09:54:12,722 - __main__ - ERROR - [ERROR] Fatal error: cannot import name 'MarketModule' from 'src.http.market' (unknown location)
+Traceback (most recent call last):
+  File "C:\laragon\www\bvc\backend\main.py", line 109, in <module>
+    asyncio.run(main())
+  File "C:\laragon\bin\python\python-3.10\lib\asyncio\runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "C:\laragon\bin\python\python-3.10\lib\asyncio\base_events.py", line 646, in run_until_complete
+    return future.result()
+  File "C:\laragon\www\bvc\backend\main.py", line 96, in main
+    await asyncio.gather(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\uvicorn\server.py", line 69, in serve
+    await self._serve(sockets)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\uvicorn\server.py", line 76, in _serve
+    config.load()
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\uvicorn\config.py", line 434, in load
+    self.loaded_app = import_from_string(self.app)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\uvicorn\importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "C:\laragon\bin\python\python-3.10\lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "C:\laragon\www\bvc\backend\src\app_module.py", line 5, in <module>
+    from .http.market import MarketModule
+ImportError: cannot import name 'MarketModule' from 'src.http.market' (unknown location)
+2025-10-15 09:54:52,167 - __main__ - INFO - ==================================================
+2025-10-15 09:54:52,167 - __main__ - INFO - Starting BVC application
+2025-10-15 09:54:52,167 - __main__ - INFO - ==================================================
+2025-10-15 09:54:52,167 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 09:54:52,167 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 09:54:52,167 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 09:54:52,665 - __main__ - ERROR - Error in main execution: cannot import name 'MarketModule' from 'src.http.market' (unknown location)
+Traceback (most recent call last):
+  File "C:\laragon\www\bvc\backend\main.py", line 96, in main
+    await asyncio.gather(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\uvicorn\server.py", line 69, in serve
+    await self._serve(sockets)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\uvicorn\server.py", line 76, in _serve
+    config.load()
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\uvicorn\config.py", line 434, in load
+    self.loaded_app = import_from_string(self.app)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\uvicorn\importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "C:\laragon\bin\python\python-3.10\lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "C:\laragon\www\bvc\backend\src\app_module.py", line 5, in <module>
+    from src.http.market import MarketModule
+ImportError: cannot import name 'MarketModule' from 'src.http.market' (unknown location)
+2025-10-15 09:54:52,671 - __main__ - ERROR - [ERROR] Fatal error: cannot import name 'MarketModule' from 'src.http.market' (unknown location)
+Traceback (most recent call last):
+  File "C:\laragon\www\bvc\backend\main.py", line 109, in <module>
+    asyncio.run(main())
+  File "C:\laragon\bin\python\python-3.10\lib\asyncio\runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "C:\laragon\bin\python\python-3.10\lib\asyncio\base_events.py", line 646, in run_until_complete
+    return future.result()
+  File "C:\laragon\www\bvc\backend\main.py", line 96, in main
+    await asyncio.gather(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\uvicorn\server.py", line 69, in serve
+    await self._serve(sockets)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\uvicorn\server.py", line 76, in _serve
+    config.load()
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\uvicorn\config.py", line 434, in load
+    self.loaded_app = import_from_string(self.app)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\uvicorn\importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "C:\laragon\bin\python\python-3.10\lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "C:\laragon\www\bvc\backend\src\app_module.py", line 5, in <module>
+    from src.http.market import MarketModule
+ImportError: cannot import name 'MarketModule' from 'src.http.market' (unknown location)
+2025-10-15 09:55:18,808 - __main__ - INFO - ==================================================
+2025-10-15 09:55:18,809 - __main__ - INFO - Starting BVC application
+2025-10-15 09:55:18,809 - __main__ - INFO - ==================================================
+2025-10-15 09:55:18,817 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 09:55:18,818 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 09:55:18,819 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 09:55:19,374 - __main__ - ERROR - Error in main execution: Missing path for method get_market_data
+Traceback (most recent call last):
+  File "C:\laragon\www\bvc\backend\main.py", line 96, in main
+    await asyncio.gather(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\uvicorn\server.py", line 69, in serve
+    await self._serve(sockets)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\uvicorn\server.py", line 76, in _serve
+    config.load()
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\uvicorn\config.py", line 434, in load
+    self.loaded_app = import_from_string(self.app)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\uvicorn\importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "C:\laragon\bin\python\python-3.10\lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "C:\laragon\www\bvc\backend\src\app_module.py", line 5, in <module>
+    from src.http.market.maket_module import MarketModule
+  File "C:\laragon\www\bvc\backend\src\http\market\maket_module.py", line 2, in <module>
+    from .market_controller import MarketController
+  File "C:\laragon\www\bvc\backend\src\http\market\market_controller.py", line 6, in <module>
+    class MarketController:
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\nest\core\decorators\controller.py", line 41, in wrapper
+    add_routes(cls, router, route_prefix)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\nest\core\decorators\controller.py", line 95, in add_routes
+    validate_method_decorator(method_function, method_name)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\nest\core\decorators\controller.py", line 106, in validate_method_decorator
+    raise AssertionError(f"Missing path for method {method_name}")
+AssertionError: Missing path for method get_market_data
+2025-10-15 09:55:19,374 - __main__ - ERROR - [ERROR] Fatal error: Missing path for method get_market_data
+Traceback (most recent call last):
+  File "C:\laragon\www\bvc\backend\main.py", line 109, in <module>
+    asyncio.run(main())
+  File "C:\laragon\bin\python\python-3.10\lib\asyncio\runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "C:\laragon\bin\python\python-3.10\lib\asyncio\base_events.py", line 646, in run_until_complete
+    return future.result()
+  File "C:\laragon\www\bvc\backend\main.py", line 96, in main
+    await asyncio.gather(
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\uvicorn\server.py", line 69, in serve
+    await self._serve(sockets)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\uvicorn\server.py", line 76, in _serve
+    config.load()
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\uvicorn\config.py", line 434, in load
+    self.loaded_app = import_from_string(self.app)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\uvicorn\importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "C:\laragon\bin\python\python-3.10\lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "C:\laragon\www\bvc\backend\src\app_module.py", line 5, in <module>
+    from src.http.market.maket_module import MarketModule
+  File "C:\laragon\www\bvc\backend\src\http\market\maket_module.py", line 2, in <module>
+    from .market_controller import MarketController
+  File "C:\laragon\www\bvc\backend\src\http\market\market_controller.py", line 6, in <module>
+    class MarketController:
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\nest\core\decorators\controller.py", line 41, in wrapper
+    add_routes(cls, router, route_prefix)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\nest\core\decorators\controller.py", line 95, in add_routes
+    validate_method_decorator(method_function, method_name)
+  File "C:\laragon\www\bvc\backend\.venv\lib\site-packages\nest\core\decorators\controller.py", line 106, in validate_method_decorator
+    raise AssertionError(f"Missing path for method {method_name}")
+AssertionError: Missing path for method get_market_data
+2025-10-15 09:56:08,929 - __main__ - INFO - ==================================================
+2025-10-15 09:56:08,929 - __main__ - INFO - Starting BVC application
+2025-10-15 09:56:08,929 - __main__ - INFO - ==================================================
+2025-10-15 09:56:08,929 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 09:56:08,929 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 09:56:08,929 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 09:56:09,419 - pynest - INFO - [34mMarketService Detected [0m
+2025-10-15 09:56:09,419 - pynest - INFO - [32mMarketModule Detected [0m
+2025-10-15 09:56:09,419 - pynest - INFO - [34mAppService Detected [0m
+2025-10-15 09:56:09,419 - pynest - INFO - [32mAppModule Detected [0m
+2025-10-15 09:56:09,499 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 09:56:29,508 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 09:56:30,797 - src.ws.bvc - INFO - Server data received: 25 symbols
+2025-10-15 09:56:30,837 - src.ws.bvc - INFO - Processed 25 symbols: 0 new, 10 updated, 15 skipped
+2025-10-15 09:56:30,837 - src.ws.bvc - INFO - Saved 25 symbols to database
+2025-10-15 09:56:54,520 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 09:57:00,780 - src.ws.bvc - INFO - Server data received: 25 symbols
+2025-10-15 09:57:00,805 - src.ws.bvc - INFO - Processed 25 symbols: 0 new, 4 updated, 21 skipped
+2025-10-15 09:57:00,805 - src.ws.bvc - INFO - Saved 25 symbols to database
+2025-10-15 09:57:21,765 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 09:57:30,809 - src.ws.bvc - INFO - Server data received: 25 symbols
+2025-10-15 09:57:30,837 - src.ws.bvc - INFO - Processed 25 symbols: 0 new, 2 updated, 23 skipped
+2025-10-15 09:57:30,837 - src.ws.bvc - INFO - Saved 25 symbols to database
+2025-10-15 09:58:00,820 - src.ws.bvc - INFO - Server data received: 25 symbols
+2025-10-15 09:58:00,854 - src.ws.bvc - INFO - Processed 25 symbols: 0 new, 2 updated, 23 skipped
+2025-10-15 09:58:00,854 - src.ws.bvc - INFO - Saved 25 symbols to database
+2025-10-15 09:58:30,813 - src.ws.bvc - INFO - Server data received: 25 symbols
+2025-10-15 09:58:30,841 - src.ws.bvc - INFO - Processed 25 symbols: 0 new, 3 updated, 22 skipped
+2025-10-15 09:58:30,841 - src.ws.bvc - INFO - Saved 25 symbols to database
+2025-10-15 09:58:59,571 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 09:59:00,877 - src.ws.bvc - INFO - Server data received: 25 symbols
+2025-10-15 09:59:00,907 - src.ws.bvc - INFO - Processed 25 symbols: 0 new, 2 updated, 23 skipped
+2025-10-15 09:59:00,908 - src.ws.bvc - INFO - Saved 25 symbols to database
+2025-10-15 09:59:24,581 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 09:59:30,906 - src.ws.bvc - INFO - Server data received: 25 symbols
+2025-10-15 09:59:30,936 - src.ws.bvc - INFO - Processed 25 symbols: 0 new, 2 updated, 23 skipped
+2025-10-15 09:59:30,937 - src.ws.bvc - INFO - Saved 25 symbols to database
+2025-10-15 09:59:51,080 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 10:00:00,962 - src.ws.bvc - INFO - Server data received: 26 symbols
+2025-10-15 10:00:01,007 - src.ws.bvc - INFO - Processed 26 symbols: 1 new, 7 updated, 18 skipped
+2025-10-15 10:00:01,009 - src.ws.bvc - INFO - Saved 26 symbols to database
+2025-10-15 10:00:30,950 - src.ws.bvc - INFO - Server data received: 26 symbols
+2025-10-15 10:00:30,975 - src.ws.bvc - INFO - Processed 26 symbols: 0 new, 1 updated, 25 skipped
+2025-10-15 10:00:30,976 - src.ws.bvc - INFO - Saved 26 symbols to database
+2025-10-15 10:01:00,883 - src.ws.bvc - INFO - Server data received: 26 symbols
+2025-10-15 10:01:00,926 - src.ws.bvc - INFO - Processed 26 symbols: 0 new, 4 updated, 22 skipped
+2025-10-15 10:01:00,926 - src.ws.bvc - INFO - Saved 26 symbols to database
+2025-10-15 10:01:29,620 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 10:01:30,926 - src.ws.bvc - INFO - Server data received: 27 symbols
+2025-10-15 10:01:30,969 - src.ws.bvc - INFO - Processed 27 symbols: 1 new, 2 updated, 24 skipped
+2025-10-15 10:01:30,970 - src.ws.bvc - INFO - Saved 27 symbols to database
+2025-10-15 10:01:54,643 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 10:02:00,935 - src.ws.bvc - INFO - Server data received: 27 symbols
+2025-10-15 10:02:00,981 - src.ws.bvc - INFO - Processed 27 symbols: 0 new, 3 updated, 24 skipped
+2025-10-15 10:02:00,982 - src.ws.bvc - INFO - Saved 27 symbols to database
+2025-10-15 10:02:21,772 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 10:02:30,966 - src.ws.bvc - INFO - Server data received: 27 symbols
+2025-10-15 10:02:31,010 - src.ws.bvc - INFO - Processed 27 symbols: 0 new, 2 updated, 25 skipped
+2025-10-15 10:02:31,013 - src.ws.bvc - INFO - Saved 27 symbols to database
+2025-10-15 10:03:00,992 - src.ws.bvc - INFO - Server data received: 27 symbols
+2025-10-15 10:03:01,022 - src.ws.bvc - INFO - Processed 27 symbols: 0 new, 1 updated, 26 skipped
+2025-10-15 10:03:01,027 - src.ws.bvc - INFO - Saved 27 symbols to database
+2025-10-15 10:03:31,004 - src.ws.bvc - INFO - Server data received: 27 symbols
+2025-10-15 10:03:31,046 - src.ws.bvc - INFO - Processed 27 symbols: 0 new, 4 updated, 23 skipped
+2025-10-15 10:03:31,046 - src.ws.bvc - INFO - Saved 27 symbols to database
+2025-10-15 10:03:59,718 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 10:04:00,972 - src.ws.bvc - INFO - Server data received: 27 symbols
+2025-10-15 10:04:01,007 - src.ws.bvc - INFO - Processed 27 symbols: 0 new, 2 updated, 25 skipped
+2025-10-15 10:04:01,007 - src.ws.bvc - INFO - Saved 27 symbols to database
+2025-10-15 10:04:24,728 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 10:04:31,004 - src.ws.bvc - INFO - Server data received: 27 symbols
+2025-10-15 10:04:31,040 - src.ws.bvc - INFO - Processed 27 symbols: 0 new, 0 updated, 27 skipped
+2025-10-15 10:04:31,041 - src.ws.bvc - INFO - Saved 27 symbols to database
+2025-10-15 10:04:51,165 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 10:05:00,990 - src.ws.bvc - INFO - Server data received: 27 symbols
+2025-10-15 10:05:01,011 - src.ws.bvc - INFO - Processed 27 symbols: 0 new, 1 updated, 26 skipped
+2025-10-15 10:05:01,012 - src.ws.bvc - INFO - Saved 27 symbols to database
+2025-10-15 10:05:31,047 - src.ws.bvc - INFO - Server data received: 27 symbols
+2025-10-15 10:05:31,078 - src.ws.bvc - INFO - Processed 27 symbols: 0 new, 0 updated, 27 skipped
+2025-10-15 10:05:31,081 - src.ws.bvc - INFO - Saved 27 symbols to database
+2025-10-15 10:06:01,077 - src.ws.bvc - INFO - Server data received: 27 symbols
+2025-10-15 10:06:01,092 - src.ws.bvc - INFO - Processed 27 symbols: 0 new, 0 updated, 27 skipped
+2025-10-15 10:06:01,096 - src.ws.bvc - INFO - Saved 27 symbols to database
+2025-10-15 10:06:29,783 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 10:06:31,046 - src.ws.bvc - INFO - Server data received: 27 symbols
+2025-10-15 10:06:31,069 - src.ws.bvc - INFO - Processed 27 symbols: 0 new, 1 updated, 26 skipped
+2025-10-15 10:06:31,069 - src.ws.bvc - INFO - Saved 27 symbols to database
+2025-10-15 10:06:54,796 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 10:07:01,043 - src.ws.bvc - INFO - Server data received: 27 symbols
+2025-10-15 10:07:01,075 - src.ws.bvc - INFO - Processed 27 symbols: 0 new, 0 updated, 27 skipped
+2025-10-15 10:07:01,075 - src.ws.bvc - INFO - Saved 27 symbols to database
+2025-10-15 10:07:21,955 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 10:07:31,082 - src.ws.bvc - INFO - Server data received: 27 symbols
+2025-10-15 10:07:31,118 - src.ws.bvc - INFO - Processed 27 symbols: 0 new, 2 updated, 25 skipped
+2025-10-15 10:07:31,118 - src.ws.bvc - INFO - Saved 27 symbols to database
+2025-10-15 10:08:01,231 - src.ws.bvc - INFO - Server data received: 27 symbols
+2025-10-15 10:08:01,268 - src.ws.bvc - INFO - Processed 27 symbols: 0 new, 3 updated, 24 skipped
+2025-10-15 10:08:01,269 - src.ws.bvc - INFO - Saved 27 symbols to database
+2025-10-15 10:08:31,152 - src.ws.bvc - INFO - Server data received: 27 symbols
+2025-10-15 10:08:31,178 - src.ws.bvc - INFO - Processed 27 symbols: 0 new, 0 updated, 27 skipped
+2025-10-15 10:08:31,179 - src.ws.bvc - INFO - Saved 27 symbols to database
+2025-10-15 10:08:59,861 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 10:09:01,167 - src.ws.bvc - INFO - Server data received: 27 symbols
+2025-10-15 10:09:01,206 - src.ws.bvc - INFO - Processed 27 symbols: 0 new, 0 updated, 27 skipped
+2025-10-15 10:09:01,207 - src.ws.bvc - INFO - Saved 27 symbols to database
+2025-10-15 10:09:24,852 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 10:09:31,125 - src.ws.bvc - INFO - Server data received: 27 symbols
+2025-10-15 10:09:31,143 - src.ws.bvc - INFO - Processed 27 symbols: 0 new, 1 updated, 26 skipped
+2025-10-15 10:09:31,143 - src.ws.bvc - INFO - Saved 27 symbols to database
+2025-10-15 10:09:51,323 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 10:10:01,305 - src.ws.bvc - INFO - Server data received: 27 symbols
+2025-10-15 10:10:01,328 - src.ws.bvc - INFO - Processed 27 symbols: 0 new, 1 updated, 26 skipped
+2025-10-15 10:10:01,328 - src.ws.bvc - INFO - Saved 27 symbols to database
+2025-10-15 10:10:31,162 - src.ws.bvc - INFO - Server data received: 27 symbols
+2025-10-15 10:10:31,186 - src.ws.bvc - INFO - Processed 27 symbols: 0 new, 0 updated, 27 skipped
+2025-10-15 10:10:31,186 - src.ws.bvc - INFO - Saved 27 symbols to database
+2025-10-15 10:11:01,288 - src.ws.bvc - INFO - Server data received: 27 symbols
+2025-10-15 10:11:01,321 - src.ws.bvc - INFO - Processed 27 symbols: 0 new, 3 updated, 24 skipped
+2025-10-15 10:11:01,321 - src.ws.bvc - INFO - Saved 27 symbols to database
+2025-10-15 10:11:29,893 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 10:11:31,177 - src.ws.bvc - INFO - Server data received: 27 symbols
+2025-10-15 10:11:31,222 - src.ws.bvc - INFO - Processed 27 symbols: 0 new, 9 updated, 18 skipped
+2025-10-15 10:11:31,222 - src.ws.bvc - INFO - Saved 27 symbols to database
+2025-10-15 10:11:54,922 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 10:12:01,284 - src.ws.bvc - INFO - Server data received: 27 symbols
+2025-10-15 10:12:01,315 - src.ws.bvc - INFO - Processed 27 symbols: 0 new, 1 updated, 26 skipped
+2025-10-15 10:12:01,315 - src.ws.bvc - INFO - Saved 27 symbols to database
+2025-10-15 10:12:22,042 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 10:12:31,204 - src.ws.bvc - INFO - Server data received: 27 symbols
+2025-10-15 10:12:31,244 - src.ws.bvc - INFO - Processed 27 symbols: 0 new, 6 updated, 21 skipped
+2025-10-15 10:12:31,244 - src.ws.bvc - INFO - Saved 27 symbols to database
+2025-10-15 10:13:01,242 - src.ws.bvc - INFO - Server data received: 27 symbols
+2025-10-15 10:13:01,264 - src.ws.bvc - INFO - Processed 27 symbols: 0 new, 0 updated, 27 skipped
+2025-10-15 10:13:01,264 - src.ws.bvc - INFO - Saved 27 symbols to database
+2025-10-15 10:13:31,291 - src.ws.bvc - INFO - Server data received: 27 symbols
+2025-10-15 10:13:31,311 - src.ws.bvc - INFO - Processed 27 symbols: 0 new, 0 updated, 27 skipped
+2025-10-15 10:13:31,311 - src.ws.bvc - INFO - Saved 27 symbols to database
+2025-10-15 10:13:59,973 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 10:14:01,249 - src.ws.bvc - INFO - Server data received: 27 symbols
+2025-10-15 10:14:01,283 - src.ws.bvc - INFO - Processed 27 symbols: 0 new, 0 updated, 27 skipped
+2025-10-15 10:14:01,284 - src.ws.bvc - INFO - Saved 27 symbols to database
+2025-10-15 10:14:07,403 - __main__ - INFO - [WARNING] Program stopped by user (Ctrl+C)
+2025-10-15 10:14:54,298 - __main__ - INFO - ==================================================
+2025-10-15 10:14:54,298 - __main__ - INFO - Starting BVC application
+2025-10-15 10:14:54,298 - __main__ - INFO - ==================================================
+2025-10-15 10:14:54,308 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 10:14:54,310 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 10:14:54,310 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 10:14:54,383 - __main__ - ERROR - [ERROR] Fatal error: Config.__init__() got an unexpected keyword argument 'prefix'
+Traceback (most recent call last):
+  File "C:\laragon\www\bvc\backend\main.py", line 113, in <module>
+    asyncio.run(main())
+  File "C:\laragon\bin\python\python-3.10\lib\asyncio\runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "C:\laragon\bin\python\python-3.10\lib\asyncio\base_events.py", line 646, in run_until_complete
+    return future.result()
+  File "C:\laragon\www\bvc\backend\main.py", line 88, in main
+    config = uvicorn.Config(
+TypeError: Config.__init__() got an unexpected keyword argument 'prefix'
+2025-10-15 10:15:08,116 - __main__ - INFO - ==================================================
+2025-10-15 10:15:08,116 - __main__ - INFO - Starting BVC application
+2025-10-15 10:15:08,116 - __main__ - INFO - ==================================================
+2025-10-15 10:15:08,116 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 10:15:08,126 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 10:15:08,126 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 10:15:08,210 - __main__ - ERROR - [ERROR] Fatal error: 'Config' object has no attribute 'router'
+Traceback (most recent call last):
+  File "C:\laragon\www\bvc\backend\main.py", line 113, in <module>
+    asyncio.run(main())
+  File "C:\laragon\bin\python\python-3.10\lib\asyncio\runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "C:\laragon\bin\python\python-3.10\lib\asyncio\base_events.py", line 646, in run_until_complete
+    return future.result()
+  File "C:\laragon\www\bvc\backend\main.py", line 95, in main
+    server.config.router.prefix = "/api"
+AttributeError: 'Config' object has no attribute 'router'
+2025-10-15 10:16:29,054 - __main__ - INFO - ==================================================
+2025-10-15 10:16:29,055 - __main__ - INFO - Starting BVC application
+2025-10-15 10:16:29,055 - __main__ - INFO - ==================================================
+2025-10-15 10:16:29,062 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 10:16:29,062 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 10:16:29,066 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 10:16:29,786 - pynest - INFO - [34mMarketService Detected [0m
+2025-10-15 10:16:29,786 - pynest - INFO - [32mMarketModule Detected [0m
+2025-10-15 10:16:29,786 - pynest - INFO - [34mAppService Detected [0m
+2025-10-15 10:16:29,787 - pynest - INFO - [32mAppModule Detected [0m
+2025-10-15 10:16:29,856 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 10:16:30,363 - src.ws.bvc - INFO - Server data received: 27 symbols
+2025-10-15 10:16:30,395 - src.ws.bvc - INFO - Processed 27 symbols: 0 new, 1 updated, 26 skipped
+2025-10-15 10:16:30,395 - src.ws.bvc - INFO - Saved 27 symbols to database
+2025-10-15 10:16:39,353 - __main__ - INFO - [WARNING] Program stopped by user (Ctrl+C)
+2025-10-15 10:18:40,229 - __main__ - INFO - ==================================================
+2025-10-15 10:18:40,229 - __main__ - INFO - Starting BVC application
+2025-10-15 10:18:40,229 - __main__ - INFO - ==================================================
+2025-10-15 10:18:40,234 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 10:18:40,237 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 10:18:40,238 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 10:18:40,307 - __main__ - ERROR - [ERROR] Fatal error: Config.__init__() got an unexpected keyword argument 'global_prefix'
+Traceback (most recent call last):
+  File "C:\laragon\www\bvc\backend\main.py", line 114, in <module>
+    asyncio.run(main())
+  File "C:\laragon\bin\python\python-3.10\lib\asyncio\runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "C:\laragon\bin\python\python-3.10\lib\asyncio\base_events.py", line 646, in run_until_complete
+    return future.result()
+  File "C:\laragon\www\bvc\backend\main.py", line 88, in main
+    config = uvicorn.Config(
+TypeError: Config.__init__() got an unexpected keyword argument 'global_prefix'
+2025-10-15 10:19:08,115 - __main__ - INFO - ==================================================
+2025-10-15 10:19:08,115 - __main__ - INFO - Starting BVC application
+2025-10-15 10:19:08,115 - __main__ - INFO - ==================================================
+2025-10-15 10:19:08,130 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 10:19:08,130 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 10:19:08,130 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 10:19:08,213 - __main__ - ERROR - [ERROR] Fatal error: Config.__init__() got an unexpected keyword argument 'global_prefix'
+Traceback (most recent call last):
+  File "C:\laragon\www\bvc\backend\main.py", line 114, in <module>
+    asyncio.run(main())
+  File "C:\laragon\bin\python\python-3.10\lib\asyncio\runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "C:\laragon\bin\python\python-3.10\lib\asyncio\base_events.py", line 646, in run_until_complete
+    return future.result()
+  File "C:\laragon\www\bvc\backend\main.py", line 88, in main
+    config = uvicorn.Config(
+TypeError: Config.__init__() got an unexpected keyword argument 'global_prefix'
+2025-10-15 10:19:22,201 - __main__ - INFO - ==================================================
+2025-10-15 10:19:22,201 - __main__ - INFO - Starting BVC application
+2025-10-15 10:19:22,201 - __main__ - INFO - ==================================================
+2025-10-15 10:19:22,206 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 10:19:22,206 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 10:19:22,206 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 10:19:22,798 - pynest - INFO - [34mMarketService Detected [0m
+2025-10-15 10:19:22,798 - pynest - INFO - [32mMarketModule Detected [0m
+2025-10-15 10:19:22,799 - pynest - INFO - [34mAppService Detected [0m
+2025-10-15 10:19:22,799 - pynest - INFO - [32mAppModule Detected [0m
+2025-10-15 10:19:22,865 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 10:19:30,450 - src.ws.bvc - INFO - Server data received: 27 symbols
+2025-10-15 10:19:30,489 - src.ws.bvc - INFO - Processed 27 symbols: 0 new, 4 updated, 23 skipped
+2025-10-15 10:19:30,490 - src.ws.bvc - INFO - Saved 27 symbols to database
+2025-10-15 10:19:50,974 - __main__ - INFO - [WARNING] Program stopped by user (Ctrl+C)
+2025-10-15 10:20:04,456 - __main__ - INFO - ==================================================
+2025-10-15 10:20:04,456 - __main__ - INFO - Starting BVC application
+2025-10-15 10:20:04,456 - __main__ - INFO - ==================================================
+2025-10-15 10:20:04,464 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 10:20:04,464 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 10:20:04,466 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 10:20:05,051 - pynest - INFO - [34mMarketService Detected [0m
+2025-10-15 10:20:05,051 - pynest - INFO - [32mMarketModule Detected [0m
+2025-10-15 10:20:05,051 - pynest - INFO - [34mAppService Detected [0m
+2025-10-15 10:20:05,051 - pynest - INFO - [32mAppModule Detected [0m
+2025-10-15 10:20:05,113 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 10:20:25,133 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 10:20:30,443 - src.ws.bvc - INFO - Server data received: 28 symbols
+2025-10-15 10:20:30,483 - src.ws.bvc - INFO - Processed 28 symbols: 1 new, 0 updated, 27 skipped
+2025-10-15 10:20:30,483 - src.ws.bvc - INFO - Saved 28 symbols to database
+2025-10-15 10:20:50,679 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 10:21:00,489 - src.ws.bvc - INFO - Server data received: 28 symbols
+2025-10-15 10:21:00,525 - src.ws.bvc - INFO - Processed 28 symbols: 0 new, 0 updated, 28 skipped
+2025-10-15 10:21:00,525 - src.ws.bvc - INFO - Saved 28 symbols to database
+2025-10-15 10:21:21,991 - __main__ - INFO - [WARNING] Program stopped by user (Ctrl+C)
+2025-10-15 10:21:22,530 - __main__ - ERROR - Uncaught exception: 
+2025-10-15 10:21:22,531 - __main__ - ERROR - Uncaught exception: Task was destroyed but it is pending!
+2025-10-15 10:21:22,531 - __main__ - ERROR - Uncaught exception: 'NoneType' object has no attribute 'send'
+2025-10-15 10:21:22,532 - src.ws.bvc - ERROR - Critical error: coroutine ignored GeneratorExit
+Traceback (most recent call last):
+  File "C:\laragon\www\bvc\backend\src\ws\bvc.py", line 299, in start
+    await self._connect_and_listen()
+RuntimeError: coroutine ignored GeneratorExit
+2025-10-15 10:21:28,187 - __main__ - INFO - ==================================================
+2025-10-15 10:21:28,187 - __main__ - INFO - Starting BVC application
+2025-10-15 10:21:28,189 - __main__ - INFO - ==================================================
+2025-10-15 10:21:28,189 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 10:21:28,189 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 10:21:28,189 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 10:21:28,886 - pynest - INFO - [34mMarketService Detected [0m
+2025-10-15 10:21:28,886 - pynest - INFO - [32mMarketModule Detected [0m
+2025-10-15 10:21:28,886 - pynest - INFO - [34mAppService Detected [0m
+2025-10-15 10:21:28,886 - pynest - INFO - [32mAppModule Detected [0m
+2025-10-15 10:21:28,952 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 10:21:30,442 - src.ws.bvc - INFO - Server data received: 28 symbols
+2025-10-15 10:21:30,477 - src.ws.bvc - INFO - Processed 28 symbols: 0 new, 2 updated, 26 skipped
+2025-10-15 10:21:30,481 - src.ws.bvc - INFO - Saved 28 symbols to database
+2025-10-15 10:21:47,488 - __main__ - INFO - [WARNING] Program stopped by user (Ctrl+C)
+2025-10-15 10:21:47,924 - __main__ - ERROR - Uncaught exception: 
+2025-10-15 10:21:47,924 - __main__ - ERROR - Uncaught exception: Task was destroyed but it is pending!
+2025-10-15 10:21:47,925 - __main__ - ERROR - Uncaught exception: 'NoneType' object has no attribute 'send'
+2025-10-15 10:21:47,925 - src.ws.bvc - ERROR - Critical error: coroutine ignored GeneratorExit
+Traceback (most recent call last):
+  File "C:\laragon\www\bvc\backend\src\ws\bvc.py", line 299, in start
+    await self._connect_and_listen()
+RuntimeError: coroutine ignored GeneratorExit
+2025-10-15 10:21:54,626 - __main__ - INFO - ==================================================
+2025-10-15 10:21:54,626 - __main__ - INFO - Starting BVC application
+2025-10-15 10:21:54,626 - __main__ - INFO - ==================================================
+2025-10-15 10:21:54,631 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 10:21:54,631 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 10:21:54,635 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 10:21:55,200 - pynest - INFO - [34mMarketService Detected [0m
+2025-10-15 10:21:55,202 - pynest - INFO - [32mMarketModule Detected [0m
+2025-10-15 10:21:55,203 - pynest - INFO - [34mAppService Detected [0m
+2025-10-15 10:21:55,203 - pynest - INFO - [32mAppModule Detected [0m
+2025-10-15 10:21:55,291 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 10:22:00,523 - src.ws.bvc - INFO - Server data received: 28 symbols
+2025-10-15 10:22:00,564 - src.ws.bvc - INFO - Processed 28 symbols: 0 new, 1 updated, 27 skipped
+2025-10-15 10:22:00,565 - src.ws.bvc - INFO - Saved 28 symbols to database
+2025-10-15 10:22:30,492 - src.ws.bvc - INFO - Server data received: 28 symbols
+2025-10-15 10:22:30,520 - src.ws.bvc - INFO - Processed 28 symbols: 0 new, 0 updated, 28 skipped
+2025-10-15 10:22:30,521 - src.ws.bvc - INFO - Saved 28 symbols to database
+2025-10-15 10:23:00,508 - src.ws.bvc - INFO - Server data received: 28 symbols
+2025-10-15 10:23:00,534 - src.ws.bvc - INFO - Processed 28 symbols: 0 new, 1 updated, 27 skipped
+2025-10-15 10:23:00,536 - src.ws.bvc - INFO - Saved 28 symbols to database
+2025-10-15 10:23:30,309 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 10:23:30,532 - src.ws.bvc - INFO - Server data received: 28 symbols
+2025-10-15 10:23:30,561 - src.ws.bvc - INFO - Processed 28 symbols: 0 new, 5 updated, 23 skipped
+2025-10-15 10:23:30,561 - src.ws.bvc - INFO - Saved 28 symbols to database
+2025-10-15 10:23:55,342 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 10:24:00,564 - src.ws.bvc - INFO - Server data received: 28 symbols
+2025-10-15 10:24:00,596 - src.ws.bvc - INFO - Processed 28 symbols: 0 new, 1 updated, 27 skipped
+2025-10-15 10:24:00,596 - src.ws.bvc - INFO - Saved 28 symbols to database
+2025-10-15 10:24:22,065 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 10:24:30,596 - src.ws.bvc - INFO - Server data received: 28 symbols
+2025-10-15 10:24:30,633 - src.ws.bvc - INFO - Processed 28 symbols: 0 new, 2 updated, 26 skipped
+2025-10-15 10:24:30,633 - src.ws.bvc - INFO - Saved 28 symbols to database
+2025-10-15 10:25:00,583 - src.ws.bvc - INFO - Server data received: 28 symbols
+2025-10-15 10:25:00,617 - src.ws.bvc - INFO - Processed 28 symbols: 0 new, 11 updated, 17 skipped
+2025-10-15 10:25:00,617 - src.ws.bvc - INFO - Saved 28 symbols to database
+2025-10-15 10:25:30,594 - src.ws.bvc - INFO - Server data received: 28 symbols
+2025-10-15 10:25:30,632 - src.ws.bvc - INFO - Processed 28 symbols: 0 new, 1 updated, 27 skipped
+2025-10-15 10:25:30,632 - src.ws.bvc - INFO - Saved 28 symbols to database
+2025-10-15 10:26:00,373 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 10:26:00,553 - src.ws.bvc - INFO - Server data received: 28 symbols
+2025-10-15 10:26:00,588 - src.ws.bvc - INFO - Processed 28 symbols: 0 new, 1 updated, 27 skipped
+2025-10-15 10:26:00,588 - src.ws.bvc - INFO - Saved 28 symbols to database
+2025-10-15 10:26:25,401 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 10:26:30,575 - src.ws.bvc - INFO - Server data received: 28 symbols
+2025-10-15 10:26:30,597 - src.ws.bvc - INFO - Processed 28 symbols: 0 new, 0 updated, 28 skipped
+2025-10-15 10:26:30,598 - src.ws.bvc - INFO - Saved 28 symbols to database
+2025-10-15 10:26:50,771 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 10:27:00,612 - src.ws.bvc - INFO - Server data received: 28 symbols
+2025-10-15 10:27:00,642 - src.ws.bvc - INFO - Processed 28 symbols: 0 new, 2 updated, 26 skipped
+2025-10-15 10:27:00,642 - src.ws.bvc - INFO - Saved 28 symbols to database
+2025-10-15 10:27:30,762 - src.ws.bvc - INFO - Server data received: 28 symbols
+2025-10-15 10:27:30,796 - src.ws.bvc - INFO - Processed 28 symbols: 0 new, 1 updated, 27 skipped
+2025-10-15 10:27:30,796 - src.ws.bvc - INFO - Saved 28 symbols to database
+2025-10-15 10:28:00,622 - src.ws.bvc - INFO - Server data received: 28 symbols
+2025-10-15 10:28:00,657 - src.ws.bvc - INFO - Processed 28 symbols: 0 new, 0 updated, 28 skipped
+2025-10-15 10:28:00,657 - src.ws.bvc - INFO - Saved 28 symbols to database
+2025-10-15 10:28:30,450 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 10:28:30,635 - src.ws.bvc - INFO - Server data received: 28 symbols
+2025-10-15 10:28:30,666 - src.ws.bvc - INFO - Processed 28 symbols: 0 new, 0 updated, 28 skipped
+2025-10-15 10:28:30,666 - src.ws.bvc - INFO - Saved 28 symbols to database
+2025-10-15 10:28:55,445 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 10:29:00,697 - src.ws.bvc - INFO - Server data received: 28 symbols
+2025-10-15 10:29:00,722 - src.ws.bvc - INFO - Processed 28 symbols: 0 new, 0 updated, 28 skipped
+2025-10-15 10:29:00,722 - src.ws.bvc - INFO - Saved 28 symbols to database
+2025-10-15 10:29:21,396 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 10:29:30,704 - src.ws.bvc - INFO - Server data received: 28 symbols
+2025-10-15 10:29:30,732 - src.ws.bvc - INFO - Processed 28 symbols: 0 new, 0 updated, 28 skipped
+2025-10-15 10:29:30,733 - src.ws.bvc - INFO - Saved 28 symbols to database
+2025-10-15 10:30:00,770 - src.ws.bvc - INFO - Server data received: 28 symbols
+2025-10-15 10:30:00,796 - src.ws.bvc - INFO - Processed 28 symbols: 0 new, 0 updated, 28 skipped
+2025-10-15 10:30:00,797 - src.ws.bvc - INFO - Saved 28 symbols to database
+2025-10-15 10:30:17,574 - __main__ - INFO - [WARNING] Program stopped by user (Ctrl+C)
+2025-10-15 10:31:37,491 - __main__ - INFO - ==================================================
+2025-10-15 10:31:37,491 - __main__ - INFO - Starting BVC application
+2025-10-15 10:31:37,491 - __main__ - INFO - ==================================================
+2025-10-15 10:31:37,493 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 10:31:37,493 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 10:31:37,502 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 10:31:38,195 - pynest - INFO - [34mMarketService Detected [0m
+2025-10-15 10:31:38,195 - pynest - INFO - [32mMarketModule Detected [0m
+2025-10-15 10:31:38,195 - pynest - INFO - [34mAppService Detected [0m
+2025-10-15 10:31:38,195 - pynest - INFO - [32mAppModule Detected [0m
+2025-10-15 10:31:38,278 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 10:31:58,295 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 10:32:00,763 - src.ws.bvc - INFO - Server data received: 28 symbols
+2025-10-15 10:32:00,788 - src.ws.bvc - INFO - Processed 28 symbols: 0 new, 1 updated, 27 skipped
+2025-10-15 10:32:00,788 - src.ws.bvc - INFO - Saved 28 symbols to database
+2025-10-15 10:32:23,293 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 10:32:27,126 - __main__ - INFO - [WARNING] Program stopped by user (Ctrl+C)
+2025-10-15 14:38:57,018 - __main__ - INFO - ==================================================
+2025-10-15 14:38:57,018 - __main__ - INFO - Starting BVC application
+2025-10-15 14:38:57,018 - __main__ - INFO - ==================================================
+2025-10-15 14:38:57,026 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 14:38:57,026 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 14:38:57,027 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 14:38:57,665 - pynest - INFO - [34mMarketService Detected [0m
+2025-10-15 14:38:57,665 - pynest - INFO - [32mMarketModule Detected [0m
+2025-10-15 14:38:57,665 - pynest - INFO - [34mAppService Detected [0m
+2025-10-15 14:38:57,665 - pynest - INFO - [32mAppModule Detected [0m
+2025-10-15 14:38:57,753 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 14:38:57,754 - src.ws.bvc - INFO - Current hour: 14
+2025-10-15 14:38:57,754 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:38:57,754 - src.ws.bvc - INFO - Current hour: 14
+2025-10-15 14:38:57,754 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:39:00,929 - src.ws.bvc - INFO - Current hour: 14
+2025-10-15 14:39:00,929 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:39:00,986 - src.ws.bvc - INFO - Current hour: 14
+2025-10-15 14:39:00,986 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:39:00,988 - src.ws.bvc - INFO - Current hour: 14
+2025-10-15 14:39:00,988 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:39:01,021 - src.ws.bvc - INFO - Current hour: 14
+2025-10-15 14:39:01,021 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:39:01,022 - src.ws.bvc - INFO - Current hour: 14
+2025-10-15 14:39:01,022 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:39:01,202 - src.ws.bvc - INFO - Current hour: 14
+2025-10-15 14:39:01,203 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:39:02,019 - src.ws.bvc - INFO - Current hour: 14
+2025-10-15 14:39:02,021 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:39:02,021 - src.ws.bvc - INFO - Current hour: 14
+2025-10-15 14:39:02,021 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:39:06,373 - __main__ - INFO - [WARNING] Program stopped by user (Ctrl+C)
+2025-10-15 14:39:06,747 - __main__ - ERROR - Uncaught exception: 
+2025-10-15 14:39:06,748 - __main__ - ERROR - Uncaught exception: Task was destroyed but it is pending!
+2025-10-15 14:39:06,748 - __main__ - ERROR - Uncaught exception: 'NoneType' object has no attribute 'send'
+2025-10-15 14:39:06,749 - src.ws.bvc - ERROR - Critical error: coroutine ignored GeneratorExit
+Traceback (most recent call last):
+  File "C:\laragon\www\bvc\backend\src\ws\bvc.py", line 311, in start
+    await self._connect_and_listen()
+RuntimeError: coroutine ignored GeneratorExit
+2025-10-15 14:40:35,459 - __main__ - INFO - ==================================================
+2025-10-15 14:40:35,459 - __main__ - INFO - Starting BVC application
+2025-10-15 14:40:35,459 - __main__ - INFO - ==================================================
+2025-10-15 14:40:35,473 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 14:40:35,473 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 14:40:35,475 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 14:40:35,989 - pynest - INFO - [34mMarketService Detected [0m
+2025-10-15 14:40:35,989 - pynest - INFO - [32mMarketModule Detected [0m
+2025-10-15 14:40:35,989 - pynest - INFO - [34mAppService Detected [0m
+2025-10-15 14:40:35,989 - pynest - INFO - [32mAppModule Detected [0m
+2025-10-15 14:40:36,056 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 14:40:36,056 - src.ws.bvc - INFO - Current hour: 14
+2025-10-15 14:40:36,056 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:40:36,056 - src.ws.bvc - INFO - Current hour: 14
+2025-10-15 14:40:36,056 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:40:37,915 - __main__ - INFO - [WARNING] Program stopped by user (Ctrl+C)
+2025-10-15 14:40:38,064 - __main__ - ERROR - Uncaught exception: 
+2025-10-15 14:40:38,067 - __main__ - ERROR - Uncaught exception: Task was destroyed but it is pending!
+2025-10-15 14:40:38,067 - __main__ - ERROR - Uncaught exception: 'NoneType' object has no attribute 'send'
+2025-10-15 14:40:38,067 - src.ws.bvc - ERROR - Critical error: coroutine ignored GeneratorExit
+Traceback (most recent call last):
+  File "C:\laragon\www\bvc\backend\src\ws\bvc.py", line 311, in start
+    await self._connect_and_listen()
+RuntimeError: coroutine ignored GeneratorExit
+2025-10-15 14:41:22,055 - __main__ - INFO - ==================================================
+2025-10-15 14:41:22,055 - __main__ - INFO - Starting BVC application
+2025-10-15 14:41:22,055 - __main__ - INFO - ==================================================
+2025-10-15 14:41:22,061 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 14:41:22,061 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 14:41:22,066 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 14:41:22,542 - pynest - INFO - [34mMarketService Detected [0m
+2025-10-15 14:41:22,542 - pynest - INFO - [32mMarketModule Detected [0m
+2025-10-15 14:41:22,542 - pynest - INFO - [34mAppService Detected [0m
+2025-10-15 14:41:22,542 - pynest - INFO - [32mAppModule Detected [0m
+2025-10-15 14:41:22,619 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 14:41:22,712 - src.ws.bvc - INFO - Current hour: 14
+2025-10-15 14:41:22,712 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:41:22,712 - src.ws.bvc - INFO - Current hour: 14
+2025-10-15 14:41:22,712 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:41:30,953 - src.ws.bvc - INFO - Current hour: 14
+2025-10-15 14:41:30,953 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:41:30,982 - src.ws.bvc - INFO - Current hour: 14
+2025-10-15 14:41:30,983 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:41:31,004 - src.ws.bvc - INFO - Current hour: 14
+2025-10-15 14:41:31,004 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:41:31,005 - src.ws.bvc - INFO - Current hour: 14
+2025-10-15 14:41:31,005 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:41:31,027 - src.ws.bvc - INFO - Current hour: 14
+2025-10-15 14:41:31,027 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:41:31,027 - src.ws.bvc - INFO - Current hour: 14
+2025-10-15 14:41:31,027 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:41:31,076 - src.ws.bvc - INFO - Current hour: 14
+2025-10-15 14:41:31,076 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:41:31,260 - src.ws.bvc - INFO - Current hour: 14
+2025-10-15 14:41:31,260 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:41:31,327 - __main__ - INFO - [WARNING] Program stopped by user (Ctrl+C)
+2025-10-15 14:41:31,731 - __main__ - ERROR - Uncaught exception: 
+2025-10-15 14:41:31,731 - __main__ - ERROR - Uncaught exception: Task was destroyed but it is pending!
+2025-10-15 14:41:31,732 - __main__ - ERROR - Uncaught exception: 'NoneType' object has no attribute 'send'
+2025-10-15 14:41:31,732 - src.ws.bvc - ERROR - Critical error: coroutine ignored GeneratorExit
+Traceback (most recent call last):
+  File "C:\laragon\www\bvc\backend\src\ws\bvc.py", line 312, in start
+    await self._connect_and_listen()
+RuntimeError: coroutine ignored GeneratorExit
+2025-10-15 14:41:34,569 - __main__ - INFO - ==================================================
+2025-10-15 14:41:34,569 - __main__ - INFO - Starting BVC application
+2025-10-15 14:41:34,569 - __main__ - INFO - ==================================================
+2025-10-15 14:41:34,574 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 14:41:34,574 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 14:41:34,580 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 14:41:35,090 - pynest - INFO - [34mMarketService Detected [0m
+2025-10-15 14:41:35,106 - pynest - INFO - [32mMarketModule Detected [0m
+2025-10-15 14:41:35,107 - pynest - INFO - [34mAppService Detected [0m
+2025-10-15 14:41:35,107 - pynest - INFO - [32mAppModule Detected [0m
+2025-10-15 14:41:35,173 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 14:41:35,264 - src.ws.bvc - INFO - Current hour: 2025-10-15 14:41:35.175649-04:28
+2025-10-15 14:41:35,264 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:41:35,264 - src.ws.bvc - INFO - Current hour: 2025-10-15 14:41:35.264992-04:28
+2025-10-15 14:41:35,267 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:41:43,685 - __main__ - INFO - [WARNING] Program stopped by user (Ctrl+C)
+2025-10-15 14:42:26,876 - __main__ - INFO - ==================================================
+2025-10-15 14:42:26,876 - __main__ - INFO - Starting BVC application
+2025-10-15 14:42:26,876 - __main__ - INFO - ==================================================
+2025-10-15 14:42:26,885 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 14:42:26,885 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 14:42:26,887 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 14:42:27,440 - pynest - INFO - [34mMarketService Detected [0m
+2025-10-15 14:42:27,440 - pynest - INFO - [32mMarketModule Detected [0m
+2025-10-15 14:42:27,440 - pynest - INFO - [34mAppService Detected [0m
+2025-10-15 14:42:27,440 - pynest - INFO - [32mAppModule Detected [0m
+2025-10-15 14:42:27,509 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 14:42:27,619 - src.ws.bvc - INFO - Current hour: 2025-10-15 14:42:27.509207-04:28
+2025-10-15 14:42:27,619 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:42:27,619 - src.ws.bvc - INFO - Current hour: 2025-10-15 14:42:27.619320-04:28
+2025-10-15 14:42:27,619 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:42:29,226 - __main__ - INFO - [WARNING] Program stopped by user (Ctrl+C)
+2025-10-15 14:42:29,475 - __main__ - ERROR - Uncaught exception: 
+2025-10-15 14:42:29,475 - __main__ - ERROR - Uncaught exception: Task was destroyed but it is pending!
+2025-10-15 14:42:29,475 - __main__ - ERROR - Uncaught exception: 'NoneType' object has no attribute 'send'
+2025-10-15 14:42:29,475 - src.ws.bvc - ERROR - Critical error: coroutine ignored GeneratorExit
+Traceback (most recent call last):
+  File "C:\laragon\www\bvc\backend\src\ws\bvc.py", line 312, in start
+    await self._connect_and_listen()
+RuntimeError: coroutine ignored GeneratorExit
+2025-10-15 14:42:44,548 - __main__ - INFO - ==================================================
+2025-10-15 14:42:44,548 - __main__ - INFO - Starting BVC application
+2025-10-15 14:42:44,548 - __main__ - INFO - ==================================================
+2025-10-15 14:42:44,560 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 14:42:44,561 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 14:42:44,561 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 14:42:45,102 - pynest - INFO - [34mMarketService Detected [0m
+2025-10-15 14:42:45,102 - pynest - INFO - [32mMarketModule Detected [0m
+2025-10-15 14:42:45,102 - pynest - INFO - [34mAppService Detected [0m
+2025-10-15 14:42:45,102 - pynest - INFO - [32mAppModule Detected [0m
+2025-10-15 14:42:45,181 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 14:42:45,270 - src.ws.bvc - INFO - Current hour: 2025-10-15 14:42:45.181842-04:28
+2025-10-15 14:42:45,270 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:42:45,270 - src.ws.bvc - INFO - Current hour: 2025-10-15 14:42:45.270659-04:28
+2025-10-15 14:42:45,273 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:42:47,775 - __main__ - INFO - [WARNING] Program stopped by user (Ctrl+C)
+2025-10-15 14:42:48,204 - __main__ - ERROR - Uncaught exception: 
+2025-10-15 14:42:48,205 - __main__ - ERROR - Uncaught exception: Task was destroyed but it is pending!
+2025-10-15 14:42:48,205 - __main__ - ERROR - Uncaught exception: 'NoneType' object has no attribute 'send'
+2025-10-15 14:42:48,206 - src.ws.bvc - ERROR - Critical error: coroutine ignored GeneratorExit
+Traceback (most recent call last):
+  File "C:\laragon\www\bvc\backend\src\ws\bvc.py", line 312, in start
+    await self._connect_and_listen()
+RuntimeError: coroutine ignored GeneratorExit
+2025-10-15 14:43:59,612 - __main__ - INFO - ==================================================
+2025-10-15 14:43:59,612 - __main__ - INFO - Starting BVC application
+2025-10-15 14:43:59,619 - __main__ - INFO - ==================================================
+2025-10-15 14:43:59,629 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 14:43:59,629 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 14:43:59,629 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 14:44:00,345 - pynest - INFO - [34mMarketService Detected [0m
+2025-10-15 14:44:00,345 - pynest - INFO - [32mMarketModule Detected [0m
+2025-10-15 14:44:00,345 - pynest - INFO - [34mAppService Detected [0m
+2025-10-15 14:44:00,349 - pynest - INFO - [32mAppModule Detected [0m
+2025-10-15 14:44:00,438 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 14:44:00,562 - src.ws.bvc - INFO - Current hour: 2025-10-15 10:44:00.562109-04:00
+2025-10-15 14:44:00,562 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:44:00,562 - src.ws.bvc - INFO - Current hour: 2025-10-15 10:44:00.562910-04:00
+2025-10-15 14:44:00,564 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:44:01,020 - src.ws.bvc - INFO - Current hour: 2025-10-15 10:44:01.020892-04:00
+2025-10-15 14:44:01,020 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:44:01,072 - src.ws.bvc - INFO - Current hour: 2025-10-15 10:44:01.072670-04:00
+2025-10-15 14:44:01,073 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:44:01,073 - src.ws.bvc - INFO - Current hour: 2025-10-15 10:44:01.073819-04:00
+2025-10-15 14:44:01,073 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:44:01,125 - src.ws.bvc - INFO - Current hour: 2025-10-15 10:44:01.125890-04:00
+2025-10-15 14:44:01,125 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:44:01,151 - src.ws.bvc - INFO - Current hour: 2025-10-15 10:44:01.151163-04:00
+2025-10-15 14:44:01,151 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:44:01,304 - src.ws.bvc - INFO - Current hour: 2025-10-15 10:44:01.304390-04:00
+2025-10-15 14:44:01,306 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:44:02,952 - src.ws.bvc - INFO - Current hour: 2025-10-15 10:44:02.952396-04:00
+2025-10-15 14:44:02,952 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:44:02,952 - src.ws.bvc - INFO - Current hour: 2025-10-15 10:44:02.952396-04:00
+2025-10-15 14:44:02,953 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:44:06,625 - __main__ - INFO - [WARNING] Program stopped by user (Ctrl+C)
+2025-10-15 14:44:06,765 - __main__ - ERROR - Uncaught exception: 
+2025-10-15 14:44:06,765 - __main__ - ERROR - Uncaught exception: Task was destroyed but it is pending!
+2025-10-15 14:44:06,767 - __main__ - ERROR - Uncaught exception: 'NoneType' object has no attribute 'send'
+2025-10-15 14:44:06,767 - src.ws.bvc - ERROR - Critical error: coroutine ignored GeneratorExit
+Traceback (most recent call last):
+  File "C:\laragon\www\bvc\backend\src\ws\bvc.py", line 312, in start
+    await self._connect_and_listen()
+RuntimeError: coroutine ignored GeneratorExit
+2025-10-15 14:44:24,130 - __main__ - INFO - ==================================================
+2025-10-15 14:44:24,130 - __main__ - INFO - Starting BVC application
+2025-10-15 14:44:24,130 - __main__ - INFO - ==================================================
+2025-10-15 14:44:24,136 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 14:44:24,136 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 14:44:24,147 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 14:44:24,705 - pynest - INFO - [34mMarketService Detected [0m
+2025-10-15 14:44:24,705 - pynest - INFO - [32mMarketModule Detected [0m
+2025-10-15 14:44:24,705 - pynest - INFO - [34mAppService Detected [0m
+2025-10-15 14:44:24,705 - pynest - INFO - [32mAppModule Detected [0m
+2025-10-15 14:44:24,765 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 14:44:24,765 - src.ws.bvc - INFO - Current hour: 2025-10-15 10:44:24.765026-04:00
+2025-10-15 14:44:24,765 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:44:24,780 - src.ws.bvc - INFO - Current hour: 2025-10-15 10:44:24.780967-04:00
+2025-10-15 14:44:24,780 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:44:29,539 - __main__ - INFO - [WARNING] Program stopped by user (Ctrl+C)
+2025-10-15 14:44:29,796 - __main__ - ERROR - Uncaught exception: 
+2025-10-15 14:44:29,796 - __main__ - ERROR - Uncaught exception: Task was destroyed but it is pending!
+2025-10-15 14:44:29,797 - __main__ - ERROR - Uncaught exception: 'NoneType' object has no attribute 'send'
+2025-10-15 14:44:29,797 - src.ws.bvc - ERROR - Critical error: coroutine ignored GeneratorExit
+Traceback (most recent call last):
+  File "C:\laragon\www\bvc\backend\src\ws\bvc.py", line 312, in start
+    await self._connect_and_listen()
+RuntimeError: coroutine ignored GeneratorExit
+2025-10-15 14:44:54,240 - __main__ - INFO - ==================================================
+2025-10-15 14:44:54,241 - __main__ - INFO - Starting BVC application
+2025-10-15 14:44:54,241 - __main__ - INFO - ==================================================
+2025-10-15 14:44:54,249 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 14:44:54,249 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 14:44:54,251 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 14:44:54,818 - pynest - INFO - [34mMarketService Detected [0m
+2025-10-15 14:44:54,818 - pynest - INFO - [32mMarketModule Detected [0m
+2025-10-15 14:44:54,818 - pynest - INFO - [34mAppService Detected [0m
+2025-10-15 14:44:54,818 - pynest - INFO - [32mAppModule Detected [0m
+2025-10-15 14:44:54,894 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 14:44:54,895 - src.ws.bvc - INFO - Current hour: 10
+2025-10-15 14:44:54,895 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:44:54,904 - src.ws.bvc - INFO - Current hour: 10
+2025-10-15 14:44:54,904 - src.ws.bvc - INFO - No son las 9am, esperando el horario permitido para procesar mensajes.
+2025-10-15 14:44:56,307 - __main__ - INFO - [WARNING] Program stopped by user (Ctrl+C)
+2025-10-15 14:44:56,826 - __main__ - ERROR - Uncaught exception: 
+2025-10-15 14:44:56,826 - __main__ - ERROR - Uncaught exception: Task was destroyed but it is pending!
+2025-10-15 14:44:56,826 - __main__ - ERROR - Uncaught exception: 'NoneType' object has no attribute 'send'
+2025-10-15 14:44:56,827 - src.ws.bvc - ERROR - Critical error: coroutine ignored GeneratorExit
+Traceback (most recent call last):
+  File "C:\laragon\www\bvc\backend\src\ws\bvc.py", line 312, in start
+    await self._connect_and_listen()
+RuntimeError: coroutine ignored GeneratorExit
+2025-10-15 14:47:27,622 - __main__ - INFO - ==================================================
+2025-10-15 14:47:27,622 - __main__ - INFO - Starting BVC application
+2025-10-15 14:47:27,622 - __main__ - INFO - ==================================================
+2025-10-15 14:47:27,627 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 14:47:27,627 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 14:47:27,627 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 14:47:28,107 - pynest - INFO - [34mMarketService Detected [0m
+2025-10-15 14:47:28,107 - pynest - INFO - [32mMarketModule Detected [0m
+2025-10-15 14:47:28,107 - pynest - INFO - [34mAppService Detected [0m
+2025-10-15 14:47:28,107 - pynest - INFO - [32mAppModule Detected [0m
+2025-10-15 14:47:28,184 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 14:47:28,185 - src.ws.bvc - INFO - Current hour: 10
+2025-10-15 14:47:28,195 - src.ws.bvc - INFO - Current hour: 10
+2025-10-15 14:47:31,181 - src.ws.bvc - INFO - Current hour: 10
+2025-10-15 14:47:31,234 - src.ws.bvc - INFO - Current hour: 10
+2025-10-15 14:47:31,234 - src.ws.bvc - INFO - Current hour: 10
+2025-10-15 14:47:31,234 - src.ws.bvc - INFO - Server data received: 28 symbols
+2025-10-15 14:47:31,302 - src.ws.bvc - INFO - Processed 28 symbols: 0 new, 24 updated, 4 skipped
+2025-10-15 14:47:31,302 - src.ws.bvc - INFO - Saved 28 symbols to database
+2025-10-15 14:47:31,305 - src.ws.bvc - INFO - Current hour: 10
+2025-10-15 14:47:31,305 - src.ws.bvc - INFO - Current hour: 10
+2025-10-15 14:47:31,305 - src.ws.bvc - INFO - Current hour: 10
+2025-10-15 14:47:31,307 - src.ws.bvc - INFO - Current hour: 10
+2025-10-15 14:47:31,421 - src.ws.bvc - INFO - Current hour: 10
+2025-10-15 14:47:34,018 - __main__ - INFO - [WARNING] Program stopped by user (Ctrl+C)
+2025-10-15 14:47:34,258 - __main__ - ERROR - Uncaught exception: 
+2025-10-15 14:47:34,258 - __main__ - ERROR - Uncaught exception: Task was destroyed but it is pending!
+2025-10-15 14:47:34,258 - __main__ - ERROR - Uncaught exception: 'NoneType' object has no attribute 'send'
+2025-10-15 14:47:34,260 - src.ws.bvc - ERROR - Critical error: coroutine ignored GeneratorExit
+Traceback (most recent call last):
+  File "C:\laragon\www\bvc\backend\src\ws\bvc.py", line 311, in start
+    await self._connect_and_listen()
+RuntimeError: coroutine ignored GeneratorExit
+2025-10-15 14:47:53,950 - __main__ - INFO - ==================================================
+2025-10-15 14:47:53,951 - __main__ - INFO - Starting BVC application
+2025-10-15 14:47:53,952 - __main__ - INFO - ==================================================
+2025-10-15 14:47:53,956 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 14:47:53,956 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 14:47:53,956 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 14:47:54,561 - pynest - INFO - [34mMarketService Detected [0m
+2025-10-15 14:47:54,561 - pynest - INFO - [32mMarketModule Detected [0m
+2025-10-15 14:47:54,563 - pynest - INFO - [34mAppService Detected [0m
+2025-10-15 14:47:54,563 - pynest - INFO - [32mAppModule Detected [0m
+2025-10-15 14:47:54,630 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 14:48:01,177 - src.ws.bvc - INFO - Server data received: 28 symbols
+2025-10-15 14:48:01,201 - src.ws.bvc - INFO - Processed 28 symbols: 0 new, 0 updated, 28 skipped
+2025-10-15 14:48:01,202 - src.ws.bvc - INFO - Saved 28 symbols to database
+2025-10-15 14:48:31,224 - src.ws.bvc - INFO - Server data received: 28 symbols
+2025-10-15 14:48:31,248 - src.ws.bvc - INFO - Processed 28 symbols: 0 new, 1 updated, 27 skipped
+2025-10-15 14:48:31,248 - src.ws.bvc - INFO - Saved 28 symbols to database
+2025-10-15 14:48:43,909 - __main__ - INFO - [WARNING] Program stopped by user (Ctrl+C)
+2025-10-15 14:48:59,757 - __main__ - INFO - ==================================================
+2025-10-15 14:48:59,757 - __main__ - INFO - Starting BVC application
+2025-10-15 14:48:59,757 - __main__ - INFO - ==================================================
+2025-10-15 14:48:59,766 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 14:48:59,767 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 14:48:59,767 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 14:48:59,828 - __main__ - ERROR - [ERROR] Fatal error: Config.__init__() got an unexpected keyword argument 'cors'
+Traceback (most recent call last):
+  File "C:\laragon\www\bvc\backend\main.py", line 123, in <module>
+    asyncio.run(main())
+  File "C:\laragon\bin\python\python-3.10\lib\asyncio\runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "C:\laragon\bin\python\python-3.10\lib\asyncio\base_events.py", line 646, in run_until_complete
+    return future.result()
+  File "C:\laragon\www\bvc\backend\main.py", line 92, in main
+    config = uvicorn.Config(
+TypeError: Config.__init__() got an unexpected keyword argument 'cors'
+2025-10-15 14:49:55,267 - __main__ - INFO - ==================================================
+2025-10-15 14:49:55,268 - __main__ - INFO - Starting BVC application
+2025-10-15 14:49:55,268 - __main__ - INFO - ==================================================
+2025-10-15 14:49:55,272 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 14:49:55,272 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 14:49:55,277 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 14:49:55,882 - pynest - INFO - [34mMarketService Detected [0m
+2025-10-15 14:49:55,882 - pynest - INFO - [32mMarketModule Detected [0m
+2025-10-15 14:49:55,882 - pynest - INFO - [34mAppService Detected [0m
+2025-10-15 14:49:55,884 - pynest - INFO - [32mAppModule Detected [0m
+2025-10-15 14:49:55,953 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 14:50:01,240 - src.ws.bvc - INFO - Server data received: 28 symbols
+2025-10-15 14:50:01,276 - src.ws.bvc - INFO - Processed 28 symbols: 0 new, 2 updated, 26 skipped
+2025-10-15 14:50:01,276 - src.ws.bvc - INFO - Saved 28 symbols to database
+2025-10-15 14:50:17,695 - __main__ - INFO - [WARNING] Program stopped by user (Ctrl+C)
