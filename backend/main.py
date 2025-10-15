@@ -7,7 +7,11 @@ import src.ws.bvc as ws_bvc
 load_dotenv() 
 
 async def main():
-    # start_db()
+    try:
+        start_db()
+    except Exception as e:
+        raise Exception("Error to connect to the database.", e)
+    
     websocket_task = asyncio.create_task(ws_bvc.connect_to_ws_bvc())
     
     config = uvicorn.Config(
@@ -25,10 +29,12 @@ async def main():
             return_exceptions=False  
         )
     except Exception as e:
-        print(f"Error: {e}")
+        raise e
     
 if __name__ == '__main__':
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
         print("The program was stopped by the user.")
+    except Exception as e:
+        print(e)

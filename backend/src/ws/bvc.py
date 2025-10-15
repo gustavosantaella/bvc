@@ -4,13 +4,7 @@ from os import getenv
 import ssl
 import json
 
-async def connect_to_ws_bvc():
-    WS_URL = getenv("WS_BVC")
-    if WS_URL is None:
-        raise Exception("PLEASE CHECK THE WS URL ENVIRONMENT")
-    
-    # Headers personalizados
-    headers = {
+__HEADERS = {
         "Accept": "*/*",
         "Accept-Encoding": "gzip, deflate, br, zstd",
         "Accept-Language": "en-US,en;q=0.5",
@@ -28,6 +22,13 @@ async def connect_to_ws_bvc():
         "Upgrade": "websocket",
     }
     
+async def connect_to_ws_bvc():
+    WS_URL = getenv("WS_BVC")
+    if WS_URL is None:
+        raise Exception("PLEASE CHECK THE WS URL ENVIRONMENT")
+    
+    # Headers personalizados
+    
     ssl_context = ssl.create_default_context()
     ssl_context.check_hostname = False
     ssl_context.verify_mode = ssl.CERT_NONE
@@ -35,7 +36,7 @@ async def connect_to_ws_bvc():
     async with websockets.connect(
         WS_URL, 
         ssl=ssl_context,
-        additional_headers=headers
+        additional_headers=__HEADERS
     ) as websocket:
         print("Connected to the WS server of BVC")
         await websocket.send(message="40")
@@ -53,9 +54,9 @@ async def connect_to_ws_bvc():
                     if data[0] == 'serverData': 
                         print(data[1])
                         symbols = list(map(lambda e: e['simbolo'], data[1]))
-                        print(symbols)
-                        print(len(symbols))
+                        __save_data(symbols)
                         
-                        
-def save_message():
+
+
+def __save_data(symbols):
     pass
