@@ -131,4 +131,5 @@ if __name__ == "__main__":
         logger.error(f"[ERROR] Fatal error: {e}", exc_info=True)
         sys.exit(1)
 else:
+    print("Running on Vercel")
     asyncio.run(main())
