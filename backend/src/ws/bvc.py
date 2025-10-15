@@ -36,9 +36,10 @@ async def connect_to_ws_bvc():
         ssl=ssl_context,
         additional_headers=headers
     ) as websocket:
-        print("Conectado al WebSocket de BVC")
+        print("Connected to the WS server of BVC")
+        await websocket.send(message="3")
+        print("Sended")
         
-        # Escuchar mensajes continuamente
         while True:
             message = await websocket.recv()
             print(f"Received: {message}")
