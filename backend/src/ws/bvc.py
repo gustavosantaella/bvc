@@ -6,8 +6,10 @@ import json
 import logging
 from typing import Optional, List, Dict, Any
 from datetime import datetime
-from src.config.time import get_current_time
+from src.config.time import get_current_time, set_time_zone
 
+
+set_time_zone()
 
 # Logging configuration
 logger = logging.getLogger(__name__)
