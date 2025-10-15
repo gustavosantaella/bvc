@@ -1,24 +1,80 @@
 <div class="max-w-7xl mx-auto mb-12">
-  <!-- Selector de Símbolo -->
-  <div class="mb-6">
-    <label
-      for="symbol-select"
-      class="block text-sm font-medium text-gray-700 mb-2"
-    >
-      Selecciona un instrumento para ver su comportamiento
-    </label>
-    <select
-      id="symbol-select"
-      [(ngModel)]="selectedSymbol"
-      (change)="onSymbolChange($event)"
-      class="block w-full max-w-md px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900 font-medium transition-all duration-200"
-    >
-      <option value="ALL">🌍 Todos los Instrumentos</option>
-      <option disabled>──────────</option>
-      <option *ngFor="let market of marketData" [value]="market.symbol">
-        {{ market.symbol }} - {{ market.description }}
-      </option>
-    </select>
+  <!-- Filtros -->
+  <div class="mb-6 space-y-4">
+    <!-- Selector de Símbolo -->
+    <div>
+      <label
+        for="symbol-select"
+        class="block text-sm font-medium text-gray-700 mb-2"
+      >
+        Selecciona un instrumento para ver su comportamiento
+      </label>
+      <select
+        id="symbol-select"
+        [(ngModel)]="selectedSymbol"
+        (change)="onSymbolChange($event)"
+        class="block w-full max-w-md px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900 font-medium transition-all duration-200"
+      >
+        <option value="ALL">🌍 Todos los Instrumentos</option>
+        <option disabled>──────────</option>
+        <option *ngFor="let market of marketData" [value]="market.symbol">
+          {{ market.symbol }} - {{ market.description }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Filtro de Fechas -->
+    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200">
+      <label class="block text-sm font-medium text-gray-700 mb-3">
+        📅 Rango de Fechas
+      </label>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+        <!-- Fecha Inicio -->
+        <div>
+          <label for="start-date" class="block text-xs text-gray-600 mb-1">
+            Desde
+          </label>
+          <input
+            type="date"
+            id="start-date"
+            [(ngModel)]="startDate"
+            (change)="onDateChange()"
+            [min]="minDate"
+            [max]="endDate"
+            class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900 text-sm transition-all duration-200"
+          />
+        </div>
+
+        <!-- Fecha Fin -->
+        <div>
+          <label for="end-date" class="block text-xs text-gray-600 mb-1">
+            Hasta
+          </label>
+          <input
+            type="date"
+            id="end-date"
+            [(ngModel)]="endDate"
+            (change)="onDateChange()"
+            [min]="startDate"
+            [max]="maxDate"
+            class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900 text-sm transition-all duration-200"
+          />
+        </div>
+
+        <!-- Botón Reset -->
+        <div>
+          <button
+            (click)="resetDateRange()"
+            class="w-full px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50 hover:border-gray-400 focus:ring-2 focus:ring-blue-500 transition-all duration-200 text-sm font-medium flex items-center justify-center gap-2"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+            </svg>
+            Últimos 3 meses
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Información del Instrumento Seleccionado (Individual) -->

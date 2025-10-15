@@ -10,7 +10,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Chart, ChartConfiguration, registerables } from 'chart.js';
-import { MarketInterface } from '../../services/http/market.service';
+import { MarketInterface, HistoryInterface } from '../../services/http/market.service';
 
 // Registrar todos los componentes de Chart.js
 Chart.register(...registerables);
@@ -39,6 +39,12 @@ export class MarketChartsComponent implements OnInit, OnChanges {
 
   // Control de expansión de gráficos
   expandedChart: 'price' | 'volume' | 'variation' | null = null;
+
+  // Filtro de fechas
+  startDate: string = '';
+  endDate: string = '';
+  minDate: string = '';
+  maxDate: string = '';
 
   // Exponer Math para uso en el template
   Math = Math;
@@ -122,10 +128,87 @@ export class MarketChartsComponent implements OnInit, OnChanges {
   ngOnInit() {
     // Por defecto mostrar "Todos"
     this.selectedSymbol = 'ALL';
+    
+    // Configurar fechas por defecto (últimos 3 meses)
+    this.initializeDateRange();
+  }
+
+  initializeDateRange() {
+    const today = new Date();
+    const threeMonthsAgo = new Date();
+    threeMonthsAgo.setMonth(today.getMonth() - 3);
+
+    this.endDate = this.formatDateForInput(today);
+    this.startDate = this.formatDateForInput(threeMonthsAgo);
+    
+    // Establecer fechas mínimas y máximas si hay datos
+    if (this.marketData.length > 0) {
+      this.updateDateLimits();
+    }
+  }
+
+  formatDateForInput(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  updateDateLimits() {
+    if (!this.marketData.length) return;
+    
+    const allDates = this.marketData.flatMap(m => 
+      m.history.map(h => new Date(h.timestamp))
+    );
+    
+    if (allDates.length > 0) {
+      const minDateTime = Math.min(...allDates.map(d => d.getTime()));
+      const maxDateTime = Math.max(...allDates.map(d => d.getTime()));
+      
+      this.minDate = this.formatDateForInput(new Date(minDateTime));
+      this.maxDate = this.formatDateForInput(new Date(maxDateTime));
+    }
+  }
+
+  onDateChange() {
+    this.updateCharts();
+  }
+
+  resetDateRange() {
+    this.initializeDateRange();
+    this.updateCharts();
+  }
+
+  filterHistoryByDate(history: HistoryInterface[]): HistoryInterface[] {
+    if (!this.startDate || !this.endDate) return history;
+    
+    const start = new Date(this.startDate);
+    start.setHours(0, 0, 0, 0);
+    const end = new Date(this.endDate);
+    end.setHours(23, 59, 59, 999);
+    
+    return history.filter(h => {
+      const historyDate = new Date(h.timestamp);
+      return historyDate >= start && historyDate <= end;
+    });
+  }
+
+  getFilteredMarket(market: MarketInterface): MarketInterface {
+    return {
+      ...market,
+      history: this.filterHistoryByDate(market.history)
+    };
+  }
+
+  getFilteredMarketData(): MarketInterface[] {
+    return this.marketData.map(m => this.getFilteredMarket(m));
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['marketData'] && this.marketData.length > 0) {
+      // Actualizar límites de fecha cuando cambien los datos
+      this.updateDateLimits();
+      
       if (!this.selectedSymbol) {
         this.selectedSymbol = this.marketData[0].symbol;
         this.selectedMarket = this.marketData[0];
@@ -199,7 +282,10 @@ export class MarketChartsComponent implements OnInit, OnChanges {
   createPriceChart() {
     if (!this.selectedMarket || !this.priceChartRef) return;
 
-    const history = this.selectedMarket.history;
+    const filteredMarket = this.getFilteredMarket(this.selectedMarket);
+    const history = filteredMarket.history;
+    if (!history.length) return;
+    
     const labels = history.map((h) => h.market_time);
     const prices = history.map((h) => h.price);
 
@@ -269,7 +355,10 @@ export class MarketChartsComponent implements OnInit, OnChanges {
   createVolumeChart() {
     if (!this.selectedMarket || !this.volumeChartRef) return;
 
-    const history = this.selectedMarket.history;
+    const filteredMarket = this.getFilteredMarket(this.selectedMarket);
+    const history = filteredMarket.history;
+    if (!history.length) return;
+    
     const labels = history.map((h) => h.market_time);
     const volumes = history.map((h) => h.volume);
 
@@ -334,7 +423,10 @@ export class MarketChartsComponent implements OnInit, OnChanges {
   createVariationChart() {
     if (!this.selectedMarket || !this.variationChartRef) return;
 
-    const history = this.selectedMarket.history;
+    const filteredMarket = this.getFilteredMarket(this.selectedMarket);
+    const history = filteredMarket.history;
+    if (!history.length) return;
+    
     const labels = history.map((h) => h.market_time);
     const variations = history.map((h) => h.relative_variation);
 
@@ -445,14 +537,17 @@ export class MarketChartsComponent implements OnInit, OnChanges {
       'rgb(251, 146, 60)',
     ];
 
+    // Filtrar datos por fecha
+    const filteredData = this.getFilteredMarketData();
+
     // Obtener todas las etiquetas únicas
     const allLabels = [
       ...new Set(
-        this.marketData.flatMap((m) => m.history.map((h) => h.market_time))
+        filteredData.flatMap((m) => m.history.map((h) => h.market_time))
       ),
     ].sort();
 
-    const datasets = this.marketData.map((market, index) => {
+    const datasets = filteredData.map((market, index) => {
       const color = colors[index % colors.length];
       // Crear un mapa de tiempo -> precio para este mercado
       const priceMap = new Map(
@@ -537,14 +632,17 @@ export class MarketChartsComponent implements OnInit, OnChanges {
       'rgba(251, 146, 60, 0.6)',
     ];
 
+    // Filtrar datos por fecha
+    const filteredData = this.getFilteredMarketData();
+
     // Obtener todas las etiquetas únicas
     const allLabels = [
       ...new Set(
-        this.marketData.flatMap((m) => m.history.map((h) => h.market_time))
+        filteredData.flatMap((m) => m.history.map((h) => h.market_time))
       ),
     ].sort();
 
-    const datasets = this.marketData.map((market, index) => {
+    const datasets = filteredData.map((market, index) => {
       const color = colors[index % colors.length];
       // Crear un mapa de tiempo -> volumen para este mercado
       const volumeMap = new Map(
@@ -623,14 +721,17 @@ export class MarketChartsComponent implements OnInit, OnChanges {
       'rgb(251, 146, 60)',
     ];
 
+    // Filtrar datos por fecha
+    const filteredData = this.getFilteredMarketData();
+
     // Obtener todas las etiquetas únicas
     const allLabels = [
       ...new Set(
-        this.marketData.flatMap((m) => m.history.map((h) => h.market_time))
+        filteredData.flatMap((m) => m.history.map((h) => h.market_time))
       ),
     ].sort();
 
-    const datasets = this.marketData.map((market, index) => {
+    const datasets = filteredData.map((market, index) => {
       const color = colors[index % colors.length];
       // Crear un mapa de tiempo -> variación para este mercado
       const variationMap = new Map(

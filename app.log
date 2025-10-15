@@ -304,3 +304,38 @@
 2025-10-15 15:33:31,445 - src.ws.bvc - INFO - Server data received: 32 symbols
 2025-10-15 15:33:31,509 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 0 updated, 32 skipped
 2025-10-15 15:33:31,510 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:34:01,468 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:34:01,492 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 0 updated, 32 skipped
+2025-10-15 15:34:01,494 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:34:26,953 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 15:34:31,506 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:34:31,544 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 4 updated, 28 skipped
+2025-10-15 15:34:31,544 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:34:51,993 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 15:35:01,470 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:35:01,502 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 3 updated, 29 skipped
+2025-10-15 15:35:01,503 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:35:31,434 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:35:31,477 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 2 updated, 30 skipped
+2025-10-15 15:35:31,478 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:36:00,423 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:36:00,453 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 2 updated, 30 skipped
+2025-10-15 15:36:00,453 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:36:30,488 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:36:30,540 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 2 updated, 30 skipped
+2025-10-15 15:36:30,540 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:36:57,078 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 15:37:00,456 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:37:00,506 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 1 updated, 31 skipped
+2025-10-15 15:37:00,507 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:37:22,069 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 15:37:30,465 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:37:30,524 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 0 updated, 32 skipped
+2025-10-15 15:37:30,525 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:37:50,626 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 15:38:00,500 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:38:00,556 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 1 updated, 31 skipped
+2025-10-15 15:38:00,556 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:38:30,483 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:38:30,526 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 0 updated, 32 skipped
+2025-10-15 15:38:30,526 - src.ws.bvc - INFO - Saved 32 symbols to database
