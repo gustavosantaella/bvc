@@ -122,7 +122,7 @@ from src.app_module import http_server as app
 
 # Initialize database for Vercel serverless environment
 # This ensures DB is connected when the module is imported
-if db is None:  # Only initialize if not already connected
+if db is None:  # Only initialize if not already connected.
     try:
         start_db()
         logger.info("[OK] Database connected for Vercel")

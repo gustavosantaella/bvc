@@ -1610,3 +1610,9 @@ TypeError: timezone() argument 1 must be datetime.timedelta, not str
 2025-10-15 19:16:31,231 - src.ws.bvc - INFO - Server data received: 32 symbols
 2025-10-15 19:16:33,512 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 0 updated, 32 skipped
 2025-10-15 19:16:33,512 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 19:17:01,205 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 19:17:03,433 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 0 updated, 32 skipped
+2025-10-15 19:17:03,434 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 19:17:31,208 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 19:17:33,404 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 0 updated, 32 skipped
+2025-10-15 19:17:33,404 - src.ws.bvc - INFO - Saved 32 symbols to database
