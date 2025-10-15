@@ -1,6 +1,7 @@
 from os import getenv, environ
 import time
-from datetime import datetime, timezone, timedelta
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 
 def get_time_zone():
@@ -21,17 +22,13 @@ def set_time_zone():
         time.tzset()
 
 
-def get_timezone_offset_timedelta():
-    """Parse timezone offset string to timedelta"""
-    offset_str = get_time_zone_offset()
-    sign = 1 if offset_str[0] == "+" else -1
-    hours, minutes = map(int, offset_str[1:].split(":"))
-    return timedelta(hours=sign * hours, minutes=sign * minutes)
-
-
 def get_current_time():
-    """Get current time in configured timezone"""
-    # Get UTC time and convert to local timezone
-    utc_now = datetime.now(timezone.utc)
-    local_tz = timezone(get_timezone_offset_timedelta())
-    return utc_now.astimezone(local_tz)
+    """Get current time in configured timezone (America/Caracas by default)"""
+    tz_name = get_time_zone()
+    try:
+        # Use ZoneInfo to get the correct timezone
+        tz = ZoneInfo(tz_name)
+        return datetime.now(tz)
+    except Exception:
+        # Fallback to UTC if timezone not found
+        return datetime.now(ZoneInfo("UTC"))

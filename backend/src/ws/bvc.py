@@ -115,7 +115,7 @@ class BVCWebSocketClient:
                         "volume": item.get("VOLUMEN"),
                         "effective_amount": item.get("MONTO_EFECTIVO"),
                         "market_time": item.get("HORA"),
-                        "timestamp": datetime.utcnow(),
+                        "timestamp": get_current_time(),
                         "raw_data": item,
                     }
                     symbols_data.append(symbol_info)
@@ -197,10 +197,8 @@ class BVCWebSocketClient:
                             if isinstance(entry_timestamp, str):
                                 # Parse ISO format string to datetime (format: 2025-10-15T14:30:00.000000)
                                 try:
-                                    entry_dt = datetime.fromisoformat(
-                                        entry_timestamp.replace("Z", "+00:00")
-                                    )
-                                    entry_date = entry_dt.date()
+
+                                    entry_date = get_current_time().date()
                                 except (ValueError, AttributeError):
                                     continue  # Skip if we can't parse
                             elif hasattr(entry_timestamp, "date"):

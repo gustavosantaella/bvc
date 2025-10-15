@@ -339,3 +339,429 @@
 2025-10-15 15:38:30,483 - src.ws.bvc - INFO - Server data received: 32 symbols
 2025-10-15 15:38:30,526 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 0 updated, 32 skipped
 2025-10-15 15:38:30,526 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:39:00,539 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:39:00,584 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 1 updated, 31 skipped
+2025-10-15 15:39:00,585 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:39:27,117 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 15:39:30,513 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:39:30,582 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 0 updated, 32 skipped
+2025-10-15 15:39:30,582 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:39:52,109 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 15:40:00,599 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:40:00,648 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 1 updated, 31 skipped
+2025-10-15 15:40:00,649 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:40:21,589 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 15:40:30,564 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:40:30,601 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 1 updated, 31 skipped
+2025-10-15 15:40:30,601 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:41:00,655 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:41:00,689 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 0 updated, 32 skipped
+2025-10-15 15:41:00,691 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:41:30,566 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:41:30,612 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 2 updated, 30 skipped
+2025-10-15 15:41:30,612 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:41:57,183 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 15:42:00,624 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:42:00,656 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 0 updated, 32 skipped
+2025-10-15 15:42:00,656 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:42:22,195 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 15:42:30,631 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:42:30,667 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 0 updated, 32 skipped
+2025-10-15 15:42:30,667 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:42:50,827 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 15:43:00,700 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:43:00,741 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 1 updated, 31 skipped
+2025-10-15 15:43:00,741 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:43:42,136 - __main__ - INFO - ==================================================
+2025-10-15 15:43:42,136 - __main__ - INFO - Starting BVC application
+2025-10-15 15:43:42,136 - __main__ - INFO - ==================================================
+2025-10-15 15:43:42,149 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 15:43:42,149 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 15:43:42,153 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 15:43:43,168 - pynest - INFO - [34mMarketService Detected [0m
+2025-10-15 15:43:43,168 - pynest - INFO - [32mMarketModule Detected [0m
+2025-10-15 15:43:43,169 - pynest - INFO - [34mAppService Detected [0m
+2025-10-15 15:43:43,169 - pynest - INFO - [32mAppModule Detected [0m
+2025-10-15 15:43:43,251 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 15:44:00,675 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:44:00,757 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 11 updated, 21 skipped
+2025-10-15 15:44:00,757 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:44:28,243 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 15:44:30,696 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:44:30,745 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 1 updated, 31 skipped
+2025-10-15 15:44:30,747 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:44:53,276 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 15:45:00,688 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:45:00,735 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 2 updated, 30 skipped
+2025-10-15 15:45:00,735 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:45:21,689 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 15:45:30,686 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:45:30,729 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 2 updated, 30 skipped
+2025-10-15 15:45:30,730 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:46:00,831 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:46:00,879 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 0 updated, 32 skipped
+2025-10-15 15:46:00,879 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:46:30,774 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:46:30,838 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 2 updated, 30 skipped
+2025-10-15 15:46:30,838 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:46:58,390 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 15:47:00,787 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:47:00,863 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 0 updated, 32 skipped
+2025-10-15 15:47:00,863 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:47:23,407 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 15:47:30,805 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:47:30,847 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 0 updated, 32 skipped
+2025-10-15 15:47:30,848 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:47:50,973 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 15:48:00,820 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:48:00,864 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 3 updated, 29 skipped
+2025-10-15 15:48:00,864 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:48:23,939 - __main__ - INFO - ==================================================
+2025-10-15 15:48:23,939 - __main__ - INFO - Starting BVC application
+2025-10-15 15:48:23,939 - __main__ - INFO - ==================================================
+2025-10-15 15:48:23,953 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 15:48:23,953 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 15:48:23,955 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 15:48:24,721 - pynest - INFO - [34mMarketService Detected [0m
+2025-10-15 15:48:24,721 - pynest - INFO - [32mMarketModule Detected [0m
+2025-10-15 15:48:24,721 - pynest - INFO - [34mAppService Detected [0m
+2025-10-15 15:48:24,721 - pynest - INFO - [32mAppModule Detected [0m
+2025-10-15 15:48:24,813 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 15:48:24,841 - src.ws.bvc - ERROR - Unexpected connection error: tzinfo argument must be None or of a tzinfo subclass, not type 'str'
+Traceback (most recent call last):
+  File "c:\laragon\www\bvc\backend\src\ws\bvc.py", line 272, in _connect_and_listen
+    current_hour = get_current_time().hour
+  File "c:\laragon\www\bvc\backend\src\config\time.py", line 35, in get_current_time
+    utc_now = datetime.now(get_time_zone())
+TypeError: tzinfo argument must be None or of a tzinfo subclass, not type 'str'
+2025-10-15 15:48:24,842 - src.ws.bvc - ERROR - Critical error: tzinfo argument must be None or of a tzinfo subclass, not type 'str'
+Traceback (most recent call last):
+  File "c:\laragon\www\bvc\backend\src\ws\bvc.py", line 310, in start
+    await self._connect_and_listen()
+  File "c:\laragon\www\bvc\backend\src\ws\bvc.py", line 272, in _connect_and_listen
+    current_hour = get_current_time().hour
+  File "c:\laragon\www\bvc\backend\src\config\time.py", line 35, in get_current_time
+    utc_now = datetime.now(get_time_zone())
+TypeError: tzinfo argument must be None or of a tzinfo subclass, not type 'str'
+2025-10-15 15:48:29,917 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 15:48:29,939 - src.ws.bvc - ERROR - Unexpected connection error: tzinfo argument must be None or of a tzinfo subclass, not type 'str'
+Traceback (most recent call last):
+  File "c:\laragon\www\bvc\backend\src\ws\bvc.py", line 272, in _connect_and_listen
+    current_hour = get_current_time().hour
+  File "c:\laragon\www\bvc\backend\src\config\time.py", line 35, in get_current_time
+    utc_now = datetime.now(get_time_zone())
+TypeError: tzinfo argument must be None or of a tzinfo subclass, not type 'str'
+2025-10-15 15:48:29,939 - src.ws.bvc - ERROR - Critical error: tzinfo argument must be None or of a tzinfo subclass, not type 'str'
+Traceback (most recent call last):
+  File "c:\laragon\www\bvc\backend\src\ws\bvc.py", line 310, in start
+    await self._connect_and_listen()
+  File "c:\laragon\www\bvc\backend\src\ws\bvc.py", line 272, in _connect_and_listen
+    current_hour = get_current_time().hour
+  File "c:\laragon\www\bvc\backend\src\config\time.py", line 35, in get_current_time
+    utc_now = datetime.now(get_time_zone())
+TypeError: tzinfo argument must be None or of a tzinfo subclass, not type 'str'
+2025-10-15 15:49:01,600 - __main__ - INFO - ==================================================
+2025-10-15 15:49:01,600 - __main__ - INFO - Starting BVC application
+2025-10-15 15:49:01,600 - __main__ - INFO - ==================================================
+2025-10-15 15:49:01,607 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 15:49:01,609 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 15:49:01,610 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 15:49:02,119 - pynest - INFO - [34mMarketService Detected [0m
+2025-10-15 15:49:02,119 - pynest - INFO - [32mMarketModule Detected [0m
+2025-10-15 15:49:02,119 - pynest - INFO - [34mAppService Detected [0m
+2025-10-15 15:49:02,119 - pynest - INFO - [32mAppModule Detected [0m
+2025-10-15 15:49:02,184 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 15:49:02,209 - src.ws.bvc - ERROR - Unexpected connection error: timezone() argument 1 must be datetime.timedelta, not str
+Traceback (most recent call last):
+  File "c:\laragon\www\bvc\backend\src\ws\bvc.py", line 272, in _connect_and_listen
+    current_hour = get_current_time().hour
+  File "c:\laragon\www\bvc\backend\src\config\time.py", line 36, in get_current_time
+    local_tz = timezone(get_time_zone())
+TypeError: timezone() argument 1 must be datetime.timedelta, not str
+2025-10-15 15:49:02,210 - src.ws.bvc - ERROR - Critical error: timezone() argument 1 must be datetime.timedelta, not str
+Traceback (most recent call last):
+  File "c:\laragon\www\bvc\backend\src\ws\bvc.py", line 310, in start
+    await self._connect_and_listen()
+  File "c:\laragon\www\bvc\backend\src\ws\bvc.py", line 272, in _connect_and_listen
+    current_hour = get_current_time().hour
+  File "c:\laragon\www\bvc\backend\src\config\time.py", line 36, in get_current_time
+    local_tz = timezone(get_time_zone())
+TypeError: timezone() argument 1 must be datetime.timedelta, not str
+2025-10-15 15:49:07,280 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 15:49:07,298 - src.ws.bvc - ERROR - Unexpected connection error: timezone() argument 1 must be datetime.timedelta, not str
+Traceback (most recent call last):
+  File "c:\laragon\www\bvc\backend\src\ws\bvc.py", line 272, in _connect_and_listen
+    current_hour = get_current_time().hour
+  File "c:\laragon\www\bvc\backend\src\config\time.py", line 36, in get_current_time
+    local_tz = timezone(get_time_zone())
+TypeError: timezone() argument 1 must be datetime.timedelta, not str
+2025-10-15 15:49:07,299 - src.ws.bvc - ERROR - Critical error: timezone() argument 1 must be datetime.timedelta, not str
+Traceback (most recent call last):
+  File "c:\laragon\www\bvc\backend\src\ws\bvc.py", line 310, in start
+    await self._connect_and_listen()
+  File "c:\laragon\www\bvc\backend\src\ws\bvc.py", line 272, in _connect_and_listen
+    current_hour = get_current_time().hour
+  File "c:\laragon\www\bvc\backend\src\config\time.py", line 36, in get_current_time
+    local_tz = timezone(get_time_zone())
+TypeError: timezone() argument 1 must be datetime.timedelta, not str
+2025-10-15 15:49:12,411 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 15:49:12,427 - src.ws.bvc - ERROR - Unexpected connection error: timezone() argument 1 must be datetime.timedelta, not str
+Traceback (most recent call last):
+  File "c:\laragon\www\bvc\backend\src\ws\bvc.py", line 272, in _connect_and_listen
+    current_hour = get_current_time().hour
+  File "c:\laragon\www\bvc\backend\src\config\time.py", line 36, in get_current_time
+    local_tz = timezone(get_time_zone())
+TypeError: timezone() argument 1 must be datetime.timedelta, not str
+2025-10-15 15:49:12,428 - src.ws.bvc - ERROR - Critical error: timezone() argument 1 must be datetime.timedelta, not str
+Traceback (most recent call last):
+  File "c:\laragon\www\bvc\backend\src\ws\bvc.py", line 310, in start
+    await self._connect_and_listen()
+  File "c:\laragon\www\bvc\backend\src\ws\bvc.py", line 272, in _connect_and_listen
+    current_hour = get_current_time().hour
+  File "c:\laragon\www\bvc\backend\src\config\time.py", line 36, in get_current_time
+    local_tz = timezone(get_time_zone())
+TypeError: timezone() argument 1 must be datetime.timedelta, not str
+2025-10-15 15:49:17,508 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 15:49:17,531 - src.ws.bvc - ERROR - Unexpected connection error: timezone() argument 1 must be datetime.timedelta, not str
+Traceback (most recent call last):
+  File "c:\laragon\www\bvc\backend\src\ws\bvc.py", line 272, in _connect_and_listen
+    current_hour = get_current_time().hour
+  File "c:\laragon\www\bvc\backend\src\config\time.py", line 36, in get_current_time
+    local_tz = timezone(get_time_zone())
+TypeError: timezone() argument 1 must be datetime.timedelta, not str
+2025-10-15 15:49:17,531 - src.ws.bvc - ERROR - Critical error: timezone() argument 1 must be datetime.timedelta, not str
+Traceback (most recent call last):
+  File "c:\laragon\www\bvc\backend\src\ws\bvc.py", line 310, in start
+    await self._connect_and_listen()
+  File "c:\laragon\www\bvc\backend\src\ws\bvc.py", line 272, in _connect_and_listen
+    current_hour = get_current_time().hour
+  File "c:\laragon\www\bvc\backend\src\config\time.py", line 36, in get_current_time
+    local_tz = timezone(get_time_zone())
+TypeError: timezone() argument 1 must be datetime.timedelta, not str
+2025-10-15 15:49:22,633 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 15:49:22,652 - src.ws.bvc - ERROR - Unexpected connection error: timezone() argument 1 must be datetime.timedelta, not str
+Traceback (most recent call last):
+  File "c:\laragon\www\bvc\backend\src\ws\bvc.py", line 272, in _connect_and_listen
+    current_hour = get_current_time().hour
+  File "c:\laragon\www\bvc\backend\src\config\time.py", line 36, in get_current_time
+    local_tz = timezone(get_timezone_offset_timedelta())
+TypeError: timezone() argument 1 must be datetime.timedelta, not str
+2025-10-15 15:49:22,653 - src.ws.bvc - ERROR - Critical error: timezone() argument 1 must be datetime.timedelta, not str
+Traceback (most recent call last):
+  File "c:\laragon\www\bvc\backend\src\ws\bvc.py", line 310, in start
+    await self._connect_and_listen()
+  File "c:\laragon\www\bvc\backend\src\ws\bvc.py", line 272, in _connect_and_listen
+    current_hour = get_current_time().hour
+  File "c:\laragon\www\bvc\backend\src\config\time.py", line 36, in get_current_time
+    local_tz = timezone(get_timezone_offset_timedelta())
+TypeError: timezone() argument 1 must be datetime.timedelta, not str
+2025-10-15 15:49:27,714 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 15:49:27,740 - src.ws.bvc - ERROR - Unexpected connection error: timezone() argument 1 must be datetime.timedelta, not str
+Traceback (most recent call last):
+  File "c:\laragon\www\bvc\backend\src\ws\bvc.py", line 272, in _connect_and_listen
+    current_hour = get_current_time().hour
+  File "c:\laragon\www\bvc\backend\src\config\time.py", line 36, in get_current_time
+    local_tz = timezone(get_timezone_offset_timedelta())
+TypeError: timezone() argument 1 must be datetime.timedelta, not str
+2025-10-15 15:49:27,740 - src.ws.bvc - ERROR - Critical error: timezone() argument 1 must be datetime.timedelta, not str
+Traceback (most recent call last):
+  File "c:\laragon\www\bvc\backend\src\ws\bvc.py", line 310, in start
+    await self._connect_and_listen()
+  File "c:\laragon\www\bvc\backend\src\ws\bvc.py", line 272, in _connect_and_listen
+    current_hour = get_current_time().hour
+  File "c:\laragon\www\bvc\backend\src\config\time.py", line 36, in get_current_time
+    local_tz = timezone(get_timezone_offset_timedelta())
+TypeError: timezone() argument 1 must be datetime.timedelta, not str
+2025-10-15 15:49:32,835 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 15:49:32,851 - src.ws.bvc - ERROR - Unexpected connection error: timezone() argument 1 must be datetime.timedelta, not str
+Traceback (most recent call last):
+  File "c:\laragon\www\bvc\backend\src\ws\bvc.py", line 272, in _connect_and_listen
+    current_hour = get_current_time().hour
+  File "c:\laragon\www\bvc\backend\src\config\time.py", line 36, in get_current_time
+    local_tz = timezone(get_timezone_offset_timedelta())
+TypeError: timezone() argument 1 must be datetime.timedelta, not str
+2025-10-15 15:49:32,851 - src.ws.bvc - ERROR - Critical error: timezone() argument 1 must be datetime.timedelta, not str
+Traceback (most recent call last):
+  File "c:\laragon\www\bvc\backend\src\ws\bvc.py", line 310, in start
+    await self._connect_and_listen()
+  File "c:\laragon\www\bvc\backend\src\ws\bvc.py", line 272, in _connect_and_listen
+    current_hour = get_current_time().hour
+  File "c:\laragon\www\bvc\backend\src\config\time.py", line 36, in get_current_time
+    local_tz = timezone(get_timezone_offset_timedelta())
+TypeError: timezone() argument 1 must be datetime.timedelta, not str
+2025-10-15 15:49:37,948 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 15:49:37,967 - src.ws.bvc - ERROR - Unexpected connection error: timezone() argument 1 must be datetime.timedelta, not str
+Traceback (most recent call last):
+  File "c:\laragon\www\bvc\backend\src\ws\bvc.py", line 272, in _connect_and_listen
+    current_hour = get_current_time().hour
+  File "c:\laragon\www\bvc\backend\src\config\time.py", line 36, in get_current_time
+    local_tz = timezone(get_timezone_offset_timedelta())
+TypeError: timezone() argument 1 must be datetime.timedelta, not str
+2025-10-15 15:49:37,968 - src.ws.bvc - ERROR - Critical error: timezone() argument 1 must be datetime.timedelta, not str
+Traceback (most recent call last):
+  File "c:\laragon\www\bvc\backend\src\ws\bvc.py", line 310, in start
+    await self._connect_and_listen()
+  File "c:\laragon\www\bvc\backend\src\ws\bvc.py", line 272, in _connect_and_listen
+    current_hour = get_current_time().hour
+  File "c:\laragon\www\bvc\backend\src\config\time.py", line 36, in get_current_time
+    local_tz = timezone(get_timezone_offset_timedelta())
+TypeError: timezone() argument 1 must be datetime.timedelta, not str
+2025-10-15 15:49:43,067 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 15:49:43,085 - src.ws.bvc - ERROR - Unexpected connection error: timezone() argument 1 must be datetime.timedelta, not str
+Traceback (most recent call last):
+  File "c:\laragon\www\bvc\backend\src\ws\bvc.py", line 272, in _connect_and_listen
+    current_hour = get_current_time().hour
+  File "c:\laragon\www\bvc\backend\src\config\time.py", line 36, in get_current_time
+    local_tz = timezone(get_timezone_offset_timedelta())
+TypeError: timezone() argument 1 must be datetime.timedelta, not str
+2025-10-15 15:49:43,086 - src.ws.bvc - ERROR - Critical error: timezone() argument 1 must be datetime.timedelta, not str
+Traceback (most recent call last):
+  File "c:\laragon\www\bvc\backend\src\ws\bvc.py", line 310, in start
+    await self._connect_and_listen()
+  File "c:\laragon\www\bvc\backend\src\ws\bvc.py", line 272, in _connect_and_listen
+    current_hour = get_current_time().hour
+  File "c:\laragon\www\bvc\backend\src\config\time.py", line 36, in get_current_time
+    local_tz = timezone(get_timezone_offset_timedelta())
+TypeError: timezone() argument 1 must be datetime.timedelta, not str
+2025-10-15 15:52:04,131 - __main__ - INFO - ==================================================
+2025-10-15 15:52:04,131 - __main__ - INFO - Starting BVC application
+2025-10-15 15:52:04,131 - __main__ - INFO - ==================================================
+2025-10-15 15:52:04,140 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 15:52:04,140 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 15:52:04,142 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 15:52:04,888 - pynest - INFO - [34mMarketService Detected [0m
+2025-10-15 15:52:04,888 - pynest - INFO - [32mMarketModule Detected [0m
+2025-10-15 15:52:04,888 - pynest - INFO - [34mAppService Detected [0m
+2025-10-15 15:52:04,888 - pynest - INFO - [32mAppModule Detected [0m
+2025-10-15 15:52:04,958 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 15:52:24,979 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 15:52:30,926 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:52:30,971 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 12 updated, 20 skipped
+2025-10-15 15:52:30,971 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:52:51,094 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 15:53:00,915 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:53:00,976 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 1 updated, 31 skipped
+2025-10-15 15:53:00,976 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:53:30,972 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:53:31,029 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 1 updated, 31 skipped
+2025-10-15 15:53:31,029 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:54:00,948 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:54:01,002 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 2 updated, 30 skipped
+2025-10-15 15:54:01,003 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:54:30,024 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 15:54:31,011 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:54:31,068 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 0 updated, 32 skipped
+2025-10-15 15:54:31,068 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:55:04,744 - __main__ - INFO - ==================================================
+2025-10-15 15:55:04,745 - __main__ - INFO - Starting BVC application
+2025-10-15 15:55:04,745 - __main__ - INFO - ==================================================
+2025-10-15 15:55:04,753 - __main__ - INFO - [OK] Database connected successfully
+2025-10-15 15:55:04,753 - __main__ - INFO - [OK] WebSocket client initialized
+2025-10-15 15:55:04,755 - src.ws.bvc - INFO - Starting BVC WebSocket client: wss://market.bolsadecaracas.com/socket.io/?EIO=4&transport=websocket
+2025-10-15 15:55:05,406 - pynest - INFO - [34mMarketService Detected [0m
+2025-10-15 15:55:05,406 - pynest - INFO - [32mMarketModule Detected [0m
+2025-10-15 15:55:05,407 - pynest - INFO - [34mAppService Detected [0m
+2025-10-15 15:55:05,407 - pynest - INFO - [32mAppModule Detected [0m
+2025-10-15 15:55:05,484 - src.ws.bvc - INFO - [OK] Connected to BVC WebSocket server
+2025-10-15 15:55:25,491 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 15:55:31,040 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:55:31,066 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 1 updated, 31 skipped
+2025-10-15 15:55:31,066 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:55:51,193 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 15:56:01,056 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:56:01,106 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 13 updated, 19 skipped
+2025-10-15 15:56:01,106 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:56:31,100 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:56:31,143 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 1 updated, 31 skipped
+2025-10-15 15:56:31,143 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:57:01,036 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:57:01,080 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 3 updated, 29 skipped
+2025-10-15 15:57:01,081 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:57:30,552 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 15:57:31,066 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:57:31,100 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 1 updated, 31 skipped
+2025-10-15 15:57:31,101 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:57:55,544 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 15:58:01,067 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:58:01,122 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 1 updated, 31 skipped
+2025-10-15 15:58:01,123 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:58:22,069 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 15:58:31,075 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:58:31,126 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 2 updated, 30 skipped
+2025-10-15 15:58:31,128 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:59:01,120 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:59:01,172 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 5 updated, 27 skipped
+2025-10-15 15:59:01,173 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 15:59:31,110 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 15:59:31,132 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 0 updated, 32 skipped
+2025-10-15 15:59:31,132 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 16:00:00,617 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 16:00:01,243 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 16:00:01,270 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 1 updated, 31 skipped
+2025-10-15 16:00:01,270 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 16:00:31,190 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 16:00:31,214 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 1 updated, 31 skipped
+2025-10-15 16:00:31,214 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 16:01:01,179 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 16:01:01,211 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 0 updated, 32 skipped
+2025-10-15 16:01:01,211 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 16:01:31,168 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 16:01:31,196 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 0 updated, 32 skipped
+2025-10-15 16:01:31,196 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 16:02:01,180 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 16:02:01,208 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 0 updated, 32 skipped
+2025-10-15 16:02:01,208 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 16:02:30,693 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 16:02:31,223 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 16:02:31,261 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 0 updated, 32 skipped
+2025-10-15 16:02:31,261 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 16:02:55,678 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 16:03:01,228 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 16:03:01,270 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 1 updated, 31 skipped
+2025-10-15 16:03:01,270 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 16:03:22,134 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 16:03:31,271 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 16:03:31,311 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 1 updated, 31 skipped
+2025-10-15 16:03:31,311 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 16:04:01,253 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 16:04:01,285 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 0 updated, 32 skipped
+2025-10-15 16:04:01,285 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 16:04:31,279 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 16:04:31,338 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 5 updated, 27 skipped
+2025-10-15 16:04:31,338 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 16:05:00,768 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 16:05:01,270 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 16:05:01,306 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 0 updated, 32 skipped
+2025-10-15 16:05:01,306 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 16:05:25,776 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 16:05:31,266 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 16:05:31,301 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 1 updated, 31 skipped
+2025-10-15 16:05:31,301 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 16:05:51,553 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 16:06:01,325 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 16:06:01,394 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 0 updated, 32 skipped
+2025-10-15 16:06:01,394 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 16:06:31,309 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 16:06:31,348 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 0 updated, 32 skipped
+2025-10-15 16:06:31,348 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 16:07:02,528 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 16:07:02,574 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 0 updated, 32 skipped
+2025-10-15 16:07:02,574 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 16:07:30,818 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 16:07:31,383 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 16:07:31,444 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 2 updated, 30 skipped
+2025-10-15 16:07:31,445 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 16:07:55,849 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 16:08:01,480 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 16:08:01,529 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 1 updated, 31 skipped
+2025-10-15 16:08:01,530 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 16:08:22,839 - src.ws.bvc - WARNING - Timeout receiving message
+2025-10-15 16:08:31,443 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 16:08:31,475 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 2 updated, 30 skipped
+2025-10-15 16:08:31,475 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 16:09:01,425 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 16:09:01,466 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 3 updated, 29 skipped
+2025-10-15 16:09:01,466 - src.ws.bvc - INFO - Saved 32 symbols to database
+2025-10-15 16:09:31,493 - src.ws.bvc - INFO - Server data received: 32 symbols
+2025-10-15 16:09:31,543 - src.ws.bvc - INFO - Processed 32 symbols: 0 new, 3 updated, 29 skipped
+2025-10-15 16:09:31,543 - src.ws.bvc - INFO - Saved 32 symbols to database

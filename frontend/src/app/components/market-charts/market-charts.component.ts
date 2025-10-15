@@ -10,7 +10,10 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Chart, ChartConfiguration, registerables } from 'chart.js';
-import { MarketInterface, HistoryInterface } from '../../services/http/market.service';
+import {
+  MarketInterface,
+  HistoryInterface,
+} from '../../services/http/market.service';
 
 // Registrar todos los componentes de Chart.js
 Chart.register(...registerables);
@@ -128,7 +131,7 @@ export class MarketChartsComponent implements OnInit, OnChanges {
   ngOnInit() {
     // Por defecto mostrar "Todos"
     this.selectedSymbol = 'ALL';
-    
+
     // Configurar fechas por defecto (últimos 3 meses)
     this.initializeDateRange();
   }
@@ -140,7 +143,7 @@ export class MarketChartsComponent implements OnInit, OnChanges {
 
     this.endDate = this.formatDateForInput(today);
     this.startDate = this.formatDateForInput(threeMonthsAgo);
-    
+
     // Establecer fechas mínimas y máximas si hay datos
     if (this.marketData.length > 0) {
       this.updateDateLimits();
@@ -156,22 +159,38 @@ export class MarketChartsComponent implements OnInit, OnChanges {
 
   updateDateLimits() {
     if (!this.marketData.length) return;
-    
-    const allDates = this.marketData.flatMap(m => 
-      m.history.map(h => new Date(h.timestamp))
+
+    const allDates = this.marketData.flatMap((m) =>
+      m.history.map((h) => new Date(h.timestamp))
     );
-    
+
     if (allDates.length > 0) {
-      const minDateTime = Math.min(...allDates.map(d => d.getTime()));
-      const maxDateTime = Math.max(...allDates.map(d => d.getTime()));
-      
+      const minDateTime = Math.min(...allDates.map((d) => d.getTime()));
+      const maxDateTime = Math.max(...allDates.map((d) => d.getTime()));
+
       this.minDate = this.formatDateForInput(new Date(minDateTime));
       this.maxDate = this.formatDateForInput(new Date(maxDateTime));
     }
   }
 
   onDateChange() {
+    // Validar que las fechas sean lógicas
+    this.validateDateRange();
     this.updateCharts();
+  }
+
+  validateDateRange() {
+    if (!this.startDate || !this.endDate) return;
+
+    const start = new Date(this.startDate);
+    const end = new Date(this.endDate);
+
+    // Si la fecha de inicio es posterior a la de fin, intercambiar
+    if (start > end) {
+      const temp = this.startDate;
+      this.startDate = this.endDate;
+      this.endDate = temp;
+    }
   }
 
   resetDateRange() {
@@ -180,35 +199,52 @@ export class MarketChartsComponent implements OnInit, OnChanges {
   }
 
   filterHistoryByDate(history: HistoryInterface[]): HistoryInterface[] {
-    if (!this.startDate || !this.endDate) return history;
-    
-    const start = new Date(this.startDate);
-    start.setHours(0, 0, 0, 0);
-    const end = new Date(this.endDate);
-    end.setHours(23, 59, 59, 999);
-    
-    return history.filter(h => {
+    if (!this.startDate || !this.endDate) {
+      return history;
+    }
+
+    // Crear fechas de comparación usando solo la parte de fecha
+    const startDateOnly = this.startDate; // Formato YYYY-MM-DD
+    const endDateOnly = this.endDate; // Formato YYYY-MM-DD
+
+    const filtered = history.filter((h) => {
       const historyDate = new Date(h.timestamp);
-      return historyDate >= start && historyDate <= end;
+
+      // Extraer solo la parte de fecha del timestamp (YYYY-MM-DD)
+      const historyDateStr = historyDate.toISOString().split('T')[0];
+
+      // Comparar strings de fecha directamente
+      const isInRange =
+        historyDateStr >= startDateOnly && historyDateStr <= endDateOnly;
+
+      return isInRange;
     });
+
+    return filtered;
   }
 
   getFilteredMarket(market: MarketInterface): MarketInterface {
     return {
       ...market,
-      history: this.filterHistoryByDate(market.history)
+      history: this.filterHistoryByDate(market.history),
     };
   }
 
   getFilteredMarketData(): MarketInterface[] {
-    return this.marketData.map(m => this.getFilteredMarket(m));
+    const filtered = this.marketData.map((m) => this.getFilteredMarket(m));
+    return filtered;
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['marketData'] && this.marketData.length > 0) {
+      // Si no hay fechas configuradas, inicializarlas
+      if (!this.startDate || !this.endDate) {
+        this.initializeDateRange();
+      }
+
       // Actualizar límites de fecha cuando cambien los datos
       this.updateDateLimits();
-      
+
       if (!this.selectedSymbol) {
         this.selectedSymbol = this.marketData[0].symbol;
         this.selectedMarket = this.marketData[0];
@@ -285,7 +321,7 @@ export class MarketChartsComponent implements OnInit, OnChanges {
     const filteredMarket = this.getFilteredMarket(this.selectedMarket);
     const history = filteredMarket.history;
     if (!history.length) return;
-    
+
     const labels = history.map((h) => h.market_time);
     const prices = history.map((h) => h.price);
 
@@ -358,7 +394,7 @@ export class MarketChartsComponent implements OnInit, OnChanges {
     const filteredMarket = this.getFilteredMarket(this.selectedMarket);
     const history = filteredMarket.history;
     if (!history.length) return;
-    
+
     const labels = history.map((h) => h.market_time);
     const volumes = history.map((h) => h.volume);
 
@@ -426,7 +462,7 @@ export class MarketChartsComponent implements OnInit, OnChanges {
     const filteredMarket = this.getFilteredMarket(this.selectedMarket);
     const history = filteredMarket.history;
     if (!history.length) return;
-    
+
     const labels = history.map((h) => h.market_time);
     const variations = history.map((h) => h.relative_variation);
 
