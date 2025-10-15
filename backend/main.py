@@ -69,4 +69,5 @@ if __name__ == "__main__":
         reload=False,
     )
 else:
+    # For Vercel
     from src.app_module import http_server as app
