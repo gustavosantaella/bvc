@@ -50,7 +50,6 @@ if db is None:  # Only initialize if not already connected
 # Export app for Vercel
 from src.app_module import http_server as app
 
-asyncio.run(connect_to_ws_bvc())
 
 if __name__ == "__main__":
     # Connect to database
