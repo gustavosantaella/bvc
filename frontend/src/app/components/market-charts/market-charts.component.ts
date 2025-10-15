@@ -9,7 +9,9 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { Chart, ChartConfiguration, registerables } from 'chart.js';
+import * as d3 from 'd3';
 import {
   MarketInterface,
   HistoryInterface,
@@ -21,7 +23,7 @@ Chart.register(...registerables);
 @Component({
   selector: 'app-market-charts',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NgSelectModule],
   templateUrl: './market-charts.component.html',
   styleUrl: './market-charts.component.css',
 })
@@ -29,19 +31,22 @@ export class MarketChartsComponent implements OnInit, OnChanges {
   @Input() marketData: MarketInterface[] = [];
 
   @ViewChild('priceChart') priceChartRef!: ElementRef<HTMLCanvasElement>;
-  @ViewChild('volumeChart') volumeChartRef!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('variationTreemap')
+  variationTreemapRef!: ElementRef<HTMLDivElement>;
   @ViewChild('variationChart')
   variationChartRef!: ElementRef<HTMLCanvasElement>;
 
   selectedSymbol = 'ALL';
+  selectedSymbols: string[] = [];
   selectedMarket: MarketInterface | null = null;
+  selectedMarkets: MarketInterface[] = [];
 
   priceChart: Chart | null = null;
-  volumeChart: Chart | null = null;
+  variationTreemap: any = null;
   variationChart: Chart | null = null;
 
   // Control de expansión de gráficos
-  expandedChart: 'price' | 'volume' | 'variation' | null = null;
+  expandedChart: 'price' | 'treemap' | 'variation' | null = null;
 
   // Filtro de fechas
   startDate: string = '';
@@ -53,7 +58,11 @@ export class MarketChartsComponent implements OnInit, OnChanges {
   Math = Math;
 
   isShowingAll(): boolean {
-    return this.selectedSymbol === 'ALL';
+    return this.selectedSymbol === 'ALL' || this.selectedSymbols.length === 0;
+  }
+
+  isMultipleSelected(): boolean {
+    return this.selectedSymbols.length > 1;
   }
 
   getMaxPrice(): number {
@@ -106,7 +115,7 @@ export class MarketChartsComponent implements OnInit, OnChanges {
     return this.getLastHistory()?.effective_amount || 0;
   }
 
-  toggleExpandChart(chartType: 'price' | 'volume' | 'variation') {
+  toggleExpandChart(chartType: 'price' | 'treemap' | 'variation') {
     if (this.expandedChart === chartType) {
       this.expandedChart = null;
     } else {
@@ -115,17 +124,67 @@ export class MarketChartsComponent implements OnInit, OnChanges {
     // Esperar a que el DOM se actualice y luego redimensionar los gráficos
     setTimeout(() => {
       if (this.priceChart) this.priceChart.resize();
-      if (this.volumeChart) this.volumeChart.resize();
+      if (this.variationTreemap) {
+        // Redimensionar el treemap
+        this.createVariationTreemap();
+      }
       if (this.variationChart) this.variationChart.resize();
     }, 300);
   }
 
-  isChartExpanded(chartType: 'price' | 'volume' | 'variation'): boolean {
+  isChartExpanded(chartType: 'price' | 'treemap' | 'variation'): boolean {
     return this.expandedChart === chartType;
   }
 
-  isChartMinimized(chartType: 'price' | 'volume' | 'variation'): boolean {
+  isChartMinimized(chartType: 'price' | 'treemap' | 'variation'): boolean {
     return this.expandedChart !== null && this.expandedChart !== chartType;
+  }
+
+  selectAllInstruments() {
+    this.selectedSymbols = this.marketData.map((m) => m.symbol);
+    this.updateSelectedMarkets();
+    this.updateCharts();
+  }
+
+  clearSelection() {
+    this.selectedSymbols = [];
+    this.selectedMarkets = [];
+    this.selectedSymbol = 'ALL';
+    this.updateCharts();
+  }
+
+  removeSymbol(symbol: string) {
+    this.selectedSymbols = this.selectedSymbols.filter((s) => s !== symbol);
+    this.updateSelectedMarkets();
+    this.updateCharts();
+  }
+
+  updateSelectedMarkets() {
+    this.selectedMarkets = this.marketData.filter((m) =>
+      this.selectedSymbols.includes(m.symbol)
+    );
+  }
+
+  onSymbolsChange(event: Event) {
+    const select = event.target as HTMLSelectElement;
+    this.selectedSymbols = Array.from(select.selectedOptions).map(
+      (option) => option.value
+    );
+    this.updateSelectedMarkets();
+    this.updateCharts();
+  }
+
+  onNgSelectChange() {
+    console.log('ng-select changed, selectedSymbols:', this.selectedSymbols);
+
+    // Asegurarse de que selectedSymbols sea un array válido
+    if (!Array.isArray(this.selectedSymbols)) {
+      this.selectedSymbols = [];
+    }
+
+    this.updateSelectedMarkets();
+    console.log('selectedMarkets:', this.selectedMarkets);
+    this.updateCharts();
   }
 
   ngOnInit() {
@@ -285,12 +344,17 @@ export class MarketChartsComponent implements OnInit, OnChanges {
     if (this.isShowingAll()) {
       if (!this.marketData.length) return;
       this.createAllPriceChart();
-      this.createAllVolumeChart();
+      this.createVariationTreemap();
       this.createAllVariationChart();
+    } else if (this.isMultipleSelected()) {
+      if (!this.selectedMarkets.length) return;
+      this.createMultiplePriceChart();
+      this.createVariationTreemap();
+      this.createMultipleVariationChart();
     } else {
       if (!this.selectedMarket || !this.selectedMarket.history.length) return;
       this.createPriceChart();
-      this.createVolumeChart();
+      this.createVariationTreemap();
       this.createVariationChart();
     }
   }
@@ -305,9 +369,9 @@ export class MarketChartsComponent implements OnInit, OnChanges {
       this.priceChart.destroy();
       this.priceChart = null;
     }
-    if (this.volumeChart) {
-      this.volumeChart.destroy();
-      this.volumeChart = null;
+    if (this.variationTreemap) {
+      d3.select(this.variationTreemapRef.nativeElement).selectAll('*').remove();
+      this.variationTreemap = null;
     }
     if (this.variationChart) {
       this.variationChart.destroy();
@@ -388,33 +452,60 @@ export class MarketChartsComponent implements OnInit, OnChanges {
     this.priceChart = new Chart(ctx, config);
   }
 
-  createVolumeChart() {
-    if (!this.selectedMarket || !this.volumeChartRef) return;
+  createMultiplePriceChart() {
+    if (!this.selectedMarkets.length || !this.priceChartRef) return;
 
-    const filteredMarket = this.getFilteredMarket(this.selectedMarket);
-    const history = filteredMarket.history;
-    if (!history.length) return;
-
-    const labels = history.map((h) => h.market_time);
-    const volumes = history.map((h) => h.volume);
-
-    const ctx = this.volumeChartRef.nativeElement.getContext('2d');
+    const ctx = this.priceChartRef.nativeElement.getContext('2d');
     if (!ctx) return;
 
+    const colors = [
+      'rgb(59, 130, 246)',
+      'rgb(16, 185, 129)',
+      'rgb(239, 68, 68)',
+      'rgb(245, 158, 11)',
+      'rgb(139, 92, 246)',
+      'rgb(236, 72, 153)',
+      'rgb(6, 182, 212)',
+      'rgb(251, 146, 60)',
+      'rgb(34, 197, 94)',
+      'rgb(168, 85, 247)',
+    ];
+
+    // Filtrar datos por fecha
+    const filteredMarkets = this.selectedMarkets.map((m) =>
+      this.getFilteredMarket(m)
+    );
+
+    // Obtener todas las etiquetas únicas
+    const allLabels = [
+      ...new Set(
+        filteredMarkets.flatMap((m) => m.history.map((h) => h.market_time))
+      ),
+    ].sort();
+
+    const datasets = filteredMarkets.map((market, index) => {
+      const color = colors[index % colors.length];
+      const priceMap = new Map(
+        market.history.map((h) => [h.market_time, h.price])
+      );
+      const data = allLabels.map((label) => priceMap.get(label) ?? null);
+
+      return {
+        label: market.symbol,
+        data: data,
+        borderColor: color,
+        backgroundColor: color.replace('rgb', 'rgba').replace(')', ', 0.1)'),
+        tension: 0.4,
+        fill: false,
+        pointRadius: 3,
+        pointHoverRadius: 6,
+        borderWidth: 2,
+      };
+    });
+
     const config: ChartConfiguration = {
-      type: 'bar',
-      data: {
-        labels: labels,
-        datasets: [
-          {
-            label: 'Volumen',
-            data: volumes,
-            backgroundColor: 'rgba(99, 102, 241, 0.6)',
-            borderColor: 'rgb(99, 102, 241)',
-            borderWidth: 1,
-          },
-        ],
-      },
+      type: 'line',
+      data: { labels: allLabels, datasets: datasets as any },
       options: {
         responsive: true,
         maintainAspectRatio: false,
@@ -425,7 +516,7 @@ export class MarketChartsComponent implements OnInit, OnChanges {
           },
           title: {
             display: true,
-            text: `Volumen de Operaciones - ${this.selectedMarket.symbol}`,
+            text: `Evolución de Precios - ${this.selectedSymbols.length} Instrumentos Seleccionados`,
             font: {
               size: 16,
               weight: 'bold',
@@ -438,9 +529,11 @@ export class MarketChartsComponent implements OnInit, OnChanges {
         },
         scales: {
           y: {
-            beginAtZero: true,
+            beginAtZero: false,
             ticks: {
-              callback: (value) => value.toLocaleString('es-CO'),
+              callback: function (value: any) {
+                return '$' + value.toFixed(2);
+              },
             },
           },
           x: {
@@ -453,7 +546,237 @@ export class MarketChartsComponent implements OnInit, OnChanges {
       },
     };
 
-    this.volumeChart = new Chart(ctx, config);
+    this.priceChart = new Chart(ctx, config);
+  }
+
+  createVariationTreemap() {
+    if (!this.variationTreemapRef) return;
+
+    // Limpiar el contenedor
+    d3.select(this.variationTreemapRef.nativeElement).selectAll('*').remove();
+
+    // Obtener datos
+    let data: any[] = [];
+
+    if (this.isShowingAll()) {
+      // Para vista "Todos", usar el último registro de cada instrumento
+      data = this.marketData.map((market) => {
+        const lastHistory = market.history[market.history.length - 1];
+        return {
+          symbol: market.symbol,
+          description: market.description,
+          variation: lastHistory?.relative_variation || 0,
+          volume: lastHistory?.volume || 0,
+          effective_amount: lastHistory?.effective_amount || 0,
+          price: lastHistory?.price || 0,
+        };
+      });
+    } else if (this.isMultipleSelected()) {
+      // Para múltiples instrumentos seleccionados, usar el último registro de cada uno
+      data = this.selectedMarkets.map((market) => {
+        const lastHistory = market.history[market.history.length - 1];
+        return {
+          symbol: market.symbol,
+          description: market.description,
+          variation: lastHistory?.relative_variation || 0,
+          volume: lastHistory?.volume || 0,
+          effective_amount: lastHistory?.effective_amount || 0,
+          price: lastHistory?.price || 0,
+        };
+      });
+    } else {
+      // Para instrumento individual, mostrar evolución de variación
+      if (!this.selectedMarket) return;
+      const filteredMarket = this.getFilteredMarket(this.selectedMarket);
+      data = filteredMarket.history.map((h) => ({
+        symbol: this.selectedMarket!.symbol,
+        description: this.selectedMarket!.description,
+        variation: h.relative_variation,
+        volume: h.volume,
+        effective_amount: h.effective_amount,
+        price: h.price,
+        time: h.market_time,
+      }));
+    }
+
+    // Filtrar datos con volumen > 0 para evitar bloques muy pequeños
+    data = data.filter((d) => d.volume > 0);
+
+    if (data.length === 0) return;
+
+    // Configurar el contenedor
+    const container = this.variationTreemapRef.nativeElement;
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+    const margin = { top: 10, right: 10, bottom: 10, left: 10 };
+
+    // Crear el SVG
+    const svg = d3
+      .select(container)
+      .append('svg')
+      .attr('width', width)
+      .attr('height', height);
+
+    // Configurar el treemap
+    const treemap = d3
+      .treemap()
+      .size([
+        width - margin.left - margin.right,
+        height - margin.top - margin.bottom,
+      ])
+      .padding(2);
+
+    // Preparar datos para D3 hierarchy
+    const root = d3
+      .hierarchy({ children: data } as any)
+      .sum((d: any) => d.effective_amount)
+      .sort((a, b) => (b.value || 0) - (a.value || 0));
+
+    treemap(root as any);
+
+    // Escala de colores
+    const colorScale = d3
+      .scaleLinear<string>()
+      .domain([
+        d3.min(data, (d) => d.variation) || 0,
+        d3.max(data, (d) => d.variation) || 0,
+      ])
+      .range(['#ef4444', '#10b981']);
+
+    // Crear los rectángulos
+    const cells = svg
+      .selectAll('.cell')
+      .data((root as any).leaves())
+      .enter()
+      .append('g')
+      .attr('class', 'cell')
+      .attr('transform', (d: any) => `translate(${d.x0},${d.y0})`);
+
+    cells
+      .append('rect')
+      .attr('width', (d: any) => d.x1 - d.x0)
+      .attr('height', (d: any) => d.y1 - d.y0)
+      .attr('fill', (d: any) => {
+        const variation = d.data.variation;
+        return variation >= 0 ? '#10b981' : '#ef4444';
+      })
+      .attr('fill-opacity', (d: any) => {
+        const variation = Math.abs(d.data.variation);
+        return Math.min(0.3 + variation / 30, 1);
+      })
+      .attr('stroke', '#ffffff')
+      .attr('stroke-width', 1)
+      .style('transition', 'all 0.2s ease');
+
+    // Agregar texto
+    cells
+      .append('text')
+      .attr('x', (d: any) => (d.x1 - d.x0) / 2)
+      .attr('y', (d: any) => (d.y1 - d.y0) / 2)
+      .attr('dy', '0.35em')
+      .attr('text-anchor', 'middle')
+      .attr('font-size', (d: any) => {
+        const area = (d.x1 - d.x0) * (d.y1 - d.y0);
+        return Math.max(8, Math.min(14, Math.sqrt(area) / 8)) + 'px';
+      })
+      .attr('font-weight', 'bold')
+      .attr('fill', '#ffffff')
+      .text(
+        (d: any) =>
+          `${d.data.symbol}\n(${
+            d.data.variation >= 0 ? '+' : ''
+          }${d.data.variation.toFixed(2)}%)`
+      );
+
+    // Agregar tooltips y eventos de click
+    cells
+      .style('cursor', 'pointer')
+      .on('mouseover', function (event: any, d: any) {
+        d3.select(this)
+          .select('rect')
+          .attr('stroke', '#000000')
+          .attr('stroke-width', 3)
+          .style('filter', 'brightness(1.1)');
+
+        // Crear tooltip
+        const tooltip = d3
+          .select('body')
+          .append('div')
+          .attr('class', 'treemap-tooltip')
+          .style('position', 'absolute')
+          .style('background', 'rgba(0, 0, 0, 0.8)')
+          .style('color', 'white')
+          .style('padding', '8px')
+          .style('border-radius', '4px')
+          .style('font-size', '12px')
+          .style('pointer-events', 'none')
+          .style('z-index', '1000');
+
+        tooltip.html(`
+          <strong>${d.data.symbol}</strong><br/>
+          ${d.data.description}<br/>
+          Variación: ${
+            d.data.variation >= 0 ? '+' : ''
+          }${d.data.variation.toFixed(2)}%<br/>
+          Precio: $${d.data.price.toFixed(2)}<br/>
+          Volumen: ${d.data.volume.toLocaleString()}<br/>
+          Monto: $${d.data.effective_amount.toLocaleString()}<br/>
+          <em>Click para seleccionar</em><br/>
+          <small>Ctrl+Click para selección múltiple</small>
+        `);
+      })
+      .on('mousemove', function (event: any) {
+        d3.select('.treemap-tooltip')
+          .style('left', event.pageX + 10 + 'px')
+          .style('top', event.pageY - 10 + 'px');
+      })
+      .on('mouseout', function () {
+        d3.select(this)
+          .select('rect')
+          .attr('stroke', '#ffffff')
+          .attr('stroke-width', 1)
+          .style('filter', 'none');
+        d3.select('.treemap-tooltip').remove();
+      })
+      .on('click', (event: any, d: any) => {
+        // Si Ctrl/Cmd está presionado, agregar/quitar de selección múltiple
+        if (event.ctrlKey || event.metaKey) {
+          const symbol = d.data.symbol;
+          if (this.selectedSymbols.includes(symbol)) {
+            this.removeSymbol(symbol);
+          } else {
+            this.selectedSymbols.push(symbol);
+            this.updateSelectedMarkets();
+            this.updateCharts();
+          }
+        } else {
+          // Selección única - reemplazar selección actual
+          this.selectedSymbols = [d.data.symbol];
+          this.selectedSymbol = d.data.symbol;
+          this.selectedMarket =
+            this.marketData.find((m) => m.symbol === d.data.symbol) || null;
+          this.updateSelectedMarkets();
+
+          // Expandir automáticamente el gráfico de variación
+          this.expandedChart = 'variation';
+
+          // Actualizar los gráficos
+          this.updateCharts();
+        }
+
+        // Scroll suave hacia la sección de gráficos
+        setTimeout(() => {
+          const chartsSection = document.querySelector('.space-y-6');
+          if (chartsSection) {
+            chartsSection.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+            });
+          }
+        }, 100);
+      });
+
+    this.variationTreemap = svg;
   }
 
   createVariationChart() {
@@ -651,95 +974,6 @@ export class MarketChartsComponent implements OnInit, OnChanges {
     this.priceChart = new Chart(ctx, config);
   }
 
-  createAllVolumeChart() {
-    if (!this.volumeChartRef || !this.marketData.length) return;
-
-    const ctx = this.volumeChartRef.nativeElement.getContext('2d');
-    if (!ctx) return;
-
-    const colors = [
-      'rgba(59, 130, 246, 0.6)',
-      'rgba(16, 185, 129, 0.6)',
-      'rgba(239, 68, 68, 0.6)',
-      'rgba(245, 158, 11, 0.6)',
-      'rgba(139, 92, 246, 0.6)',
-      'rgba(236, 72, 153, 0.6)',
-      'rgba(6, 182, 212, 0.6)',
-      'rgba(251, 146, 60, 0.6)',
-    ];
-
-    // Filtrar datos por fecha
-    const filteredData = this.getFilteredMarketData();
-
-    // Obtener todas las etiquetas únicas
-    const allLabels = [
-      ...new Set(
-        filteredData.flatMap((m) => m.history.map((h) => h.market_time))
-      ),
-    ].sort();
-
-    const datasets = filteredData.map((market, index) => {
-      const color = colors[index % colors.length];
-      // Crear un mapa de tiempo -> volumen para este mercado
-      const volumeMap = new Map(
-        market.history.map((h) => [h.market_time, h.volume])
-      );
-      // Crear array de datos alineado con las etiquetas
-      const data = allLabels.map((label) => volumeMap.get(label) ?? null);
-
-      return {
-        label: market.symbol,
-        data: data as any,
-        backgroundColor: color,
-        borderColor: color.replace('0.6', '1'),
-        borderWidth: 1,
-      };
-    });
-
-    const config: ChartConfiguration = {
-      type: 'bar',
-      data: { labels: allLabels, datasets: datasets as any },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: true,
-            position: 'top',
-          },
-          title: {
-            display: true,
-            text: 'Volumen de Operaciones - Todos los Instrumentos',
-            font: {
-              size: 16,
-              weight: 'bold',
-            },
-          },
-          tooltip: {
-            mode: 'index',
-            intersect: false,
-          },
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: {
-              callback: (value) => value.toLocaleString('es-CO'),
-            },
-          },
-          x: {
-            ticks: {
-              maxRotation: 45,
-              minRotation: 45,
-            },
-          },
-        },
-      },
-    };
-
-    this.volumeChart = new Chart(ctx, config);
-  }
-
   createAllVariationChart() {
     if (!this.variationChartRef || !this.marketData.length) return;
 
@@ -826,6 +1060,109 @@ export class MarketChartsComponent implements OnInit, OnChanges {
           y: {
             ticks: {
               callback: (value) => value + '%',
+            },
+          },
+          x: {
+            ticks: {
+              maxRotation: 45,
+              minRotation: 45,
+            },
+          },
+        },
+      },
+    };
+
+    this.variationChart = new Chart(ctx, config);
+  }
+
+  createMultipleVariationChart() {
+    if (!this.variationChartRef || !this.selectedMarkets.length) return;
+
+    const ctx = this.variationChartRef.nativeElement.getContext('2d');
+    if (!ctx) return;
+
+    const colors = [
+      'rgb(59, 130, 246)',
+      'rgb(16, 185, 129)',
+      'rgb(239, 68, 68)',
+      'rgb(245, 158, 11)',
+      'rgb(139, 92, 246)',
+      'rgb(236, 72, 153)',
+      'rgb(6, 182, 212)',
+      'rgb(251, 146, 60)',
+      'rgb(34, 197, 94)',
+      'rgb(168, 85, 247)',
+    ];
+
+    // Filtrar datos por fecha
+    const filteredMarkets = this.selectedMarkets.map((m) =>
+      this.getFilteredMarket(m)
+    );
+
+    // Obtener todas las etiquetas únicas
+    const allLabels = [
+      ...new Set(
+        filteredMarkets.flatMap((m) => m.history.map((h) => h.market_time))
+      ),
+    ].sort();
+
+    const datasets = filteredMarkets.map((market, index) => {
+      const color = colors[index % colors.length];
+      const variationMap = new Map(
+        market.history.map((h) => [h.market_time, h.relative_variation])
+      );
+      const data = allLabels.map((label) => variationMap.get(label) ?? null);
+
+      return {
+        label: market.symbol,
+        data: data as any,
+        borderColor: color,
+        backgroundColor: color.replace('rgb', 'rgba').replace(')', ', 0.1)'),
+        tension: 0.4,
+        fill: false,
+        pointRadius: 3,
+        pointHoverRadius: 6,
+        borderWidth: 2,
+        spanGaps: true,
+      };
+    });
+
+    const config: ChartConfiguration = {
+      type: 'line',
+      data: { labels: allLabels, datasets: datasets as any },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: `Evolución de Variación - ${this.selectedSymbols.length} Instrumentos Seleccionados`,
+            font: {
+              size: 16,
+              weight: 'bold',
+            },
+          },
+          tooltip: {
+            mode: 'index',
+            intersect: false,
+          },
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              callback: function (value: any) {
+                return value.toFixed(2) + '%';
+              },
+            },
+            grid: {
+              color: (context: any) => {
+                return context.tick.value === 0 ? '#ef4444' : '#e5e7eb';
+              },
             },
           },
           x: {

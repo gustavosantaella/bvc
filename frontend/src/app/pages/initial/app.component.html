@@ -155,7 +155,7 @@
     </div>
 
     <!-- Mobile menu -->
-    <div class="md:hidden" [class.hidden]="!showMobileMenu" [@slideDown]>
+    <div class="md:hidden" [class.hidden]="!showMobileMenu">
       <div class="px-2 pt-2 pb-3 space-y-1 border-t border-gray-200">
         <button
           (click)="scrollToSection('graph-market-data')"
@@ -240,7 +240,7 @@
       extraidos desde la pagina oficial de la Bolsa de Valores de Caracas
       <a href="https://www.bolsadecaracas.com/" target="_blank"
         >(Ver sitio oficial)</a
-      >
+      >.
     </div>
 
     <div

@@ -268,16 +268,15 @@ class BVCWebSocketClient:
                         )
 
                         current_hour = get_current_time().hour
+
+                        response = await self._handle_message(message)
                         if current_hour < 9 or current_hour == 13:
                             if self.is_running:
                                 logger.info(
                                     f"The time must be between 9am and 1pm. {get_current_time()}"
                                 )
-                            self.is_running = False
-                            break
-                        else:
-                            self.is_running = True
-                        response = await self._handle_message(message)
+                            # self.is_running = False
+                            continue
 
                         if response:
                             await websocket.send(response)

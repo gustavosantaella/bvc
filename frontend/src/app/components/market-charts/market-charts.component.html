@@ -1,26 +1,120 @@
 <div class="max-w-7xl mx-auto mb-12">
   <!-- Filtros -->
   <div class="mb-6 space-y-4">
-    <!-- Selector de Símbolo -->
+    <!-- Selector Múltiple de Símbolos -->
     <div>
-      <label
-        for="symbol-select"
-        class="block text-sm font-medium text-gray-700 mb-2"
-      >
-        Selecciona un instrumento para ver su comportamiento
+      <label class="block text-sm font-medium text-gray-700 mb-2">
+        Selecciona uno o más instrumentos para ver su comportamiento
       </label>
-      <select
-        id="symbol-select"
-        [(ngModel)]="selectedSymbol"
-        (change)="onSymbolChange($event)"
-        class="block w-full max-w-md px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900 font-medium transition-all duration-200"
-      >
-        <option value="ALL">🌍 Todos los Instrumentos</option>
-        <option disabled>──────────</option>
-        <option *ngFor="let market of marketData" [value]="market.symbol">
-          {{ market.symbol }} - {{ market.description }}
-        </option>
-      </select>
+      <div class="space-y-3">
+        <!-- Botón para seleccionar todos -->
+        <div class="flex gap-2">
+          <button
+            (click)="selectAllInstruments()"
+            class="px-3 py-2 bg-blue-100 text-blue-700 rounded-lg text-sm font-medium hover:bg-blue-200 transition-colors duration-200 flex items-center gap-1"
+          >
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            Seleccionar Todos
+          </button>
+          <button
+            (click)="clearSelection()"
+            class="px-3 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors duration-200 flex items-center gap-1"
+          >
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+            Limpiar Selección
+          </button>
+        </div>
+
+        <!-- ng-select -->
+        <ng-select
+          [items]="marketData"
+          bindLabel="description"
+          bindValue="symbol"
+          [(ngModel)]="selectedSymbols"
+          (ngModelChange)="onNgSelectChange()"
+          [multiple]="true"
+          [closeOnSelect]="false"
+          [searchable]="true"
+          [clearable]="true"
+          placeholder="🔍 Buscar y seleccionar instrumentos..."
+          notFoundText="No se encontraron instrumentos"
+          class="ng-select-custom"
+        >
+          <ng-template ng-label-tmp let-item="item" let-clear="clear">
+            <span class="ng-value-label">{{ item.symbol }}</span>
+            <span
+              class="ng-value-icon right"
+              (click)="clear(item)"
+              aria-hidden="true"
+              >×</span
+            >
+          </ng-template>
+          <ng-template ng-option-tmp let-item="item" let-index="index">
+            <div class="flex items-center justify-between py-1">
+              <div>
+                <span class="font-semibold text-gray-800">{{
+                  item.symbol
+                }}</span>
+                <span class="text-gray-600 text-sm ml-2">{{
+                  item.description
+                }}</span>
+              </div>
+              <span
+                *ngIf="item.history && item.history.length > 0"
+                [class]="
+                  item.history[item.history.length - 1].relative_variation >= 0
+                    ? 'text-green-600 text-xs font-medium'
+                    : 'text-red-600 text-xs font-medium'
+                "
+              >
+                {{
+                  item.history[item.history.length - 1].relative_variation >= 0
+                    ? "+"
+                    : ""
+                }}{{
+                  item.history[
+                    item.history.length - 1
+                  ].relative_variation.toFixed(2)
+                }}%
+              </span>
+            </div>
+          </ng-template>
+        </ng-select>
+
+        <!-- Información sobre selección actual -->
+        <div *ngIf="selectedSymbols.length > 0" class="text-sm text-gray-600">
+          <span class="font-medium"
+            >{{ selectedSymbols.length }} instrumento{{
+              selectedSymbols.length > 1 ? "s" : ""
+            }}
+            seleccionado{{ selectedSymbols.length > 1 ? "s" : "" }}</span
+          >
+        </div>
+      </div>
     </div>
 
     <!-- Filtro de Fechas -->
@@ -208,25 +302,25 @@
 
     <!-- Grid de 2 gráficos -->
     <div class="grid md:grid-cols-2 gap-6">
-      <!-- Gráfico de Volumen -->
+      <!-- Treemap de Variación -->
       <div
         class="bg-white rounded-xl shadow-lg p-6 transition-all duration-300"
-        [class.md:col-span-2]="isChartExpanded('volume')"
-        [class.opacity-50]="isChartMinimized('volume')"
-        [class.scale-95]="isChartMinimized('volume')"
+        [class.md:col-span-2]="isChartExpanded('treemap')"
+        [class.opacity-50]="isChartMinimized('treemap')"
+        [class.scale-95]="isChartMinimized('treemap')"
       >
         <div class="flex justify-between items-center mb-4">
           <h3 class="text-lg font-semibold text-gray-700">
-            Gráfico de Volumen
+            Gráfico de Variación
           </h3>
           <button
-            (click)="toggleExpandChart('volume')"
+            (click)="toggleExpandChart('treemap')"
             class="p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200 group"
-            [title]="isChartExpanded('volume') ? 'Minimizar' : 'Expandir'"
+            [title]="isChartExpanded('treemap') ? 'Minimizar' : 'Expandir'"
           >
             <svg
-              *ngIf="!isChartExpanded('volume')"
-              class="w-5 h-5 text-gray-600 group-hover:text-indigo-600"
+              *ngIf="!isChartExpanded('treemap')"
+              class="w-5 h-5 text-gray-600 group-hover:text-green-600"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -239,8 +333,8 @@
               />
             </svg>
             <svg
-              *ngIf="isChartExpanded('volume')"
-              class="w-5 h-5 text-indigo-600 group-hover:text-gray-600"
+              *ngIf="isChartExpanded('treemap')"
+              class="w-5 h-5 text-green-600 group-hover:text-gray-600"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -255,10 +349,10 @@
           </button>
         </div>
         <div
-          [class.h-80]="!isChartExpanded('volume')"
-          [class.h-96]="isChartExpanded('volume')"
+          [class.h-80]="!isChartExpanded('treemap')"
+          [class.h-96]="isChartExpanded('treemap')"
         >
-          <canvas #volumeChart></canvas>
+          <div #variationTreemap class="w-full h-full"></div>
         </div>
       </div>
 
