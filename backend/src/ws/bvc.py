@@ -377,7 +377,7 @@ if __name__ == "__main__":
     try:
         from database.mongo import start_db
 
-        start_db()
+        db = start_db()
         logger.info("[OK] Database connected successfully")
     except Exception as e:
         logger.error(f"[ERROR] Error connecting to database: {e}", exc_info=True)

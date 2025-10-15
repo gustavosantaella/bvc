@@ -20,12 +20,10 @@ app = PyNestFactory.create(
 )
 
 # Configure CORS
-from fastapi.middleware.cors import CORSMiddleware
 
 http_server = app.get_server()
 
 http_server.add_middleware(
-    CORSMiddleware,
     allow_origins=["*"],
     allow_credentials=False,
     allow_methods=["*"],
