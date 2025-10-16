@@ -641,7 +641,7 @@ export class MarketChartsComponent implements OnInit, OnChanges {
       }
 
       return {
-        x: new Date(h.timestamp).getTime(),
+        x: index, // Usar el índice en lugar del timestamp
         o: open,
         h: high,
         l: low,
@@ -664,9 +664,13 @@ export class MarketChartsComponent implements OnInit, OnChanges {
     const ctx = this.priceChartRef.nativeElement.getContext('2d');
     if (!ctx) return;
 
+    // Preparar las etiquetas con market_time para mostrar fechas/horas agrupadas
+    const labels = processedHistory.map((h) => h.market_time);
+
     const config: any = {
       type: 'candlestick',
       data: {
+        labels: labels, // Agregar labels con las fechas/horas personalizadas
         datasets: [
           {
             label: this.selectedMarket.symbol,
@@ -730,13 +734,6 @@ export class MarketChartsComponent implements OnInit, OnChanges {
             },
           },
           x: {
-            type: 'timeseries',
-            time: {
-              unit: 'day',
-              displayFormats: {
-                day: 'MMM dd',
-              },
-            },
             ticks: {
               maxRotation: 45,
               minRotation: 45,
