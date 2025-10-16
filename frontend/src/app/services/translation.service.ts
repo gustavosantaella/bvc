@@ -465,6 +465,18 @@ export class TranslationService {
       es: 'Estado del Mercado',
       en: 'Market Status',
     },
+    'footer.developedWith': {
+      es: 'Desarrollado con',
+      en: 'Developed with',
+    },
+    'footer.status': {
+      es: 'Estado',
+      en: 'Status',
+    },
+    'footer.online': {
+      es: 'En línea',
+      en: 'Online',
+    },
   };
 
   constructor() {
