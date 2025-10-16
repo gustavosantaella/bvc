@@ -426,8 +426,8 @@ export class TranslationService {
       en: 'Current time',
     },
     'footer.rights': {
-      es: 'Todos los derechos y datos pertenecen a la Bolsa de Valores de Caracas.',
-      en: 'All rights and data belong to the Caracas Stock Exchange.',
+      es: 'Los datos pertenecen a la Bolsa de Valores de Caracas.',
+      en: 'The data belong to the Caracas Stock Exchange.',
     },
     'footer.community': {
       es: 'Por la comunidad',
