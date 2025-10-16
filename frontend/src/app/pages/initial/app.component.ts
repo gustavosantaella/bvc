@@ -45,6 +45,7 @@ export class AppComponent implements OnInit {
     this.getMarketData();
     this.updateTime();
     setInterval(() => this.updateTime(), 1000);
+    setInterval(() => this.getMarketData(), 600000);
   }
 
   updateTime() {
