@@ -441,6 +441,18 @@ export class TranslationService {
       es: 'Información',
       en: 'Information',
     },
+    'market.open': {
+      es: 'Abierto',
+      en: 'Open',
+    },
+    'market.closed': {
+      es: 'Cerrado',
+      en: 'Closed',
+    },
+    'market.status': {
+      es: 'Estado del Mercado',
+      en: 'Market Status',
+    },
   };
 
   constructor() {

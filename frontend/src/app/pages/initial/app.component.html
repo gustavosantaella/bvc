@@ -272,8 +272,145 @@
   </nav>
 </header>
 
+<!-- Breadcrumb Sticky -->
+<div class="fixed top-20 right-4 z-50 hidden lg:block">
+  <div
+    class="relative transition-all duration-300 ease-in-out overflow-visible"
+    [class.w-12]="!showMarketPanel"
+    [class.h-12]="!showMarketPanel"
+    [class.w-64]="showMarketPanel"
+    [class.h-auto]="showMarketPanel"
+    [class.min-h-fit]="showMarketPanel"
+  >
+    <!-- Botón de información -->
+    <button
+      (click)="toggleMarketPanel()"
+      class="absolute top-0 right-0 transition-all duration-300 ease-in-out z-50 cursor-pointer flex items-center justify-center rounded-lg shadow-xl hover:shadow-2xl hover:scale-110"
+      [class.w-12]="true"
+      [class.h-12]="true"
+      [class.border-2]="true"
+      [class.border-green-500]="marketStatus.isOpen"
+      [class.border-red-500]="!marketStatus.isOpen"
+      [class.bg-green-500]="marketStatus.isOpen"
+      [class.bg-red-500]="!marketStatus.isOpen"
+      [class.text-white]="true"
+    >
+      <!-- Icono de información -->
+      <svg
+        class="w-6 h-6"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+        ></path>
+      </svg>
+    </button>
+
+    <!-- Panel expandido -->
+    <div
+      *ngIf="showMarketPanel"
+      class="absolute top-0 right-0 w-64 bg-white border-2 border-gray-200 rounded-lg shadow-2xl z-50 transition-all duration-300 ease-in-out"
+    >
+      <!-- Botón de cerrar -->
+      <button
+        (click)="toggleMarketPanel()"
+        class="absolute top-2 right-2 w-6 h-6 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-800 transition-colors duration-200"
+        title="Cerrar panel"
+      >
+        <svg
+          class="w-4 h-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          ></path>
+        </svg>
+      </button>
+
+      <!-- Contenido del panel -->
+      <div class="p-4">
+        <div class="flex items-center space-x-3 mb-3">
+          <div
+            class="w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-lg flex items-center justify-center"
+          >
+            <span class="text-white font-bold text-sm">📊</span>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-gray-800">
+              {{ t("market.status") }}
+            </h3>
+            <p class="text-xs text-gray-500">{{ today }}</p>
+          </div>
+        </div>
+
+        <!-- Estado del Mercado -->
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-sm font-medium text-gray-700"
+            >{{ t("market.status") }}:</span
+          >
+          <div class="flex items-center space-x-2">
+            <div
+              class="w-3 h-3 rounded-full {{
+                marketStatus.statusClass
+              }} animate-pulse"
+            ></div>
+            <span
+              class="text-sm font-semibold"
+              [class.text-green-600]="marketStatus.isOpen"
+              [class.text-red-600]="!marketStatus.isOpen"
+            >
+              {{ marketStatus.status }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Hora Actual -->
+        <div class="border-t border-gray-200 pt-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-gray-500"
+              >{{ t("footer.currentTime") }}:</span
+            >
+            <span class="text-sm font-mono font-bold text-gray-800">{{
+              currentTime
+            }}</span>
+          </div>
+        </div>
+
+        <!-- Horario del Mercado -->
+        <div class="mt-3 pt-3 border-t border-gray-200">
+          <div class="text-xs text-gray-500">
+            <div class="flex items-center justify-between mb-1">
+              <span>Horario:</span>
+              <span class="font-semibold">9:00 AM - 1:00 PM</span>
+            </div>
+            <div class="text-center">
+              <span class="text-xs text-gray-400">
+                {{
+                  marketStatus.isOpen
+                    ? "🟢 Mercado activo"
+                    : "🔴 Mercado cerrado"
+                }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div
-  class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-4 md:p-8 w-full"
+  class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-4 md:p-8 w-full relative"
 >
   <div class="w-full">
     <div
@@ -947,7 +1084,8 @@
                     (click)="sortTable('description')"
                     class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider cursor-pointer hover:bg-blue-700 transition-colors duration-200"
                   >
-                    {{ t("table.description") }} {{ getSortIcon("description") }}
+                    {{ t("table.description") }}
+                    {{ getSortIcon("description") }}
                   </th>
                   <th
                     (click)="sortTable('price')"

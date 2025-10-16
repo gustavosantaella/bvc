@@ -28,6 +28,7 @@ export class AppComponent implements OnInit {
   loading = true;
   error = '';
   showHistoryTable = false;
+  showMarketPanel = false;
   selectedMarket: MarketInterface | null = null;
   currentTime = '';
   showMobileMenu = false;
@@ -501,5 +502,23 @@ export class AppComponent implements OnInit {
 
     if (!worstMarket || !worstHistory) return null;
     return { market: worstMarket, history: worstHistory };
+  }
+
+  get marketStatus(): { isOpen: boolean; status: string; statusClass: string } {
+    const now = new Date();
+    const currentHour = now.getHours();
+
+    // Mercado abierto de 9:00 AM a 1:00 PM (13:00)
+    const isOpen = currentHour >= 9 && currentHour < 13;
+
+    return {
+      isOpen,
+      status: isOpen ? this.t('market.open') : this.t('market.closed'),
+      statusClass: isOpen ? 'bg-green-500' : 'bg-red-500',
+    };
+  }
+
+  toggleMarketPanel() {
+    this.showMarketPanel = !this.showMarketPanel;
   }
 }
