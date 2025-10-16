@@ -66,14 +66,13 @@ export class AppComponent implements OnInit {
     this.loading = true;
     this.marketService.getMarketData().subscribe({
       next: (data: any) => {
-        const allData = data.data as MarketInterface[];
+        this.marketData = data.data as MarketInterface[];
 
-        // Filtrar solo los instrumentos que tienen datos de hoy
-        this.marketData = allData.filter((market) =>
+        // Filtrar solo los que tienen datos de hoy para la tabla
+        this.filteredMarketData = this.marketData.filter((market) =>
           this.hasDataFromToday(market)
         );
 
-        this.filteredMarketData = this.marketData;
         this.loading = false;
       },
       error: (err) => {

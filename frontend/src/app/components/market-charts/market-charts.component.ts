@@ -512,6 +512,63 @@ export class MarketChartsComponent implements OnInit, OnChanges {
     }
   }
 
+  // Procesar historial para mostrar: último registro de fechas pasadas + todos los registros de hoy
+  processHistoryForDisplay(history: HistoryInterface[]): HistoryInterface[] {
+    if (!history || history.length === 0) {
+      return [];
+    }
+
+    const groupedByDate = new Map<string, HistoryInterface[]>();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const todayStr = today.toISOString().split('T')[0];
+
+    // Agrupar por fecha
+    history.forEach((h) => {
+      const date = new Date(h.timestamp).toISOString().split('T')[0];
+      if (!groupedByDate.has(date)) {
+        groupedByDate.set(date, []);
+      }
+      groupedByDate.get(date)!.push(h);
+    });
+
+    const processedHistory: HistoryInterface[] = [];
+    const dates = Array.from(groupedByDate.keys()).sort();
+
+    dates.forEach((date) => {
+      const dateRecords = groupedByDate.get(date)!;
+
+      // Ordenar registros de esta fecha por hora
+      dateRecords.sort(
+        (a, b) =>
+          new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
+      );
+
+      const isToday = date === todayStr;
+
+      if (isToday) {
+        // Para registros de hoy, agregar TODOS con la hora
+        processedHistory.push(...dateRecords);
+      } else {
+        // Para fechas pasadas, solo el ÚLTIMO registro con la fecha en el label
+        const lastRecord = dateRecords[dateRecords.length - 1];
+        const recordDate = new Date(lastRecord.timestamp);
+        const formattedDate = recordDate.toLocaleDateString('es-VE', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+        });
+
+        processedHistory.push({
+          ...lastRecord,
+          market_time: `📅 ${formattedDate}`, // Mostrar fecha completa
+        });
+      }
+    });
+
+    return processedHistory;
+  }
+
   // Función auxiliar para generar datos OHLC simulados desde precios históricos
   generateOHLCData(history: HistoryInterface[]) {
     return history.map((h, index) => {
@@ -550,10 +607,12 @@ export class MarketChartsComponent implements OnInit, OnChanges {
     if (!this.selectedMarket || !this.priceChartRef) return;
 
     const filteredMarket = this.getFilteredMarket(this.selectedMarket);
-    const history = filteredMarket.history;
-    if (!history.length) return;
+    const processedHistory = this.processHistoryForDisplay(
+      filteredMarket.history
+    );
+    if (!processedHistory.length) return;
 
-    const ohlcData = this.generateOHLCData(history);
+    const ohlcData = this.generateOHLCData(processedHistory);
 
     const ctx = this.priceChartRef.nativeElement.getContext('2d');
     if (!ctx) return;
@@ -662,10 +721,14 @@ export class MarketChartsComponent implements OnInit, OnChanges {
       'rgb(168, 85, 247)',
     ];
 
-    // Filtrar datos por fecha
-    const filteredMarkets = this.selectedMarkets.map((m) =>
-      this.getFilteredMarket(m)
-    );
+    // Filtrar datos por fecha y procesar el historial
+    const filteredMarkets = this.selectedMarkets.map((m) => {
+      const filtered = this.getFilteredMarket(m);
+      return {
+        ...filtered,
+        history: this.processHistoryForDisplay(filtered.history),
+      };
+    });
 
     // Obtener todas las etiquetas únicas
     const allLabels = [
@@ -977,11 +1040,13 @@ export class MarketChartsComponent implements OnInit, OnChanges {
     if (!this.selectedMarket || !this.variationChartRef) return;
 
     const filteredMarket = this.getFilteredMarket(this.selectedMarket);
-    const history = filteredMarket.history;
-    if (!history.length) return;
+    const processedHistory = this.processHistoryForDisplay(
+      filteredMarket.history
+    );
+    if (!processedHistory.length) return;
 
-    const labels = history.map((h) => h.market_time);
-    const variations = history.map((h) => h.relative_variation);
+    const labels = processedHistory.map((h) => h.market_time);
+    const variations = processedHistory.map((h) => h.relative_variation);
 
     const ctx = this.variationChartRef.nativeElement.getContext('2d');
     if (!ctx) return;
@@ -1093,11 +1158,13 @@ export class MarketChartsComponent implements OnInit, OnChanges {
     if (!this.selectedMarket) return;
 
     const filteredMarket = this.getFilteredMarket(this.selectedMarket);
-    const history = filteredMarket.history;
-    if (!history.length) return;
+    const processedHistory = this.processHistoryForDisplay(
+      filteredMarket.history
+    );
+    if (!processedHistory.length) return;
 
-    const labels = history.map((h) => h.market_time);
-    const volumes = history.map((h) => h.volume);
+    const labels = processedHistory.map((h) => h.market_time);
+    const volumes = processedHistory.map((h) => h.volume);
 
     const config: ChartConfiguration = {
       type: 'bar',
@@ -1175,7 +1242,12 @@ export class MarketChartsComponent implements OnInit, OnChanges {
       'rgba(236, 72, 153, 0.6)',
     ];
 
-    const filteredData = this.getFilteredMarketData();
+    // Filtrar datos por fecha y procesar el historial
+    const filteredData = this.getFilteredMarketData().map((m) => ({
+      ...m,
+      history: this.processHistoryForDisplay(m.history),
+    }));
+
     const allLabels = [
       ...new Set(
         filteredData.flatMap((m) => m.history.map((h) => h.market_time))
@@ -1256,9 +1328,15 @@ export class MarketChartsComponent implements OnInit, OnChanges {
       'rgba(236, 72, 153, 0.6)',
     ];
 
-    const filteredMarkets = this.selectedMarkets.map((m) =>
-      this.getFilteredMarket(m)
-    );
+    // Filtrar datos por fecha y procesar el historial
+    const filteredMarkets = this.selectedMarkets.map((m) => {
+      const filtered = this.getFilteredMarket(m);
+      return {
+        ...filtered,
+        history: this.processHistoryForDisplay(filtered.history),
+      };
+    });
+
     const allLabels = [
       ...new Set(
         filteredMarkets.flatMap((m) => m.history.map((h) => h.market_time))
@@ -1348,11 +1426,13 @@ export class MarketChartsComponent implements OnInit, OnChanges {
     if (!this.selectedMarket) return;
 
     const filteredMarket = this.getFilteredMarket(this.selectedMarket);
-    const history = filteredMarket.history;
-    if (!history.length) return;
+    const processedHistory = this.processHistoryForDisplay(
+      filteredMarket.history
+    );
+    if (!processedHistory.length) return;
 
-    const labels = history.map((h) => h.market_time);
-    const amounts = history.map((h) => h.effective_amount);
+    const labels = processedHistory.map((h) => h.market_time);
+    const amounts = processedHistory.map((h) => h.effective_amount);
 
     const config: ChartConfiguration = {
       type: 'line',
@@ -1435,7 +1515,12 @@ export class MarketChartsComponent implements OnInit, OnChanges {
       'rgb(236, 72, 153)',
     ];
 
-    const filteredData = this.getFilteredMarketData();
+    // Filtrar datos por fecha y procesar el historial
+    const filteredData = this.getFilteredMarketData().map((m) => ({
+      ...m,
+      history: this.processHistoryForDisplay(m.history),
+    }));
+
     const allLabels = [
       ...new Set(
         filteredData.flatMap((m) => m.history.map((h) => h.market_time))
@@ -1523,9 +1608,15 @@ export class MarketChartsComponent implements OnInit, OnChanges {
       'rgb(236, 72, 153)',
     ];
 
-    const filteredMarkets = this.selectedMarkets.map((m) =>
-      this.getFilteredMarket(m)
-    );
+    // Filtrar datos por fecha y procesar el historial
+    const filteredMarkets = this.selectedMarkets.map((m) => {
+      const filtered = this.getFilteredMarket(m);
+      return {
+        ...filtered,
+        history: this.processHistoryForDisplay(filtered.history),
+      };
+    });
+
     const allLabels = [
       ...new Set(
         filteredMarkets.flatMap((m) => m.history.map((h) => h.market_time))
@@ -1619,8 +1710,11 @@ export class MarketChartsComponent implements OnInit, OnChanges {
       'rgb(251, 146, 60)',
     ];
 
-    // Filtrar datos por fecha
-    const filteredData = this.getFilteredMarketData();
+    // Filtrar datos por fecha y procesar el historial
+    const filteredData = this.getFilteredMarketData().map((m) => ({
+      ...m,
+      history: this.processHistoryForDisplay(m.history),
+    }));
 
     // Obtener todas las etiquetas únicas
     const allLabels = [
@@ -1714,8 +1808,11 @@ export class MarketChartsComponent implements OnInit, OnChanges {
       'rgb(251, 146, 60)',
     ];
 
-    // Filtrar datos por fecha
-    const filteredData = this.getFilteredMarketData();
+    // Filtrar datos por fecha y procesar el historial
+    const filteredData = this.getFilteredMarketData().map((m) => ({
+      ...m,
+      history: this.processHistoryForDisplay(m.history),
+    }));
 
     // Obtener todas las etiquetas únicas
     const allLabels = [
@@ -1817,10 +1914,14 @@ export class MarketChartsComponent implements OnInit, OnChanges {
       'rgb(168, 85, 247)',
     ];
 
-    // Filtrar datos por fecha
-    const filteredMarkets = this.selectedMarkets.map((m) =>
-      this.getFilteredMarket(m)
-    );
+    // Filtrar datos por fecha y procesar el historial
+    const filteredMarkets = this.selectedMarkets.map((m) => {
+      const filtered = this.getFilteredMarket(m);
+      return {
+        ...filtered,
+        history: this.processHistoryForDisplay(filtered.history),
+      };
+    });
 
     // Obtener todas las etiquetas únicas
     const allLabels = [
