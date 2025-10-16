@@ -863,6 +863,50 @@
         </div>
       </div>
 
+      <!-- Filtros -->
+      <div *ngIf="!loading && !error" class="mb-6">
+        <div class="flex flex-wrap gap-3 items-center">
+          <span class="text-sm font-medium text-gray-700"
+            >{{ t("filters.title") }}:</span
+          >
+
+          <button
+            (click)="setFilter('all')"
+            [class.bg-blue-600]="currentFilter === 'all'"
+            [class.text-white]="currentFilter === 'all'"
+            [class.bg-gray-100]="currentFilter !== 'all'"
+            [class.text-gray-700]="currentFilter !== 'all'"
+            class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:shadow-md"
+          >
+            {{ t("filters.all") }}
+          </button>
+
+          <button
+            (click)="setFilter('gainers')"
+            [class.bg-green-600]="currentFilter === 'gainers'"
+            [class.text-white]="currentFilter === 'gainers'"
+            [class.bg-gray-100]="currentFilter !== 'gainers'"
+            [class.text-gray-700]="currentFilter !== 'gainers'"
+            class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:shadow-md flex items-center space-x-1"
+          >
+            <span>📈</span>
+            <span>{{ t("filters.gainers") }}</span>
+          </button>
+
+          <button
+            (click)="setFilter('losers')"
+            [class.bg-red-600]="currentFilter === 'losers'"
+            [class.text-white]="currentFilter === 'losers'"
+            [class.bg-gray-100]="currentFilter !== 'losers'"
+            [class.text-gray-700]="currentFilter !== 'losers'"
+            class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:shadow-md flex items-center space-x-1"
+          >
+            <span>📉</span>
+            <span>{{ t("filters.losers") }}</span>
+          </button>
+        </div>
+      </div>
+
       <!-- Loading State -->
       <div *ngIf="loading" class="flex justify-center items-center py-20">
         <div
@@ -894,39 +938,46 @@
               <thead class="bg-gradient-to-r from-blue-600 to-indigo-700">
                 <tr>
                   <th
-                    class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider"
+                    (click)="sortTable('symbol')"
+                    class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider cursor-pointer hover:bg-blue-700 transition-colors duration-200"
                   >
-                    {{ t("table.symbol") }}
+                    {{ t("table.symbol") }} {{ getSortIcon("symbol") }}
                   </th>
                   <th
-                    class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider"
+                    (click)="sortTable('description')"
+                    class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider cursor-pointer hover:bg-blue-700 transition-colors duration-200"
                   >
-                    {{ t("table.description") }}
+                    {{ t("table.description") }} {{ getSortIcon("description") }}
                   </th>
                   <th
-                    class="px-6 py-4 text-right text-xs font-semibold text-white uppercase tracking-wider"
+                    (click)="sortTable('price')"
+                    class="px-6 py-4 text-right text-xs font-semibold text-white uppercase tracking-wider cursor-pointer hover:bg-blue-700 transition-colors duration-200"
                   >
-                    {{ t("table.price") }}
+                    {{ t("table.price") }} {{ getSortIcon("price") }}
                   </th>
                   <th
-                    class="px-6 py-4 text-right text-xs font-semibold text-white uppercase tracking-wider"
+                    (click)="sortTable('variation')"
+                    class="px-6 py-4 text-right text-xs font-semibold text-white uppercase tracking-wider cursor-pointer hover:bg-blue-700 transition-colors duration-200"
                   >
-                    {{ t("table.variation") }}
+                    {{ t("table.variation") }} {{ getSortIcon("variation") }}
                   </th>
                   <th
-                    class="px-6 py-4 text-right text-xs font-semibold text-white uppercase tracking-wider"
+                    (click)="sortTable('volume')"
+                    class="px-6 py-4 text-right text-xs font-semibold text-white uppercase tracking-wider cursor-pointer hover:bg-blue-700 transition-colors duration-200"
                   >
-                    {{ t("table.volume") }}
+                    {{ t("table.volume") }} {{ getSortIcon("volume") }}
                   </th>
                   <th
-                    class="px-6 py-4 text-right text-xs font-semibold text-white uppercase tracking-wider"
+                    (click)="sortTable('amount')"
+                    class="px-6 py-4 text-right text-xs font-semibold text-white uppercase tracking-wider cursor-pointer hover:bg-blue-700 transition-colors duration-200"
                   >
-                    {{ t("table.amount") }}
+                    {{ t("table.amount") }} {{ getSortIcon("amount") }}
                   </th>
                   <th
-                    class="px-6 py-4 text-center text-xs font-semibold text-white uppercase tracking-wider"
+                    (click)="sortTable('time')"
+                    class="px-6 py-4 text-center text-xs font-semibold text-white uppercase tracking-wider cursor-pointer hover:bg-blue-700 transition-colors duration-200"
                   >
-                    {{ t("table.time") }}
+                    {{ t("table.time") }} {{ getSortIcon("time") }}
                   </th>
                   <th
                     class="px-6 py-4 text-center text-xs font-semibold text-white uppercase tracking-wider"
@@ -1252,34 +1303,40 @@
               <thead class="bg-gray-50">
                 <tr>
                   <th
-                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    (click)="sortHistory('date')"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors duration-200"
                   >
-                    Fecha
+                    Fecha {{ getHistorySortIcon("date") }}
                   </th>
                   <th
-                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    (click)="sortHistory('time')"
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors duration-200"
                   >
-                    Hora
+                    Hora {{ getHistorySortIcon("time") }}
                   </th>
                   <th
-                    class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    (click)="sortHistory('price')"
+                    class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors duration-200"
                   >
-                    Precio ($)
+                    Precio ($) {{ getHistorySortIcon("price") }}
                   </th>
                   <th
-                    class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    (click)="sortHistory('variation')"
+                    class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors duration-200"
                   >
-                    Variación %
+                    Variación % {{ getHistorySortIcon("variation") }}
                   </th>
                   <th
-                    class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    (click)="sortHistory('volume')"
+                    class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors duration-200"
                   >
-                    Volumen
+                    Volumen {{ getHistorySortIcon("volume") }}
                   </th>
                   <th
-                    class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    (click)="sortHistory('amount')"
+                    class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors duration-200"
                   >
-                    Monto ($)
+                    Monto ($) {{ getHistorySortIcon("amount") }}
                   </th>
                 </tr>
               </thead>

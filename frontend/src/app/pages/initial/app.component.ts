@@ -32,6 +32,15 @@ export class AppComponent implements OnInit {
   currentTime = '';
   showMobileMenu = false;
 
+  // Filtros
+  currentFilter: 'all' | 'gainers' | 'losers' = 'all';
+
+  // Ordenamiento
+  sortColumn: string = '';
+  sortDirection: 'asc' | 'desc' = 'asc';
+  historySortColumn: string = '';
+  historySortDirection: 'asc' | 'desc' = 'asc';
+
   today = new Date().toLocaleDateString('es-VE', {
     day: '2-digit',
     month: '2-digit',
@@ -133,23 +142,197 @@ export class AppComponent implements OnInit {
   }
 
   filterMarketData() {
-    if (!this.searchTerm) {
-      this.filteredMarketData = this.marketData;
-      return;
+    let filtered = this.marketData.filter((market) => {
+      // Aplicar filtro de búsqueda
+      if (this.searchTerm) {
+        const symbolMatch = market.symbol
+          .toLowerCase()
+          .includes(this.searchTerm);
+        const descriptionMatch = market.description
+          .toLowerCase()
+          .includes(this.searchTerm);
+        if (!symbolMatch && !descriptionMatch) return false;
+      }
+
+      // Aplicar filtro de ganancia/pérdida
+      const lastHistory = this.getLastHistory(market);
+      if (!lastHistory) return false;
+
+      switch (this.currentFilter) {
+        case 'gainers':
+          return lastHistory.relative_variation > 0;
+        case 'losers':
+          return lastHistory.relative_variation < 0;
+        default:
+          return true;
+      }
+    });
+
+    // Aplicar ordenamiento
+    if (this.sortColumn) {
+      filtered = this.sortData(filtered, this.sortColumn, this.sortDirection);
     }
 
-    this.filteredMarketData = this.marketData.filter((market) => {
-      const symbolMatch = market.symbol.toLowerCase().includes(this.searchTerm);
-      const descriptionMatch = market.description
-        .toLowerCase()
-        .includes(this.searchTerm);
-      return symbolMatch || descriptionMatch;
-    });
+    this.filteredMarketData = filtered;
   }
 
   clearSearch() {
     this.searchTerm = '';
-    this.filteredMarketData = this.marketData;
+    this.currentFilter = 'all';
+    this.sortColumn = '';
+    this.sortDirection = 'asc';
+    this.filterMarketData();
+  }
+
+  // Métodos para filtros
+  setFilter(filter: 'all' | 'gainers' | 'losers') {
+    this.currentFilter = filter;
+    this.filterMarketData();
+  }
+
+  // Métodos para ordenamiento
+  sortData(
+    data: MarketInterface[],
+    column: string,
+    direction: 'asc' | 'desc'
+  ): MarketInterface[] {
+    return [...data].sort((a, b) => {
+      const lastHistoryA = this.getLastHistory(a);
+      const lastHistoryB = this.getLastHistory(b);
+
+      if (!lastHistoryA || !lastHistoryB) return 0;
+
+      let valueA: any;
+      let valueB: any;
+
+      switch (column) {
+        case 'symbol':
+          valueA = a.symbol;
+          valueB = b.symbol;
+          break;
+        case 'description':
+          valueA = a.description;
+          valueB = b.description;
+          break;
+        case 'price':
+          valueA = lastHistoryA.price;
+          valueB = lastHistoryB.price;
+          break;
+        case 'variation':
+          valueA = lastHistoryA.relative_variation;
+          valueB = lastHistoryB.relative_variation;
+          break;
+        case 'volume':
+          valueA = lastHistoryA.volume;
+          valueB = lastHistoryB.volume;
+          break;
+        case 'amount':
+          valueA = lastHistoryA.effective_amount;
+          valueB = lastHistoryB.effective_amount;
+          break;
+        case 'time':
+          valueA = new Date(lastHistoryA.timestamp).getTime();
+          valueB = new Date(lastHistoryB.timestamp).getTime();
+          break;
+        default:
+          return 0;
+      }
+
+      if (typeof valueA === 'string' && typeof valueB === 'string') {
+        return direction === 'asc'
+          ? valueA.localeCompare(valueB)
+          : valueB.localeCompare(valueA);
+      }
+
+      return direction === 'asc' ? valueA - valueB : valueB - valueA;
+    });
+  }
+
+  sortTable(column: string) {
+    if (this.sortColumn === column) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortColumn = column;
+      this.sortDirection = 'asc';
+    }
+    this.filterMarketData();
+  }
+
+  // Métodos para ordenamiento del historial
+  sortHistory(column: string) {
+    if (!this.selectedMarket) return;
+
+    if (this.historySortColumn === column) {
+      this.historySortDirection =
+        this.historySortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.historySortColumn = column;
+      this.historySortDirection = 'asc';
+    }
+
+    this.selectedMarket.history = this.sortHistoryData(
+      this.selectedMarket.history,
+      column,
+      this.historySortDirection
+    );
+  }
+
+  sortHistoryData(
+    data: HistoryInterface[],
+    column: string,
+    direction: 'asc' | 'desc'
+  ): HistoryInterface[] {
+    return [...data].sort((a, b) => {
+      let valueA: any;
+      let valueB: any;
+
+      switch (column) {
+        case 'date':
+          valueA = new Date(a.timestamp).getTime();
+          valueB = new Date(b.timestamp).getTime();
+          break;
+        case 'time':
+          valueA = a.market_time;
+          valueB = b.market_time;
+          break;
+        case 'price':
+          valueA = a.price;
+          valueB = b.price;
+          break;
+        case 'variation':
+          valueA = a.relative_variation;
+          valueB = b.relative_variation;
+          break;
+        case 'volume':
+          valueA = a.volume;
+          valueB = b.volume;
+          break;
+        case 'amount':
+          valueA = a.effective_amount;
+          valueB = b.effective_amount;
+          break;
+        default:
+          return 0;
+      }
+
+      if (typeof valueA === 'string' && typeof valueB === 'string') {
+        return direction === 'asc'
+          ? valueA.localeCompare(valueB)
+          : valueB.localeCompare(valueA);
+      }
+
+      return direction === 'asc' ? valueA - valueB : valueB - valueA;
+    });
+  }
+
+  getSortIcon(column: string): string {
+    if (this.sortColumn !== column) return '↕️';
+    return this.sortDirection === 'asc' ? '↑' : '↓';
+  }
+
+  getHistorySortIcon(column: string): string {
+    if (this.historySortColumn !== column) return '↕️';
+    return this.historySortDirection === 'asc' ? '↑' : '↓';
   }
 
   getLastHistory(market: MarketInterface): HistoryInterface | null {

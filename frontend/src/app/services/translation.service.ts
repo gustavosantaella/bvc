@@ -362,6 +362,28 @@ export class TranslationService {
       en: 'Abs. Var',
     },
 
+    // Filtros
+    'filters.all': {
+      es: 'Todos',
+      en: 'All',
+    },
+    'filters.gainers': {
+      es: 'En Subida',
+      en: 'Gainers',
+    },
+    'filters.losers': {
+      es: 'En Pérdida',
+      en: 'Losers',
+    },
+    'filters.title': {
+      es: 'Filtros',
+      en: 'Filters',
+    },
+    'sort.title': {
+      es: 'Ordenar por',
+      en: 'Sort by',
+    },
+
     // Footer
     'footer.about': {
       es: 'Sistema de Información de Mercado de la Bolsa de Valores de Caracas. Datos actualizados en tiempo real.',
