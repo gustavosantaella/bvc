@@ -231,6 +231,34 @@ export class TranslationService {
       es: 'No hay datos de hoy disponibles',
       en: 'No data available from today',
     },
+    'worst.title': {
+      es: '⚠️ Instrumentos con Menor Rendimiento',
+      en: '⚠️ Worst Performing Instruments',
+    },
+    'worst.yesterday': {
+      es: 'Menor Rendimiento de Ayer',
+      en: "Yesterday's Worst",
+    },
+    'worst.yesterdayDesc': {
+      es: 'Menor variación del día anterior',
+      en: 'Lowest variation from previous day',
+    },
+    'worst.today': {
+      es: 'Menor Rendimiento de Hoy',
+      en: "Today's Worst",
+    },
+    'worst.todayDesc': {
+      es: 'Menor variación del día actual',
+      en: 'Lowest variation from current day',
+    },
+    'worst.noYesterdayData': {
+      es: 'No hay datos de ayer disponibles',
+      en: 'No data available from yesterday',
+    },
+    'worst.noTodayData': {
+      es: 'No hay datos de hoy disponibles',
+      en: 'No data available from today',
+    },
 
     // Table
     'table.title': {

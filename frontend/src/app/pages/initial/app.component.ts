@@ -249,4 +249,74 @@ export class AppComponent implements OnInit {
     if (!topMarket || !topHistory) return null;
     return { market: topMarket, history: topHistory };
   }
+
+  getWorstPerformerYesterday(): {
+    market: MarketInterface;
+    history: HistoryInterface;
+  } | null {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    yesterday.setHours(0, 0, 0, 0);
+    const yesterdayStr = yesterday.toISOString().split('T')[0];
+
+    let worstMarket: MarketInterface | null = null;
+    let worstHistory: HistoryInterface | null = null;
+    let minVariation = Infinity;
+
+    this.marketData.forEach((market) => {
+      // Buscar el último registro de ayer
+      const yesterdayRecords = market.history.filter((h) => {
+        const recordDate = new Date(h.timestamp).toISOString().split('T')[0];
+        return recordDate === yesterdayStr;
+      });
+
+      if (yesterdayRecords.length > 0) {
+        const lastYesterdayRecord =
+          yesterdayRecords[yesterdayRecords.length - 1];
+        if (lastYesterdayRecord.relative_variation < minVariation) {
+          minVariation = lastYesterdayRecord.relative_variation;
+          worstMarket = market;
+          worstHistory = lastYesterdayRecord;
+        }
+      }
+    });
+
+    if (!worstMarket || !worstHistory) return null;
+    return { market: worstMarket, history: worstHistory };
+  }
+
+  getWorstPerformerToday(): {
+    market: MarketInterface;
+    history: HistoryInterface;
+  } | null {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const todayStr = today.toISOString().split('T')[0];
+
+    // Filtrar solo instrumentos que tienen datos de hoy
+    const marketsWithToday = this.marketData.filter((market) => {
+      return market.history.some((h) => {
+        const recordDate = new Date(h.timestamp).toISOString().split('T')[0];
+        return recordDate === todayStr;
+      });
+    });
+
+    if (marketsWithToday.length === 0) return null;
+
+    let worstMarket: MarketInterface | null = null;
+    let worstHistory: HistoryInterface | null = null;
+    let minVariation = Infinity;
+
+    marketsWithToday.forEach((market) => {
+      const lastHistory = this.getLastHistory(market);
+      if (lastHistory && lastHistory.relative_variation < minVariation) {
+        minVariation = lastHistory.relative_variation;
+        worstMarket = market;
+        worstHistory = lastHistory;
+      }
+    });
+
+    if (!worstMarket || !worstHistory) return null;
+    return { market: worstMarket, history: worstHistory };
+  }
 }
