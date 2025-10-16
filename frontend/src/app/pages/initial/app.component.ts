@@ -72,10 +72,20 @@ export class AppComponent implements OnInit {
     inject();
     injectSpeedInsights();
 
+    this.removeMarketDataIfBetweenHours(9, 13);
+
     this.getMarketData();
     this.updateTime();
     setInterval(() => this.updateTime(), 1000);
     setInterval(() => this.getMarketData(), 600000);
+  }
+
+  removeMarketDataIfBetweenHours(startHour: number, endHour: number) {
+    const now = new Date();
+    const currentHour = now.getHours();
+    if (currentHour >= startHour && currentHour < endHour) {
+      localStorage.removeItem('marketData');
+    }
   }
 
   updateTime() {
@@ -101,6 +111,15 @@ export class AppComponent implements OnInit {
 
   getMarketData() {
     this.loading = true;
+    const marketData = localStorage.getItem('marketData');
+    if (marketData) {
+      this.marketData = JSON.parse(marketData) as MarketInterface[];
+      this.filteredMarketData = this.marketData.filter((market) =>
+        this.hasDataFromToday(market)
+      );
+      this.loading = false;
+      return;
+    }
     this.marketService.getMarketData().subscribe({
       next: (data: any) => {
         this.marketData = data.data as MarketInterface[];
@@ -109,6 +128,7 @@ export class AppComponent implements OnInit {
         this.filteredMarketData = this.marketData.filter((market) =>
           this.hasDataFromToday(market)
         );
+        localStorage.setItem('marketData', JSON.stringify(this.marketData));
 
         this.loading = false;
       },
