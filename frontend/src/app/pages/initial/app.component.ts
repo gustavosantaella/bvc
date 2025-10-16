@@ -66,7 +66,13 @@ export class AppComponent implements OnInit {
     this.loading = true;
     this.marketService.getMarketData().subscribe({
       next: (data: any) => {
-        this.marketData = data.data as MarketInterface[];
+        const allData = data.data as MarketInterface[];
+
+        // Filtrar solo los instrumentos que tienen datos de hoy
+        this.marketData = allData.filter((market) =>
+          this.hasDataFromToday(market)
+        );
+
         this.filteredMarketData = this.marketData;
         this.loading = false;
       },
@@ -76,6 +82,22 @@ export class AppComponent implements OnInit {
         console.error(err);
       },
     });
+  }
+
+  hasDataFromToday(market: MarketInterface): boolean {
+    if (!market.history || market.history.length === 0) {
+      return false;
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Resetear a medianoche para comparar solo fechas
+
+    // Verificar si el último registro es de hoy
+    const lastHistory = market.history[market.history.length - 1];
+    const lastDate = new Date(lastHistory.timestamp);
+    lastDate.setHours(0, 0, 0, 0);
+
+    return lastDate.getTime() === today.getTime();
   }
 
   onSearch(event: Event) {

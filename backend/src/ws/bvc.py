@@ -104,16 +104,16 @@ class BVCWebSocketClient:
                     event_type = data[0]
 
                     if event_type == "serverData" and len(data) > 1:
-                        logger.info(f"Server data received: {len(data[1])} symbols")
+                        print(f"Server data received: {len(data[1])} symbols")
                         await self._process_server_data(data[1])
 
             else:
                 logger.debug(f"Unrecognized message: {message}")
 
         except json.JSONDecodeError as e:
-            logger.error(f"JSON decode error: {e}, message: {message}")
+            print(f"JSON decode error: {e}, message: {message}")
         except Exception as e:
-            logger.error(f"Error processing message: {e}", exc_info=True)
+            print(f"Error processing message: {e}")
 
     async def _process_server_data(self, data: List[Dict[str, Any]]) -> None:
         """
@@ -142,10 +142,10 @@ class BVCWebSocketClient:
 
             if symbols_data:
                 await self._save_data(symbols_data)
-                logger.info(f"Saved {len(symbols_data)} symbols to database")
+                print(f"Saved {len(symbols_data)} symbols to database")
 
         except Exception as e:
-            logger.error(f"Error processing server data: {e}", exc_info=True)
+            print(f"Error processing server data: {e}")
 
     async def _save_data(self, symbols_data: List[Dict[str, Any]]) -> None:
         """
@@ -161,7 +161,7 @@ class BVCWebSocketClient:
         try:
 
             if db is None:
-                logger.error("Database not initialized")
+                print("Database not initialized")
                 return
 
             collection = db["market_data"]
@@ -250,13 +250,13 @@ class BVCWebSocketClient:
                             f"Duplicate record skipped: {symbol_code} (date: {current_date}, time: {market_time})"
                         )
 
-            logger.info(
+            print(
                 f"Processed {len(symbols_data)} symbols: "
                 f"{inserted_count} new, {updated_count} updated, {skipped_count} skipped"
             )
 
         except Exception as e:
-            logger.error(f"Error saving data: {e}", exc_info=True)
+            print(f"Error saving data: {e}")
 
     async def _connect_and_listen(self) -> None:
         """
@@ -273,7 +273,7 @@ class BVCWebSocketClient:
                 ping_interval=self.ping_interval,
                 ping_timeout=self.ping_timeout,
             ) as websocket:
-                logger.info("[OK] Connected to BVC WebSocket server")
+                print("[OK] Connected to BVC WebSocket server")
 
                 # Send initial handshake message
                 await websocket.send("40")
@@ -295,14 +295,13 @@ class BVCWebSocketClient:
                                 print(
                                     f"The time must be between 9am and 1pm. {get_current_time()}"
                                 )
-                                logger.info(
+                                print(
                                     f"The time must be between 9am and 1pm. {get_current_time()}"
                                 )
                             # self.is_running = False
                             continue
                         else:
                             print("The time is between 9am and 1pm")
-                            logger.info("The time is between 9am and 1pm")
 
                         if response:
                             await websocket.send(response)
@@ -313,10 +312,10 @@ class BVCWebSocketClient:
                         await websocket.ping()
 
         except websockets.exceptions.WebSocketException as e:
-            logger.error(f"WebSocket error: {e}")
+            print(f"WebSocket error: {e}")
             raise
         except Exception as e:
-            logger.error(f"Unexpected connection error: {e}", exc_info=True)
+            print(f"Unexpected connection error: {e}")
             raise
 
     async def start(self) -> None:
@@ -326,7 +325,7 @@ class BVCWebSocketClient:
         self.is_running = True
         reconnect_attempts = 0
 
-        logger.info(f"Starting BVC WebSocket client: {self.ws_url}")
+        print(f"Starting BVC WebSocket client: {self.ws_url}")
         print("IS RUNNING", self.is_running)
         while self.is_running and reconnect_attempts < self.max_reconnect_attempts:
             try:
@@ -342,13 +341,13 @@ class BVCWebSocketClient:
                     logger.warning(
                         f"Connection lost ({reconnect_attempts}/{self.max_reconnect_attempts}): {e}"
                     )
-                    logger.info(f"Reconnecting in {self.reconnect_delay} seconds...")
+                    print(f"Reconnecting in {self.reconnect_delay} seconds...")
                     await asyncio.sleep(self.reconnect_delay)
                 else:
                     break
 
             except Exception as e:
-                logger.error(f"Critical error: {e}", exc_info=True)
+                print(f"Critical error: {e}")
                 reconnect_attempts += 1
                 if reconnect_attempts < self.max_reconnect_attempts:
                     await asyncio.sleep(self.reconnect_delay)
@@ -356,15 +355,15 @@ class BVCWebSocketClient:
                     break
 
         if reconnect_attempts >= self.max_reconnect_attempts:
-            logger.error("Maximum reconnection attempts reached")
+            print("Maximum reconnection attempts reached")
 
-        logger.info("BVC WebSocket client stopped")
+        print("BVC WebSocket client stopped")
 
     async def stop(self) -> None:
         """
         Stop WebSocket client cleanly.
         """
-        logger.info("Stopping BVC WebSocket client...")
+        print("Stopping BVC WebSocket client...")
         self.is_running = False
 
 
@@ -384,19 +383,19 @@ if __name__ == "__main__":
         from database.mongo import start_db
 
         db = start_db()
-        logger.info("[OK] Database connected successfully")
+        print("[OK] Database connected successfully")
     except Exception as e:
-        logger.error(f"[ERROR] Error connecting to database: {e}", exc_info=True)
+        print(f"[ERROR] Error connecting to database: {e}")
         sys.exit(1)
 
     # Start the WebSocket client
-    logger.info("Starting BVC WebSocket client...")
+    print("Starting BVC WebSocket client...")
     try:
         asyncio.run(connect_to_ws_bvc())
     except Exception as e:
-        logger.error(f"[ERROR] Error starting BVC WebSocket client: {e}", exc_info=True)
+        print(f"[ERROR] Error starting BVC WebSocket client: {e}")
         sys.exit(1)
     except KeyboardInterrupt:
         print("KeyboardInterrupt")
-        logger.info("Stopping BVC WebSocket client...")
+        print("Stopping BVC WebSocket client...")
         sys.exit(0)
