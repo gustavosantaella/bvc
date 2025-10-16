@@ -1,0 +1,14 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://bvc-analytics.vercel.app/sitemap.xml
+
+# Disallow specific paths (if needed)
+# Disallow: /api/
+# Disallow: /private/
+
+# Crawl-delay for polite crawlers
+Crawl-delay: 1
+

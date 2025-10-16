@@ -1,0 +1,35 @@
+{
+  "name": "BVC Analytics - Bolsa de Valores de Caracas",
+  "short_name": "BVC Analytics",
+  "description": "Plataforma de análisis en tiempo real de la Bolsa de Valores de Caracas",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1F2937",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/assets/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["finance", "business"],
+  "lang": "es-VE",
+  "dir": "ltr",
+  "scope": "/",
+  "prefer_related_applications": false
+}
+
