@@ -159,4 +159,67 @@ export class AppComponent implements OnInit {
     this.showHistoryTable = false;
     this.selectedMarket = null;
   }
+
+  // Obtener el instrumento más destacado (mayor variación positiva)
+  getTopPerformerToday(): {
+    market: MarketInterface;
+    history: HistoryInterface;
+  } | null {
+    const marketsWithToday = this.marketData.filter((m) =>
+      this.hasDataFromToday(m)
+    );
+
+    if (marketsWithToday.length === 0) return null;
+
+    let topMarket: MarketInterface | null = null;
+    let topHistory: HistoryInterface | null = null;
+    let maxVariation = -Infinity;
+
+    marketsWithToday.forEach((market) => {
+      const lastHistory = this.getLastHistory(market);
+      if (lastHistory && lastHistory.relative_variation > maxVariation) {
+        maxVariation = lastHistory.relative_variation;
+        topMarket = market;
+        topHistory = lastHistory;
+      }
+    });
+
+    if (!topMarket || !topHistory) return null;
+    return { market: topMarket, history: topHistory };
+  }
+
+  getTopPerformerYesterday(): {
+    market: MarketInterface;
+    history: HistoryInterface;
+  } | null {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    yesterday.setHours(0, 0, 0, 0);
+    const yesterdayStr = yesterday.toISOString().split('T')[0];
+
+    let topMarket: MarketInterface | null = null;
+    let topHistory: HistoryInterface | null = null;
+    let maxVariation = -Infinity;
+
+    this.marketData.forEach((market) => {
+      // Buscar el último registro de ayer
+      const yesterdayRecords = market.history.filter((h) => {
+        const recordDate = new Date(h.timestamp).toISOString().split('T')[0];
+        return recordDate === yesterdayStr;
+      });
+
+      if (yesterdayRecords.length > 0) {
+        const lastYesterdayRecord =
+          yesterdayRecords[yesterdayRecords.length - 1];
+        if (lastYesterdayRecord.relative_variation > maxVariation) {
+          maxVariation = lastYesterdayRecord.relative_variation;
+          topMarket = market;
+          topHistory = lastYesterdayRecord;
+        }
+      }
+    });
+
+    if (!topMarket || !topHistory) return null;
+    return { market: topMarket, history: topHistory };
+  }
 }
