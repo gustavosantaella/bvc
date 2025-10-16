@@ -49,11 +49,11 @@ export class MarketChartsComponent implements OnInit, OnChanges {
   variationChartRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('volumeChart') volumeChartRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('amountChart') amountChartRef!: ElementRef<HTMLCanvasElement>;
-  @ViewChild('correlationChart')
+  @ViewChild('correlationChartRef')
   correlationChartRef!: ElementRef<HTMLCanvasElement>;
-  @ViewChild('volatilityChart')
+  @ViewChild('volatilityChartRef')
   volatilityChartRef!: ElementRef<HTMLCanvasElement>;
-  @ViewChild('distributionChart')
+  @ViewChild('distributionChartRef')
   distributionChartRef!: ElementRef<HTMLCanvasElement>;
 
   selectedSymbol = 'ALL';
