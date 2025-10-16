@@ -11,14 +11,19 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { Chart, ChartConfiguration, registerables } from 'chart.js';
+import {
+  CandlestickController,
+  CandlestickElement,
+} from 'chartjs-chart-financial';
+import 'chartjs-adapter-date-fns';
 import * as d3 from 'd3';
 import {
   MarketInterface,
   HistoryInterface,
 } from '../../services/http/market.service';
 
-// Registrar todos los componentes de Chart.js
-Chart.register(...registerables);
+// Registrar todos los componentes de Chart.js incluyendo candlestick
+Chart.register(...registerables, CandlestickController, CandlestickElement);
 
 @Component({
   selector: 'app-market-charts',
@@ -183,7 +188,23 @@ export class MarketChartsComponent implements OnInit, OnChanges {
     }
 
     this.updateSelectedMarkets();
+
+    // Actualizar selectedMarket para instrumentos individuales
+    if (this.selectedSymbols.length === 1) {
+      this.selectedSymbol = this.selectedSymbols[0];
+      this.selectedMarket =
+        this.marketData.find((m) => m.symbol === this.selectedSymbols[0]) ||
+        null;
+    } else if (this.selectedSymbols.length === 0) {
+      this.selectedSymbol = 'ALL';
+      this.selectedMarket = null;
+    } else {
+      // Múltiples seleccionados
+      this.selectedMarket = null;
+    }
+
     console.log('selectedMarkets:', this.selectedMarkets);
+    console.log('selectedMarket (single):', this.selectedMarket);
     this.updateCharts();
   }
 
@@ -361,22 +382,73 @@ export class MarketChartsComponent implements OnInit, OnChanges {
 
   updateCharts() {
     this.destroyCharts();
-    this.createCharts();
+    // Esperar un momento para que el canvas se limpie completamente
+    setTimeout(() => {
+      this.createCharts();
+    }, 0);
   }
 
   destroyCharts() {
     if (this.priceChart) {
-      this.priceChart.destroy();
+      try {
+        this.priceChart.destroy();
+      } catch (e) {
+        console.warn('Error al destruir priceChart:', e);
+      }
       this.priceChart = null;
     }
     if (this.variationTreemap) {
-      d3.select(this.variationTreemapRef.nativeElement).selectAll('*').remove();
+      try {
+        d3.select(this.variationTreemapRef.nativeElement)
+          .selectAll('*')
+          .remove();
+      } catch (e) {
+        console.warn('Error al destruir variationTreemap:', e);
+      }
       this.variationTreemap = null;
     }
     if (this.variationChart) {
-      this.variationChart.destroy();
+      try {
+        this.variationChart.destroy();
+      } catch (e) {
+        console.warn('Error al destruir variationChart:', e);
+      }
       this.variationChart = null;
     }
+  }
+
+  // Función auxiliar para generar datos OHLC simulados desde precios históricos
+  generateOHLCData(history: HistoryInterface[]) {
+    return history.map((h, index) => {
+      const price = h.price;
+      const prevPrice = index > 0 ? history[index - 1].price : price;
+
+      // Calcular volatilidad aproximada basada en la variación
+      const volatility = (Math.abs(h.relative_variation) / 100) * price * 0.3;
+
+      let open, high, low, close;
+
+      close = price;
+      open = prevPrice;
+
+      // Si el precio subió (close > open)
+      if (close >= open) {
+        high = close + volatility;
+        low = open - volatility * 0.5;
+      } else {
+        // Si el precio bajó (close < open)
+        high = open + volatility * 0.5;
+        low = close - volatility;
+      }
+
+      return {
+        x: new Date(h.timestamp).getTime(),
+        o: open,
+        h: high,
+        l: low,
+        c: close,
+      };
+    });
   }
 
   createPriceChart() {
@@ -386,27 +458,28 @@ export class MarketChartsComponent implements OnInit, OnChanges {
     const history = filteredMarket.history;
     if (!history.length) return;
 
-    const labels = history.map((h) => h.market_time);
-    const prices = history.map((h) => h.price);
+    const ohlcData = this.generateOHLCData(history);
 
     const ctx = this.priceChartRef.nativeElement.getContext('2d');
     if (!ctx) return;
 
-    const config: ChartConfiguration = {
-      type: 'line',
+    const config: any = {
+      type: 'candlestick',
       data: {
-        labels: labels,
         datasets: [
           {
-            label: 'Precio ($)',
-            data: prices,
-            borderColor: 'rgb(59, 130, 246)',
-            backgroundColor: 'rgba(59, 130, 246, 0.1)',
-            tension: 0.4,
-            fill: true,
-            pointRadius: 3,
-            pointHoverRadius: 6,
-            borderWidth: 2,
+            label: this.selectedMarket.symbol,
+            data: ohlcData,
+            borderColor: {
+              up: 'rgb(34, 197, 94)', // Verde para subidas
+              down: 'rgb(239, 68, 68)', // Rojo para bajadas
+              unchanged: 'rgb(156, 163, 175)',
+            },
+            backgroundColor: {
+              up: 'rgba(34, 197, 94, 0.3)',
+              down: 'rgba(239, 68, 68, 0.3)',
+              unchanged: 'rgba(156, 163, 175, 0.3)',
+            },
           },
         ],
       },
@@ -420,7 +493,7 @@ export class MarketChartsComponent implements OnInit, OnChanges {
           },
           title: {
             display: true,
-            text: `Evolución del Precio - ${this.selectedMarket.symbol}`,
+            text: `Gráfico de Velas - ${this.selectedMarket.symbol}`,
             font: {
               size: 16,
               weight: 'bold',
@@ -429,17 +502,40 @@ export class MarketChartsComponent implements OnInit, OnChanges {
           tooltip: {
             mode: 'index',
             intersect: false,
+            callbacks: {
+              label: (context: any) => {
+                const data = context.raw;
+                const diff = data.c - data.o;
+                const diffPercent = ((diff / data.o) * 100).toFixed(2);
+                return [
+                  `Apertura: $${data.o.toFixed(2)}`,
+                  `Máximo: $${data.h.toFixed(2)}`,
+                  `Mínimo: $${data.l.toFixed(2)}`,
+                  `Cierre: $${data.c.toFixed(2)}`,
+                  `Variación: ${diff >= 0 ? '+' : ''}$${diff.toFixed(
+                    2
+                  )} (${diffPercent}%)`,
+                ];
+              },
+            },
           },
         },
         scales: {
           y: {
             beginAtZero: false,
             ticks: {
-              callback: (value) =>
+              callback: (value: any) =>
                 '$' + (typeof value === 'number' ? value.toFixed(2) : value),
             },
           },
           x: {
+            type: 'timeseries',
+            time: {
+              unit: 'day',
+              displayFormats: {
+                day: 'MMM dd',
+              },
+            },
             ticks: {
               maxRotation: 45,
               minRotation: 45,
