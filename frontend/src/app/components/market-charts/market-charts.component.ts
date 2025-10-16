@@ -21,6 +21,7 @@ import {
   MarketInterface,
   HistoryInterface,
 } from '../../services/http/market.service';
+import { TranslationService } from '../../services/translation.service';
 
 // Registrar todos los componentes de Chart.js incluyendo candlestick
 Chart.register(...registerables, CandlestickController, CandlestickElement);
@@ -34,6 +35,12 @@ Chart.register(...registerables, CandlestickController, CandlestickElement);
 })
 export class MarketChartsComponent implements OnInit, OnChanges {
   @Input() marketData: MarketInterface[] = [];
+
+  constructor(public translationService: TranslationService) {}
+
+  t(key: string): string {
+    return this.translationService.translate(key);
+  }
 
   @ViewChild('priceChart') priceChartRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('variationTreemap')

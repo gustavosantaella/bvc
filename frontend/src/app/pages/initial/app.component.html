@@ -13,9 +13,9 @@
         </div>
         <div class="hidden md:block">
           <h1 class="text-xl font-bold text-gray-800">
-            Informacion de la Bolsa de Valores de Caracas
+            {{ t("header.title") }}
           </h1>
-          <p class="text-xs text-gray-500">Sistema de Información de Mercado</p>
+          <p class="text-xs text-gray-500">{{ t("header.subtitle") }}</p>
         </div>
         <div class="md:hidden">
           <h1 class="text-lg font-bold text-gray-800">BVC</h1>
@@ -41,7 +41,7 @@
               d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
             />
           </svg>
-          <span>Gráficos</span>
+          <span>{{ t("header.charts") }}</span>
         </button>
         <button
           (click)="scrollToSection('table-market-data')"
@@ -60,8 +60,34 @@
               d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
             />
           </svg>
-          <span>Datos</span>
+          <span>{{ t("header.data") }}</span>
         </button>
+        <div class="h-8 w-px bg-gray-300"></div>
+
+        <!-- Language Selector -->
+        <div class="flex items-center space-x-2 bg-gray-100 rounded-lg p-1">
+          <button
+            (click)="changeLanguage('es')"
+            [class.bg-blue-600]="currentLanguage === 'es'"
+            [class.text-white]="currentLanguage === 'es'"
+            [class.text-gray-700]="currentLanguage !== 'es'"
+            class="px-3 py-1 rounded-md text-xs font-medium transition-all duration-200 flex items-center space-x-1"
+          >
+            <span>🇪🇸</span>
+            <span>ES</span>
+          </button>
+          <button
+            (click)="changeLanguage('en')"
+            [class.bg-blue-600]="currentLanguage === 'en'"
+            [class.text-white]="currentLanguage === 'en'"
+            [class.text-gray-700]="currentLanguage !== 'en'"
+            class="px-3 py-1 rounded-md text-xs font-medium transition-all duration-200 flex items-center space-x-1"
+          >
+            <span>🇺🇸</span>
+            <span>EN</span>
+          </button>
+        </div>
+
         <div class="h-8 w-px bg-gray-300"></div>
         <div class="flex items-center space-x-2 text-sm">
           <div class="flex items-center space-x-1 text-gray-600">
@@ -200,21 +226,45 @@
           </div>
         </button>
         <div class="px-3 py-2 border-t border-gray-200 mt-2">
-          <div class="flex items-center space-x-2 text-sm text-gray-600">
-            <svg
-              class="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-              />
-            </svg>
-            <span>{{ today }}</span>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2 text-sm text-gray-600">
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
+              </svg>
+              <span>{{ today }}</span>
+            </div>
+
+            <!-- Language Selector Mobile -->
+            <div class="flex items-center space-x-1 bg-gray-100 rounded-lg p-1">
+              <button
+                (click)="changeLanguage('es')"
+                [class.bg-blue-600]="currentLanguage === 'es'"
+                [class.text-white]="currentLanguage === 'es'"
+                [class.text-gray-700]="currentLanguage !== 'es'"
+                class="px-2 py-1 rounded-md text-xs font-medium transition-all duration-200"
+              >
+                🇪🇸
+              </button>
+              <button
+                (click)="changeLanguage('en')"
+                [class.bg-blue-600]="currentLanguage === 'en'"
+                [class.text-white]="currentLanguage === 'en'"
+                [class.text-gray-700]="currentLanguage !== 'en'"
+                class="px-2 py-1 rounded-md text-xs font-medium transition-all duration-200"
+              >
+                🇺🇸
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -236,10 +286,10 @@
         );
       "
     >
-      Este sistema es de uso libre y gratuito para la comunidad. Los datos son
-      extraidos desde la pagina oficial de la Bolsa de Valores de Caracas
-      <a href="https://www.bolsadecaracas.com/" target="_blank"
-        >(Ver sitio oficial)</a
+      {{ t("banner.freeSystem") }}
+      <a href="https://www.bolsadecaracas.com/" target="_blank">{{
+        t("banner.officialSite")
+      }}</a
       >.
     </div>
 
@@ -253,18 +303,17 @@
         );
       "
     >
-      Todos los montos están en moneda venezolana y las variaciones están en
-      porcentajes.
+      {{ t("banner.currency") }}
     </div>
   </div>
 
   <section id="graph-market-data" class="py-8">
     <div class="max-w-7xl mx-auto mb-8">
       <h2 class="text-3xl font-bold text-gray-800 mb-2">
-        📊 Análisis Gráfico del Mercado
+        📊 {{ t("charts.title") }}
       </h2>
       <p class="text-gray-600">
-        Visualiza el comportamiento histórico de los instrumentos
+        {{ t("charts.subtitle") }}
       </p>
     </div>
     <app-market-charts
@@ -279,7 +328,7 @@
       class="max-w-7xl mx-auto mt-8"
     >
       <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">
-        🌟 Instrumentos Más Destacados
+        🌟 {{ t("top.title") }}
       </h3>
 
       <div class="grid md:grid-cols-2 gap-6">
@@ -297,10 +346,10 @@
               </div>
               <div>
                 <h4 class="text-lg font-bold text-gray-800">
-                  Destacado de Ayer
+                  {{ t("top.yesterday") }}
                 </h4>
                 <p class="text-xs text-gray-600">
-                  Mayor variación del día anterior
+                  {{ t("top.yesterdayDesc") }}
                 </p>
               </div>
             </div>
@@ -330,13 +379,17 @@
               class="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-gray-200"
             >
               <div>
-                <div class="text-xs text-gray-500 uppercase">Volumen</div>
+                <div class="text-xs text-gray-500 uppercase">
+                  {{ t("common.volume") }}
+                </div>
                 <div class="text-sm font-semibold text-gray-900">
                   {{ formatVolume(topYesterday.history.volume) }}
                 </div>
               </div>
               <div>
-                <div class="text-xs text-gray-500 uppercase">Monto</div>
+                <div class="text-xs text-gray-500 uppercase">
+                  {{ t("common.amount") }}
+                </div>
                 <div class="text-sm font-semibold text-gray-900">
                   {{ formatCurrency(topYesterday.history.effective_amount) }}
                 </div>
@@ -359,10 +412,10 @@
               </div>
               <div>
                 <h4 class="text-lg font-bold text-gray-800">
-                  Destacado de Hoy
+                  {{ t("top.today") }}
                 </h4>
                 <p class="text-xs text-gray-600">
-                  Mayor variación del día actual
+                  {{ t("top.todayDesc") }}
                 </p>
               </div>
             </div>
@@ -392,13 +445,17 @@
               class="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-gray-200"
             >
               <div>
-                <div class="text-xs text-gray-500 uppercase">Volumen</div>
+                <div class="text-xs text-gray-500 uppercase">
+                  {{ t("common.volume") }}
+                </div>
                 <div class="text-sm font-semibold text-gray-900">
                   {{ formatVolume(topToday.history.volume) }}
                 </div>
               </div>
               <div>
-                <div class="text-xs text-gray-500 uppercase">Monto</div>
+                <div class="text-xs text-gray-500 uppercase">
+                  {{ t("common.amount") }}
+                </div>
                 <div class="text-sm font-semibold text-gray-900">
                   {{ formatCurrency(topToday.history.effective_amount) }}
                 </div>
@@ -425,7 +482,9 @@
                   </svg>
                   <span>{{ topToday.history.market_time }}</span>
                 </span>
-                <span class="font-semibold text-green-600">🔥 En vivo</span>
+                <span class="font-semibold text-green-600"
+                  >🔥 {{ t("top.live") }}</span
+                >
               </div>
             </div>
           </div>
@@ -450,7 +509,7 @@
                 d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
               />
             </svg>
-            <p class="text-sm">No hay datos de ayer disponibles</p>
+            <p class="text-sm">{{ t("top.noYesterdayData") }}</p>
           </div>
         </div>
 
@@ -472,7 +531,7 @@
                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-            <p class="text-sm">No hay datos de hoy disponibles</p>
+            <p class="text-sm">{{ t("top.noTodayData") }}</p>
           </div>
         </div>
       </div>
@@ -483,10 +542,10 @@
       <!-- Header -->
       <div class="mb-8">
         <h1 class="text-4xl font-bold text-gray-800 mb-2">
-          📈 Datos del Mercado - BVC A la fecha: {{ today }}
+          📈 {{ t("table.title") }}: {{ today }}
         </h1>
         <p class="text-gray-600">
-          Información actualizada del mercado de valores
+          {{ t("table.subtitle") }}
         </p>
       </div>
 
@@ -515,7 +574,7 @@
               type="text"
               [value]="searchTerm"
               (input)="onSearch($event)"
-              placeholder="Buscar por símbolo o descripción..."
+              [placeholder]="t('table.searchPlaceholder')"
               class="block w-full pl-12 pr-12 py-3 border border-gray-300 rounded-lg leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-all duration-200"
             />
             <div
@@ -566,24 +625,26 @@
                 d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
               />
             </svg>
-            <span class="hidden sm:inline font-medium">Actualizar</span>
+            <span class="hidden sm:inline font-medium">{{
+              t("table.refresh")
+            }}</span>
           </button>
         </div>
         <div
           *ngIf="searchTerm && filteredMarketData.length > 0"
           class="mt-2 text-sm text-gray-600"
         >
-          Se encontraron
+          {{ t("table.found") }}
           <span class="font-semibold text-blue-600">{{
             filteredMarketData.length
           }}</span>
-          resultado(s)
+          {{ t("table.results") }}
         </div>
         <div
           *ngIf="searchTerm && filteredMarketData.length === 0"
           class="mt-2 text-sm text-amber-600"
         >
-          No se encontraron resultados para "{{ searchTerm }}"
+          {{ t("table.noResults") }} "{{ searchTerm }}"
         </div>
       </div>
 
@@ -620,42 +681,42 @@
                   <th
                     class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider"
                   >
-                    Símbolo
+                    {{ t("table.symbol") }}
                   </th>
                   <th
                     class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider"
                   >
-                    Descripción
+                    {{ t("table.description") }}
                   </th>
                   <th
                     class="px-6 py-4 text-right text-xs font-semibold text-white uppercase tracking-wider"
                   >
-                    Precio ($)
+                    {{ t("table.price") }}
                   </th>
                   <th
                     class="px-6 py-4 text-right text-xs font-semibold text-white uppercase tracking-wider"
                   >
-                    Variación %
+                    {{ t("table.variation") }}
                   </th>
                   <th
                     class="px-6 py-4 text-right text-xs font-semibold text-white uppercase tracking-wider"
                   >
-                    Volumen (MM)
+                    {{ t("table.volume") }}
                   </th>
                   <th
                     class="px-6 py-4 text-right text-xs font-semibold text-white uppercase tracking-wider"
                   >
-                    Efectivo ($MM)
+                    {{ t("table.amount") }}
                   </th>
                   <th
                     class="px-6 py-4 text-center text-xs font-semibold text-white uppercase tracking-wider"
                   >
-                    Hora
+                    {{ t("table.time") }}
                   </th>
                   <th
                     class="px-6 py-4 text-center text-xs font-semibold text-white uppercase tracking-wider"
                   >
-                    Acciones
+                    {{ t("table.actions") }}
                   </th>
                 </tr>
               </thead>
@@ -792,7 +853,7 @@
                             d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                           />
                         </svg>
-                        Historial
+                        {{ t("table.history") }}
                       </button>
                     </td>
                   </ng-container>
@@ -918,7 +979,7 @@
                             d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                           />
                         </svg>
-                        Historial
+                        {{ t("table.history") }}
                       </button>
                     </div>
                   </div>
@@ -1172,21 +1233,21 @@
       >
         <p class="text-sm text-gray-600">
           <span *ngIf="!searchTerm">
-            Total de instrumentos:
+            {{ t("table.totalInstruments") }}
             <span class="font-semibold text-gray-900">{{
               filteredMarketData.length
             }}</span>
           </span>
           <span *ngIf="searchTerm">
-            Mostrando
+            {{ t("table.showing") }}
             <span class="font-semibold text-blue-600">{{
               filteredMarketData.length
             }}</span>
-            de
+            {{ t("table.of") }}
             <span class="font-semibold text-gray-900">{{
               marketData.length
             }}</span>
-            instrumentos
+            {{ t("charts.instrumentsSelected") }}s
           </span>
         </p>
       </div>
@@ -1197,7 +1258,7 @@
         class="text-center py-12"
       >
         <p class="text-gray-500 text-lg">
-          No hay datos disponibles en este momento
+          {{ t("table.noDataAvailable") }}
         </p>
       </div>
     </div>
@@ -1219,14 +1280,15 @@
           <h3 class="text-lg font-bold">BVC</h3>
         </div>
         <p class="text-gray-400 text-sm">
-          Sistema de Información de Mercado de la Bolsa de Valores de Caracas.
-          Datos actualizados en tiempo real.
+          {{ t("footer.aboutText") }}
         </p>
       </div>
 
       <!-- Quick Links -->
       <div>
-        <h3 class="text-lg font-bold mb-4">Navegación Rápida</h3>
+        <h3 class="text-lg font-bold mb-4">
+          {{ t("footer.quickLinksTitle") }}
+        </h3>
         <ul class="space-y-2">
           <li>
             <button
@@ -1246,7 +1308,7 @@
                   d="M9 5l7 7-7 7"
                 />
               </svg>
-              <span>Gráficos del Mercado</span>
+              <span>{{ t("footer.chartsLink") }}</span>
             </button>
           </li>
           <li>
@@ -1267,7 +1329,7 @@
                   d="M9 5l7 7-7 7"
                 />
               </svg>
-              <span>Datos del Mercado</span>
+              <span>{{ t("footer.dataLink") }}</span>
             </button>
           </li>
         </ul>
@@ -1275,7 +1337,7 @@
 
       <!-- Contact Info -->
       <div>
-        <h3 class="text-lg font-bold mb-4">Información</h3>
+        <h3 class="text-lg font-bold mb-4">{{ t("footer.infoTitle") }}</h3>
         <ul class="space-y-2 text-sm text-gray-400">
           <li class="flex items-center space-x-2">
             <svg
@@ -1291,7 +1353,7 @@
                 d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
               />
             </svg>
-            <span>Última actualización: {{ today }}</span>
+            <span>{{ t("footer.lastUpdate") }} {{ today }}</span>
           </li>
           <li class="flex items-center space-x-2">
             <svg
@@ -1307,7 +1369,7 @@
                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-            <span>Hora actual: {{ currentTime }}</span>
+            <span>{{ t("footer.currentTime") }} {{ currentTime }}</span>
           </li>
           <li class="flex items-center space-x-2">
             <svg
@@ -1323,7 +1385,7 @@
                 d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-            <span>Estado: En línea</span>
+            <span>{{ t("footer.status") }} {{ t("footer.online") }}</span>
           </li>
         </ul>
       </div>
@@ -1335,15 +1397,14 @@
         class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0"
       >
         <p class="text-gray-400 text-sm">
-          - {{ today.split("/")[2] }} Todos los derechos y datos pertenecen a la
-          Bolsa de Valores de Caracas.
+          - {{ today.split("/")[2] }} {{ t("footer.rights") }}
           <a href="https://www.bolsadecaracas.com/" target="_blank"
             >https://www.bolsadecaracas.com/</a
           >
         </p>
         <div class="flex items-center space-x-4 text-sm text-gray-400">
           <span class="flex items-center space-x-1">
-            <span>Desarrollado con</span>
+            <span>{{ t("footer.developedWith") }}</span>
             <svg
               class="w-4 h-4 text-red-500"
               fill="currentColor"
@@ -1355,7 +1416,7 @@
                 clip-rule="evenodd"
               />
             </svg>
-            <span>Por la comunidad</span>
+            <span>{{ t("footer.community") }}</span>
           </span>
         </div>
       </div>

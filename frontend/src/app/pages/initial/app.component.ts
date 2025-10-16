@@ -8,6 +8,10 @@ import {
 import { MarketChartsComponent } from '../../components/market-charts/market-charts.component';
 import { inject } from '@vercel/analytics';
 import { injectSpeedInsights } from '@vercel/speed-insights';
+import {
+  TranslationService,
+  Language,
+} from '../../services/translation.service';
 
 @Component({
   selector: 'app-root',
@@ -35,7 +39,23 @@ export class AppComponent implements OnInit {
   });
   imagePath =
     'https://market.bolsadecaracas.com/_next/image?url=%2Ficons%2F{{symbol}}.png&w=96&q=75';
-  constructor(private marketService: MarketService) {}
+
+  constructor(
+    private marketService: MarketService,
+    public translationService: TranslationService
+  ) {}
+
+  get currentLanguage(): Language {
+    return this.translationService.currentLanguage;
+  }
+
+  changeLanguage(lang: Language) {
+    this.translationService.setLanguage(lang);
+  }
+
+  t(key: string): string {
+    return this.translationService.translate(key);
+  }
 
   ngOnInit() {
     // Inicializar Vercel Analytics y Speed Insights
