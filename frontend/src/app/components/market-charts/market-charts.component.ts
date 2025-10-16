@@ -49,6 +49,12 @@ export class MarketChartsComponent implements OnInit, OnChanges {
   variationChartRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('volumeChart') volumeChartRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('amountChart') amountChartRef!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('correlationChart')
+  correlationChartRef!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('volatilityChart')
+  volatilityChartRef!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('distributionChart')
+  distributionChartRef!: ElementRef<HTMLCanvasElement>;
 
   selectedSymbol = 'ALL';
   selectedSymbols: string[] = [];
@@ -60,6 +66,9 @@ export class MarketChartsComponent implements OnInit, OnChanges {
   variationChart: Chart | null = null;
   volumeChart: Chart | null = null;
   amountChart: Chart | null = null;
+  correlationChart: Chart | null = null;
+  volatilityChart: Chart | null = null;
+  distributionChart: Chart | null = null;
 
   // Control de expansión de gráficos
   expandedChart: 'price' | 'treemap' | 'variation' | null = null;
@@ -69,8 +78,8 @@ export class MarketChartsComponent implements OnInit, OnChanges {
   isTransitioning = false;
 
   get totalSlides(): number {
-    // Siempre 5 slides: treemap, variación%, volumen, velas, monto
-    return 5;
+    // 8 slides: treemap, variación%, volumen, velas, monto, correlación, volatilidad, distribución
+    return 8;
   }
 
   // Filtro de fechas
@@ -464,6 +473,13 @@ export class MarketChartsComponent implements OnInit, OnChanges {
       this.createVolumeChart();
       this.createAmountChart();
     }, 100);
+
+    // Crear gráficos adicionales
+    setTimeout(() => {
+      this.createCorrelationChart();
+      this.createVolatilityChart();
+      this.createDistributionChart();
+    }, 200);
   }
 
   updateCharts() {
@@ -516,6 +532,30 @@ export class MarketChartsComponent implements OnInit, OnChanges {
         console.warn('Error al destruir amountChart:', e);
       }
       this.amountChart = null;
+    }
+    if (this.correlationChart) {
+      try {
+        this.correlationChart.destroy();
+      } catch (e) {
+        console.warn('Error al destruir correlationChart:', e);
+      }
+      this.correlationChart = null;
+    }
+    if (this.volatilityChart) {
+      try {
+        this.volatilityChart.destroy();
+      } catch (e) {
+        console.warn('Error al destruir volatilityChart:', e);
+      }
+      this.volatilityChart = null;
+    }
+    if (this.distributionChart) {
+      try {
+        this.distributionChart.destroy();
+      } catch (e) {
+        console.warn('Error al destruir distributionChart:', e);
+      }
+      this.distributionChart = null;
     }
   }
 
@@ -2007,6 +2047,257 @@ export class MarketChartsComponent implements OnInit, OnChanges {
     };
 
     this.variationChart = new Chart(ctx, config);
+  }
+
+  // Gráfico de Correlación entre Instrumentos
+  createCorrelationChart() {
+    if (!this.correlationChartRef?.nativeElement) return;
+
+    const ctx = this.correlationChartRef.nativeElement.getContext('2d');
+    if (!ctx) return;
+
+    // Obtener datos de correlación entre los primeros 10 instrumentos
+    const topMarkets = this.marketData.slice(0, 10);
+    const symbols = topMarkets.map((m) => m.symbol);
+
+    // Calcular matriz de correlación simplificada basada en variaciones
+    const correlations: number[][] = [];
+    for (let i = 0; i < symbols.length; i++) {
+      correlations[i] = [];
+      for (let j = 0; j < symbols.length; j++) {
+        if (i === j) {
+          correlations[i][j] = 1;
+        } else {
+          // Correlación simplificada basada en similitud de variaciones
+          const marketI = topMarkets[i];
+          const marketJ = topMarkets[j];
+          const lastHistoryI =
+            marketI.history && marketI.history.length > 0
+              ? marketI.history[marketI.history.length - 1]
+              : null;
+          const lastHistoryJ =
+            marketJ.history && marketJ.history.length > 0
+              ? marketJ.history[marketJ.history.length - 1]
+              : null;
+
+          if (lastHistoryI && lastHistoryJ) {
+            const variationI = lastHistoryI.relative_variation;
+            const variationJ = lastHistoryJ.relative_variation;
+            // Correlación basada en la similitud de signos y magnitudes
+            const correlation = Math.min(
+              1,
+              Math.max(
+                -1,
+                (variationI * variationJ) /
+                  (Math.abs(variationI) + Math.abs(variationJ) + 0.1)
+              )
+            );
+            correlations[i][j] = correlation;
+          } else {
+            correlations[i][j] = 0;
+          }
+        }
+      }
+    }
+
+    const config: ChartConfiguration = {
+      type: 'bar',
+      data: {
+        labels: symbols,
+        datasets: [
+          {
+            label: 'Correlación Promedio',
+            data: correlations.map(
+              (row) => row.reduce((sum, val) => sum + val, 0) / row.length
+            ),
+            backgroundColor: correlations.map((row) => {
+              const avg = row.reduce((sum, val) => sum + val, 0) / row.length;
+              return avg > 0.5 ? '#10B981' : avg > 0 ? '#F59E0B' : '#EF4444';
+            }),
+            borderColor: '#1F2937',
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Correlación entre Instrumentos',
+            font: { size: 16, weight: 'bold' },
+          },
+          legend: { display: false },
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: -1,
+            max: 1,
+            title: { display: true, text: 'Correlación' },
+          },
+          x: {
+            title: { display: true, text: 'Instrumentos' },
+          },
+        },
+      },
+    };
+
+    this.correlationChart = new Chart(ctx, config);
+  }
+
+  // Gráfico de Volatilidad
+  createVolatilityChart() {
+    if (!this.volatilityChartRef?.nativeElement) return;
+
+    const ctx = this.volatilityChartRef.nativeElement.getContext('2d');
+    if (!ctx) return;
+
+    // Calcular volatilidad para los primeros 10 instrumentos
+    const topMarkets = this.marketData.slice(0, 10);
+    const volatilityData = topMarkets.map((market) => {
+      const history = this.processHistoryForDisplay(market.history);
+      if (history.length < 2) return 0;
+
+      // Calcular volatilidad como desviación estándar de las variaciones
+      const variations = history.map((h) => h.relative_variation);
+      const mean =
+        variations.reduce((sum, val) => sum + val, 0) / variations.length;
+      const variance =
+        variations.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) /
+        variations.length;
+      return Math.sqrt(variance);
+    });
+
+    const config: ChartConfiguration = {
+      type: 'line',
+      data: {
+        labels: topMarkets.map((m) => m.symbol),
+        datasets: [
+          {
+            label: 'Volatilidad (%)',
+            data: volatilityData,
+            borderColor: '#8B5CF6',
+            backgroundColor: 'rgba(139, 92, 246, 0.1)',
+            tension: 0.4,
+            fill: true,
+            pointBackgroundColor: '#8B5CF6',
+            pointBorderColor: '#FFFFFF',
+            pointBorderWidth: 2,
+            pointRadius: 6,
+            pointHoverRadius: 8,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Volatilidad Histórica',
+            font: { size: 16, weight: 'bold' },
+          },
+          legend: { display: true },
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: { display: true, text: 'Volatilidad (%)' },
+          },
+          x: {
+            title: { display: true, text: 'Instrumentos' },
+          },
+        },
+      },
+    };
+
+    this.volatilityChart = new Chart(ctx, config);
+  }
+
+  // Gráfico de Distribución de Precios
+  createDistributionChart() {
+    if (!this.distributionChartRef?.nativeElement) return;
+
+    const ctx = this.distributionChartRef.nativeElement.getContext('2d');
+    if (!ctx) return;
+
+    // Obtener todos los precios actuales
+    const allPrices = this.marketData
+      .map((market) => {
+        const lastHistory =
+          market.history && market.history.length > 0
+            ? market.history[market.history.length - 1]
+            : null;
+        return lastHistory ? lastHistory.price : 0;
+      })
+      .filter((price) => price > 0);
+
+    // Crear rangos de precios para el histograma
+    const minPrice = Math.min(...allPrices);
+    const maxPrice = Math.max(...allPrices);
+    const range = maxPrice - minPrice;
+    const binSize = range / 10;
+
+    const bins = Array(10)
+      .fill(0)
+      .map((_, i) => ({
+        label: `$${(minPrice + i * binSize).toFixed(0)} - $${(
+          minPrice +
+          (i + 1) * binSize
+        ).toFixed(0)}`,
+        count: 0,
+      }));
+
+    // Contar precios en cada rango
+    allPrices.forEach((price) => {
+      const binIndex = Math.min(9, Math.floor((price - minPrice) / binSize));
+      bins[binIndex].count++;
+    });
+
+    const config: ChartConfiguration = {
+      type: 'bar',
+      data: {
+        labels: bins.map((bin) => bin.label),
+        datasets: [
+          {
+            label: 'Número de Instrumentos',
+            data: bins.map((bin) => bin.count),
+            backgroundColor: '#3B82F6',
+            borderColor: '#1E40AF',
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Distribución de Precios',
+            font: { size: 16, weight: 'bold' },
+          },
+          legend: { display: false },
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: { display: true, text: 'Cantidad de Instrumentos' },
+          },
+          x: {
+            title: { display: true, text: 'Rangos de Precio' },
+            ticks: {
+              maxRotation: 45,
+              minRotation: 45,
+            },
+          },
+        },
+      },
+    };
+
+    this.distributionChart = new Chart(ctx, config);
   }
 
   ngOnDestroy() {

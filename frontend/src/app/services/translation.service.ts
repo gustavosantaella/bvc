@@ -103,6 +103,18 @@ export class TranslationService {
       es: 'Tip: Puedes seleccionar cualquier fecha, incluso fuera de este rango',
       en: 'Tip: You can select any date, even outside this range',
     },
+    'charts.correlationTitle': {
+      es: 'Análisis de Correlación',
+      en: 'Correlation Analysis',
+    },
+    'charts.volatilityTitle': {
+      es: 'Análisis de Volatilidad',
+      en: 'Volatility Analysis',
+    },
+    'charts.distributionTitle': {
+      es: 'Distribución de Precios',
+      en: 'Price Distribution',
+    },
     'charts.from': {
       es: 'Desde',
       en: 'From',
