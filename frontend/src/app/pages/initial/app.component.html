@@ -1484,12 +1484,12 @@
                   class="hover:bg-green-50 transition-colors duration-150"
                   [class.bg-gray-50]="i % 2 === 0"
                 >
-                  <!-- Time -->
+                  <!-- Date -->
                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                     <span
                       class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
                     >
-                      🕐 {{ history.timestamp }}
+                      📅 {{ formatDateOnly(history.timestamp) }}
                     </span>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">

@@ -521,4 +521,13 @@ export class AppComponent implements OnInit {
   toggleMarketPanel() {
     this.showMarketPanel = !this.showMarketPanel;
   }
+
+  formatDateOnly(timestamp: string): string {
+    const date = new Date(timestamp);
+    return date.toLocaleDateString('es-VE', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
+  }
 }

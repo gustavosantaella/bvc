@@ -372,7 +372,7 @@ export class TranslationService {
       en: 'Gainers',
     },
     'filters.losers': {
-      es: 'En Pérdida',
+      es: 'En Bajada',
       en: 'Losers',
     },
     'filters.title': {
