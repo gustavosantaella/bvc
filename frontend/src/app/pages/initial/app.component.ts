@@ -6,6 +6,8 @@ import {
   HistoryInterface,
 } from '../../services/http/market.service';
 import { MarketChartsComponent } from '../../components/market-charts/market-charts.component';
+import { inject } from '@vercel/analytics';
+import { injectSpeedInsights } from '@vercel/speed-insights';
 
 @Component({
   selector: 'app-root',
@@ -36,6 +38,10 @@ export class AppComponent implements OnInit {
   constructor(private marketService: MarketService) {}
 
   ngOnInit() {
+    // Inicializar Vercel Analytics y Speed Insights
+    inject();
+    injectSpeedInsights();
+
     this.getMarketData();
     this.updateTime();
     setInterval(() => this.updateTime(), 1000);
