@@ -262,218 +262,310 @@
     </div>
   </div>
 
-  <!-- Gráficos -->
+  <!-- Gráficos con Carrusel -->
   <div
     *ngIf="
       (isShowingAll() && marketData.length > 0) ||
       (selectedMarket && selectedMarket.history.length > 0) ||
       (isMultipleSelected() && selectedMarkets.length > 0)
     "
-    class="space-y-6"
+    class="relative"
   >
-    <!-- Gráfico de Precio -->
-    <div
-      class="bg-white rounded-xl shadow-lg p-6 transition-all duration-300"
-      [class.col-span-2]="isChartExpanded('price')"
-      [class.opacity-50]="isChartMinimized('price')"
+    <!-- Flechas de navegación -->
+    <button
+      (click)="prevSlide()"
+      class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg rounded-full p-3 transition-all duration-200 hover:scale-110 group"
+      [disabled]="isTransitioning"
     >
-      <div class="flex justify-between items-center mb-4">
-        <h3 class="text-lg font-semibold text-gray-700">📊 Gráfico de Velas</h3>
-        <button
-          (click)="toggleExpandChart('price')"
-          class="p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200 group"
-          [title]="isChartExpanded('price') ? 'Minimizar' : 'Expandir'"
-        >
-          <svg
-            *ngIf="!isChartExpanded('price')"
-            class="w-5 h-5 text-gray-600 group-hover:text-blue-600"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"
-            />
-          </svg>
-          <svg
-            *ngIf="isChartExpanded('price')"
-            class="w-5 h-5 text-blue-600 group-hover:text-gray-600"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </button>
-      </div>
-      <div
-        [class.h-80]="!isChartExpanded('price')"
-        [class.h-96]="isChartExpanded('price')"
+      <svg
+        class="w-6 h-6 text-gray-700 group-hover:text-blue-600"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
       >
-        <canvas #priceChart></canvas>
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M15 19l-7-7 7-7"
+        />
+      </svg>
+    </button>
+
+    <button
+      (click)="nextSlide()"
+      class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg rounded-full p-3 transition-all duration-200 hover:scale-110 group"
+      [disabled]="isTransitioning"
+    >
+      <svg
+        class="w-6 h-6 text-gray-700 group-hover:text-blue-600"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 5l7 7-7 7"
+        />
+      </svg>
+    </button>
+
+    <!-- Contenedor del Carrusel -->
+    <div class="overflow-hidden px-12">
+      <div
+        class="transition-transform duration-500 ease-in-out flex gap-6"
+        [style.transform]="
+          'translateX(calc(-' +
+          currentSlide * 100 +
+          '% - ' +
+          currentSlide * 1.5 +
+          'rem))'
+        "
+      >
+        <!-- Slide 1: Mapa de Calor (Treemap) -->
+        <div class="min-w-full flex-shrink-0 space-y-6">
+          <div class="bg-white rounded-xl shadow-lg p-6">
+            <h3 class="text-lg font-semibold text-gray-700 mb-4">
+              🗺️ Mapa de Calor - Variación de Instrumentos
+            </h3>
+            <div class="h-96">
+              <div #variationTreemap class="w-full h-full"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 2: Gráfico de Variación Porcentual -->
+        <div class="min-w-full flex-shrink-0 space-y-6">
+          <div class="bg-white rounded-xl shadow-lg p-6">
+            <h3 class="text-lg font-semibold text-gray-700 mb-4">
+              📈 Gráfico de Variación Porcentual
+            </h3>
+            <div class="h-96">
+              <canvas #variationChart></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 3: Gráfico de Volumen -->
+        <div class="min-w-full flex-shrink-0 space-y-6">
+          <div class="bg-white rounded-xl shadow-lg p-6">
+            <h3 class="text-lg font-semibold text-gray-700 mb-4">
+              📊 Análisis de Volumen
+            </h3>
+            <div class="h-96">
+              <canvas #volumeChart></canvas>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div
+              class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4"
+            >
+              <div class="text-xs text-blue-600 font-semibold uppercase">
+                Volumen Total
+              </div>
+              <div class="text-2xl font-bold text-blue-900">
+                {{ getTotalVolume().toLocaleString("es-CO") }}
+              </div>
+            </div>
+            <div
+              class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-4"
+            >
+              <div class="text-xs text-purple-600 font-semibold uppercase">
+                Volumen Mínimo
+              </div>
+              <div class="text-2xl font-bold text-purple-900">
+                {{ getMinVolume().toLocaleString("es-CO") }}
+              </div>
+            </div>
+            <div
+              class="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-lg p-4"
+            >
+              <div class="text-xs text-indigo-600 font-semibold uppercase">
+                Volumen Máximo
+              </div>
+              <div class="text-2xl font-bold text-indigo-900">
+                {{ getMaxVolume().toLocaleString("es-CO") }}
+              </div>
+            </div>
+            <div
+              class="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-4"
+            >
+              <div class="text-xs text-green-600 font-semibold uppercase">
+                Monto Total
+              </div>
+              <div class="text-2xl font-bold text-green-900">
+                ${{ (getTotalAmount() / 1000).toFixed(0) }}K
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 4: Gráfico de Velas/Precio -->
+        <div class="min-w-full flex-shrink-0 space-y-6">
+          <div
+            class="bg-white rounded-xl shadow-lg p-6 transition-all duration-300"
+          >
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-lg font-semibold text-gray-700">
+                📊 Gráfico de Velas
+              </h3>
+              <button
+                (click)="toggleExpandChart('price')"
+                class="p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200 group"
+                [title]="isChartExpanded('price') ? 'Minimizar' : 'Expandir'"
+              >
+                <svg
+                  *ngIf="!isChartExpanded('price')"
+                  class="w-5 h-5 text-gray-600 group-hover:text-blue-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"
+                  />
+                </svg>
+                <svg
+                  *ngIf="isChartExpanded('price')"
+                  class="w-5 h-5 text-blue-600 group-hover:text-gray-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div class="h-96">
+              <canvas #priceChart></canvas>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+            <div
+              class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4"
+            >
+              <div class="text-xs text-blue-600 font-semibold uppercase">
+                Precio Máximo
+              </div>
+              <div class="text-2xl font-bold text-blue-900">
+                ${{ getMaxPrice().toFixed(2) }}
+              </div>
+            </div>
+            <div
+              class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-4"
+            >
+              <div class="text-xs text-purple-600 font-semibold uppercase">
+                Precio Mínimo
+              </div>
+              <div class="text-2xl font-bold text-purple-900">
+                ${{ getMinPrice().toFixed(2) }}
+              </div>
+            </div>
+            <div
+              class="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-lg p-4"
+            >
+              <div class="text-xs text-indigo-600 font-semibold uppercase">
+                Precio Promedio
+              </div>
+              <div
+                class="text-2xl font-bold text-indigo-900"
+                *ngIf="selectedMarket"
+              >
+                ${{ ((getMaxPrice() + getMinPrice()) / 2).toFixed(2) }}
+              </div>
+            </div>
+            <div
+              class="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-4"
+            >
+              <div class="text-xs text-green-600 font-semibold uppercase">
+                Monto Total
+              </div>
+              <div class="text-2xl font-bold text-green-900">
+                ${{ (getTotalAmount() / 1000).toFixed(0) }}K
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 5: Gráfico de Monto Efectivo -->
+        <div class="min-w-full flex-shrink-0 space-y-6">
+          <div class="bg-white rounded-xl shadow-lg p-6">
+            <h3 class="text-lg font-semibold text-gray-700 mb-4">
+              💰 Análisis de Monto Efectivo
+            </h3>
+            <div class="h-96">
+              <canvas #amountChart></canvas>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div
+              class="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-4"
+            >
+              <div class="text-xs text-green-600 font-semibold uppercase">
+                Monto Total
+              </div>
+              <div class="text-2xl font-bold text-green-900">
+                ${{ (getTotalAmount() / 1000).toFixed(0) }}K
+              </div>
+            </div>
+            <div
+              class="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-lg p-4"
+            >
+              <div class="text-xs text-indigo-600 font-semibold uppercase">
+                Volumen Total
+              </div>
+              <div class="text-2xl font-bold text-indigo-900">
+                {{ getTotalVolume().toLocaleString("es-CO") }}
+              </div>
+            </div>
+            <div
+              class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4"
+            >
+              <div class="text-xs text-blue-600 font-semibold uppercase">
+                Precio Máximo
+              </div>
+              <div class="text-2xl font-bold text-blue-900">
+                ${{ getMaxPrice().toFixed(2) }}
+              </div>
+            </div>
+            <div
+              class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-4"
+            >
+              <div class="text-xs text-purple-600 font-semibold uppercase">
+                Precio Mínimo
+              </div>
+              <div class="text-2xl font-bold text-purple-900">
+                ${{ getMinPrice().toFixed(2) }}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Grid de 2 gráficos -->
-    <div class="grid md:grid-cols-2 gap-6">
-      <!-- Treemap de Variación -->
-      <div
-        class="bg-white rounded-xl shadow-lg p-6 transition-all duration-300"
-        [class.md:col-span-2]="isChartExpanded('treemap')"
-        [class.opacity-50]="isChartMinimized('treemap')"
-        [class.scale-95]="isChartMinimized('treemap')"
-      >
-        <div class="flex justify-between items-center mb-4">
-          <h3 class="text-lg font-semibold text-gray-700">
-            Gráfico de Variación
-          </h3>
-          <button
-            (click)="toggleExpandChart('treemap')"
-            class="p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200 group"
-            [title]="isChartExpanded('treemap') ? 'Minimizar' : 'Expandir'"
-          >
-            <svg
-              *ngIf="!isChartExpanded('treemap')"
-              class="w-5 h-5 text-gray-600 group-hover:text-green-600"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"
-              />
-            </svg>
-            <svg
-              *ngIf="isChartExpanded('treemap')"
-              class="w-5 h-5 text-green-600 group-hover:text-gray-600"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        </div>
-        <div
-          [class.h-80]="!isChartExpanded('treemap')"
-          [class.h-96]="isChartExpanded('treemap')"
-        >
-          <div #variationTreemap class="w-full h-full"></div>
-        </div>
-      </div>
-
-      <!-- Gráfico de Variación -->
-      <div
-        class="bg-white rounded-xl shadow-lg p-6 transition-all duration-300"
-        [class.md:col-span-2]="isChartExpanded('variation')"
-        [class.opacity-50]="isChartMinimized('variation')"
-        [class.scale-95]="isChartMinimized('variation')"
-      >
-        <div class="flex justify-between items-center mb-4">
-          <h3 class="text-lg font-semibold text-gray-700">
-            Gráfico de Variación
-          </h3>
-          <button
-            (click)="toggleExpandChart('variation')"
-            class="p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200 group"
-            [title]="isChartExpanded('variation') ? 'Minimizar' : 'Expandir'"
-          >
-            <svg
-              *ngIf="!isChartExpanded('variation')"
-              class="w-5 h-5 text-gray-600 group-hover:text-purple-600"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"
-              />
-            </svg>
-            <svg
-              *ngIf="isChartExpanded('variation')"
-              class="w-5 h-5 text-purple-600 group-hover:text-gray-600"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        </div>
-        <div
-          [class.h-80]="!isChartExpanded('variation')"
-          [class.h-96]="isChartExpanded('variation')"
-        >
-          <canvas #variationChart></canvas>
-        </div>
-      </div>
-    </div>
-
-    <!-- Estadísticas Adicionales -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4">
-        <div class="text-xs text-blue-600 font-semibold uppercase">
-          Precio Máximo
-        </div>
-        <div class="text-2xl font-bold text-blue-900">
-          ${{ getMaxPrice().toFixed(2) }}
-        </div>
-      </div>
-
-      <div
-        class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-4"
-      >
-        <div class="text-xs text-purple-600 font-semibold uppercase">
-          Precio Mínimo
-        </div>
-        <div class="text-2xl font-bold text-purple-900">
-          ${{ getMinPrice().toFixed(2) }}
-        </div>
-      </div>
-
-      <div
-        class="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-lg p-4"
-      >
-        <div class="text-xs text-indigo-600 font-semibold uppercase">
-          Vol. Total
-        </div>
-        <div class="text-2xl font-bold text-indigo-900">
-          {{ getTotalVolume().toLocaleString("es-CO") }}
-        </div>
-      </div>
-
-      <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-4">
-        <div class="text-xs text-green-600 font-semibold uppercase">
-          Monto Total
-        </div>
-        <div class="text-2xl font-bold text-green-900">
-          ${{ (getTotalAmount() / 1000).toFixed(0) }}K
-        </div>
-      </div>
+    <!-- Indicadores de página -->
+    <div class="flex justify-center gap-2 mt-6">
+      <button
+        *ngFor="let i of [0, 1, 2, 3, 4]"
+        (click)="goToSlide(i)"
+        [class.bg-blue-600]="currentSlide === i"
+        [class.bg-gray-300]="currentSlide !== i"
+        class="w-2.5 h-2.5 rounded-full transition-all duration-300 hover:scale-125"
+        [attr.aria-label]="'Ir al slide ' + (i + 1)"
+      ></button>
     </div>
   </div>
 

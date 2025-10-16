@@ -292,11 +292,17 @@ class BVCWebSocketClient:
                         response = await self._handle_message(message)
                         if current_hour < 9 or current_hour == 13:
                             if self.is_running:
+                                print(
+                                    f"The time must be between 9am and 1pm. {get_current_time()}"
+                                )
                                 logger.info(
                                     f"The time must be between 9am and 1pm. {get_current_time()}"
                                 )
                             # self.is_running = False
                             continue
+                        else:
+                            print("The time is between 9am and 1pm")
+                            logger.info("The time is between 9am and 1pm")
 
                         if response:
                             await websocket.send(response)
@@ -390,3 +396,7 @@ if __name__ == "__main__":
     except Exception as e:
         logger.error(f"[ERROR] Error starting BVC WebSocket client: {e}", exc_info=True)
         sys.exit(1)
+    except KeyboardInterrupt:
+        print("KeyboardInterrupt")
+        logger.info("Stopping BVC WebSocket client...")
+        sys.exit(0)

@@ -40,6 +40,8 @@ export class MarketChartsComponent implements OnInit, OnChanges {
   variationTreemapRef!: ElementRef<HTMLDivElement>;
   @ViewChild('variationChart')
   variationChartRef!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('volumeChart') volumeChartRef!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('amountChart') amountChartRef!: ElementRef<HTMLCanvasElement>;
 
   selectedSymbol = 'ALL';
   selectedSymbols: string[] = [];
@@ -49,9 +51,20 @@ export class MarketChartsComponent implements OnInit, OnChanges {
   priceChart: Chart | null = null;
   variationTreemap: any = null;
   variationChart: Chart | null = null;
+  volumeChart: Chart | null = null;
+  amountChart: Chart | null = null;
 
   // Control de expansión de gráficos
   expandedChart: 'price' | 'treemap' | 'variation' | null = null;
+
+  // Control de carrusel de gráficos
+  currentSlide = 0;
+  isTransitioning = false;
+
+  get totalSlides(): number {
+    // Siempre 5 slides: treemap, variación%, volumen, velas, monto
+    return 5;
+  }
 
   // Filtro de fechas
   startDate: string = '';
@@ -120,6 +133,30 @@ export class MarketChartsComponent implements OnInit, OnChanges {
     return this.getLastHistory()?.effective_amount || 0;
   }
 
+  getMaxVolume(): number {
+    if (this.isShowingAll()) {
+      if (!this.marketData.length) return 0;
+      const allVolumes = this.marketData.flatMap((m) =>
+        m.history.map((h) => h.volume)
+      );
+      return allVolumes.length > 0 ? Math.max(...allVolumes) : 0;
+    }
+    if (!this.selectedMarket || !this.selectedMarket.history.length) return 0;
+    return Math.max(...this.selectedMarket.history.map((h) => h.volume));
+  }
+
+  getMinVolume(): number {
+    if (this.isShowingAll()) {
+      if (!this.marketData.length) return 0;
+      const allVolumes = this.marketData.flatMap((m) =>
+        m.history.map((h) => h.volume)
+      );
+      return allVolumes.length > 0 ? Math.min(...allVolumes) : 0;
+    }
+    if (!this.selectedMarket || !this.selectedMarket.history.length) return 0;
+    return Math.min(...this.selectedMarket.history.map((h) => h.volume));
+  }
+
   toggleExpandChart(chartType: 'price' | 'treemap' | 'variation') {
     if (this.expandedChart === chartType) {
       this.expandedChart = null;
@@ -145,9 +182,43 @@ export class MarketChartsComponent implements OnInit, OnChanges {
     return this.expandedChart !== null && this.expandedChart !== chartType;
   }
 
+  // Métodos del carrusel
+  nextSlide() {
+    if (this.isTransitioning) return;
+    this.isTransitioning = true;
+    this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
+    setTimeout(() => {
+      this.isTransitioning = false;
+    }, 500);
+  }
+
+  prevSlide() {
+    if (this.isTransitioning) return;
+    this.isTransitioning = true;
+    this.currentSlide =
+      (this.currentSlide - 1 + this.totalSlides) % this.totalSlides;
+    setTimeout(() => {
+      this.isTransitioning = false;
+    }, 500);
+  }
+
+  goToSlide(index: number) {
+    if (this.isTransitioning || index >= this.totalSlides) return;
+    this.isTransitioning = true;
+    this.currentSlide = index;
+    setTimeout(() => {
+      this.isTransitioning = false;
+    }, 500);
+  }
+
+  resetCarousel() {
+    this.currentSlide = 0;
+  }
+
   selectAllInstruments() {
     this.selectedSymbols = this.marketData.map((m) => m.symbol);
     this.updateSelectedMarkets();
+    this.resetCarousel();
     this.updateCharts();
   }
 
@@ -155,6 +226,7 @@ export class MarketChartsComponent implements OnInit, OnChanges {
     this.selectedSymbols = [];
     this.selectedMarkets = [];
     this.selectedSymbol = 'ALL';
+    this.resetCarousel();
     this.updateCharts();
   }
 
@@ -205,6 +277,7 @@ export class MarketChartsComponent implements OnInit, OnChanges {
 
     console.log('selectedMarkets:', this.selectedMarkets);
     console.log('selectedMarket (single):', this.selectedMarket);
+    this.resetCarousel();
     this.updateCharts();
   }
 
@@ -378,14 +451,20 @@ export class MarketChartsComponent implements OnInit, OnChanges {
       this.createVariationTreemap();
       this.createVariationChart();
     }
+
+    // Crear gráficos de volumen y monto para todos los casos
+    setTimeout(() => {
+      this.createVolumeChart();
+      this.createAmountChart();
+    }, 100);
   }
 
   updateCharts() {
     this.destroyCharts();
-    // Esperar un momento para que el canvas se limpie completamente
+    // Esperar un momento para que el canvas se limpie completamente y el DOM se actualice
     setTimeout(() => {
       this.createCharts();
-    }, 0);
+    }, 100);
   }
 
   destroyCharts() {
@@ -414,6 +493,22 @@ export class MarketChartsComponent implements OnInit, OnChanges {
         console.warn('Error al destruir variationChart:', e);
       }
       this.variationChart = null;
+    }
+    if (this.volumeChart) {
+      try {
+        this.volumeChart.destroy();
+      } catch (e) {
+        console.warn('Error al destruir volumeChart:', e);
+      }
+      this.volumeChart = null;
+    }
+    if (this.amountChart) {
+      try {
+        this.amountChart.destroy();
+      } catch (e) {
+        console.warn('Error al destruir amountChart:', e);
+      }
+      this.amountChart = null;
     }
   }
 
@@ -646,7 +741,10 @@ export class MarketChartsComponent implements OnInit, OnChanges {
   }
 
   createVariationTreemap() {
-    if (!this.variationTreemapRef) return;
+    if (!this.variationTreemapRef || !this.variationTreemapRef.nativeElement) {
+      console.warn('variationTreemapRef no está disponible aún');
+      return;
+    }
 
     // Limpiar el contenedor
     d3.select(this.variationTreemapRef.nativeElement).selectAll('*').remove();
@@ -972,6 +1070,535 @@ export class MarketChartsComponent implements OnInit, OnChanges {
     };
 
     this.variationChart = new Chart(ctx, config);
+  }
+
+  // Gráfico de Volumen
+  createVolumeChart() {
+    if (!this.volumeChartRef) return;
+
+    const ctx = this.volumeChartRef.nativeElement.getContext('2d');
+    if (!ctx) return;
+
+    // Determinar qué tipo de gráfico crear
+    if (this.isShowingAll()) {
+      this.createAllVolumeChart(ctx);
+    } else if (this.isMultipleSelected()) {
+      this.createMultipleVolumeChart(ctx);
+    } else {
+      this.createSingleVolumeChart(ctx);
+    }
+  }
+
+  createSingleVolumeChart(ctx: CanvasRenderingContext2D) {
+    if (!this.selectedMarket) return;
+
+    const filteredMarket = this.getFilteredMarket(this.selectedMarket);
+    const history = filteredMarket.history;
+    if (!history.length) return;
+
+    const labels = history.map((h) => h.market_time);
+    const volumes = history.map((h) => h.volume);
+
+    const config: ChartConfiguration = {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Volumen',
+            data: volumes,
+            backgroundColor: 'rgba(59, 130, 246, 0.6)',
+            borderColor: 'rgb(59, 130, 246)',
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: `Volumen de Operaciones - ${this.selectedMarket.symbol}`,
+            font: {
+              size: 16,
+              weight: 'bold',
+            },
+          },
+          tooltip: {
+            mode: 'index',
+            intersect: false,
+            callbacks: {
+              label: (context) => {
+                const value = context.parsed.y ?? 0;
+                return `Volumen: ${value.toLocaleString('es-CO')}`;
+              },
+            },
+          },
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              callback: (value) =>
+                typeof value === 'number'
+                  ? value.toLocaleString('es-CO')
+                  : value,
+            },
+          },
+          x: {
+            ticks: {
+              maxRotation: 45,
+              minRotation: 45,
+            },
+          },
+        },
+      },
+    };
+
+    this.volumeChart = new Chart(ctx, config);
+  }
+
+  createAllVolumeChart(ctx: CanvasRenderingContext2D) {
+    if (!this.marketData.length) return;
+
+    const colors = [
+      'rgba(59, 130, 246, 0.6)',
+      'rgba(16, 185, 129, 0.6)',
+      'rgba(239, 68, 68, 0.6)',
+      'rgba(245, 158, 11, 0.6)',
+      'rgba(139, 92, 246, 0.6)',
+      'rgba(236, 72, 153, 0.6)',
+    ];
+
+    const filteredData = this.getFilteredMarketData();
+    const allLabels = [
+      ...new Set(
+        filteredData.flatMap((m) => m.history.map((h) => h.market_time))
+      ),
+    ].sort();
+
+    const datasets = filteredData.map((market, index) => {
+      const volumeMap = new Map(
+        market.history.map((h) => [h.market_time, h.volume])
+      );
+      const data = allLabels.map((label) => volumeMap.get(label) ?? null);
+
+      return {
+        label: market.symbol,
+        data: data,
+        backgroundColor: colors[index % colors.length],
+        borderColor: colors[index % colors.length].replace('0.6', '1'),
+        borderWidth: 1,
+      };
+    });
+
+    const config: ChartConfiguration = {
+      type: 'bar',
+      data: { labels: allLabels, datasets: datasets as any },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Volumen de Operaciones - Todos los Instrumentos',
+            font: {
+              size: 16,
+              weight: 'bold',
+            },
+          },
+          tooltip: {
+            mode: 'index',
+            intersect: false,
+          },
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              callback: (value) =>
+                typeof value === 'number'
+                  ? value.toLocaleString('es-CO')
+                  : value,
+            },
+          },
+          x: {
+            ticks: {
+              maxRotation: 45,
+              minRotation: 45,
+            },
+          },
+        },
+      },
+    };
+
+    this.volumeChart = new Chart(ctx, config);
+  }
+
+  createMultipleVolumeChart(ctx: CanvasRenderingContext2D) {
+    if (!this.selectedMarkets.length) return;
+
+    const colors = [
+      'rgba(59, 130, 246, 0.6)',
+      'rgba(16, 185, 129, 0.6)',
+      'rgba(239, 68, 68, 0.6)',
+      'rgba(245, 158, 11, 0.6)',
+      'rgba(139, 92, 246, 0.6)',
+      'rgba(236, 72, 153, 0.6)',
+    ];
+
+    const filteredMarkets = this.selectedMarkets.map((m) =>
+      this.getFilteredMarket(m)
+    );
+    const allLabels = [
+      ...new Set(
+        filteredMarkets.flatMap((m) => m.history.map((h) => h.market_time))
+      ),
+    ].sort();
+
+    const datasets = filteredMarkets.map((market, index) => {
+      const volumeMap = new Map(
+        market.history.map((h) => [h.market_time, h.volume])
+      );
+      const data = allLabels.map((label) => volumeMap.get(label) ?? null);
+
+      return {
+        label: market.symbol,
+        data: data,
+        backgroundColor: colors[index % colors.length],
+        borderColor: colors[index % colors.length].replace('0.6', '1'),
+        borderWidth: 1,
+      };
+    });
+
+    const config: ChartConfiguration = {
+      type: 'bar',
+      data: { labels: allLabels, datasets: datasets as any },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: `Volumen de Operaciones - ${this.selectedSymbols.length} Instrumentos`,
+            font: {
+              size: 16,
+              weight: 'bold',
+            },
+          },
+          tooltip: {
+            mode: 'index',
+            intersect: false,
+          },
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              callback: (value) =>
+                typeof value === 'number'
+                  ? value.toLocaleString('es-CO')
+                  : value,
+            },
+          },
+          x: {
+            ticks: {
+              maxRotation: 45,
+              minRotation: 45,
+            },
+          },
+        },
+      },
+    };
+
+    this.volumeChart = new Chart(ctx, config);
+  }
+
+  // Gráfico de Monto Efectivo
+  createAmountChart() {
+    if (!this.amountChartRef) return;
+
+    const ctx = this.amountChartRef.nativeElement.getContext('2d');
+    if (!ctx) return;
+
+    // Determinar qué tipo de gráfico crear
+    if (this.isShowingAll()) {
+      this.createAllAmountChart(ctx);
+    } else if (this.isMultipleSelected()) {
+      this.createMultipleAmountChart(ctx);
+    } else {
+      this.createSingleAmountChart(ctx);
+    }
+  }
+
+  createSingleAmountChart(ctx: CanvasRenderingContext2D) {
+    if (!this.selectedMarket) return;
+
+    const filteredMarket = this.getFilteredMarket(this.selectedMarket);
+    const history = filteredMarket.history;
+    if (!history.length) return;
+
+    const labels = history.map((h) => h.market_time);
+    const amounts = history.map((h) => h.effective_amount);
+
+    const config: ChartConfiguration = {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Monto Efectivo ($)',
+            data: amounts,
+            borderColor: 'rgb(16, 185, 129)',
+            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+            tension: 0.4,
+            fill: true,
+            pointRadius: 3,
+            pointHoverRadius: 6,
+            borderWidth: 2,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: `Monto Efectivo de Operaciones - ${this.selectedMarket.symbol}`,
+            font: {
+              size: 16,
+              weight: 'bold',
+            },
+          },
+          tooltip: {
+            mode: 'index',
+            intersect: false,
+            callbacks: {
+              label: (context) => {
+                const value = context.parsed.y ?? 0;
+                return `Monto: $${value.toLocaleString('es-CO')}`;
+              },
+            },
+          },
+        },
+        scales: {
+          y: {
+            beginAtZero: false,
+            ticks: {
+              callback: (value) =>
+                '$' +
+                (typeof value === 'number'
+                  ? (value / 1000).toFixed(0) + 'K'
+                  : value),
+            },
+          },
+          x: {
+            ticks: {
+              maxRotation: 45,
+              minRotation: 45,
+            },
+          },
+        },
+      },
+    };
+
+    this.amountChart = new Chart(ctx, config);
+  }
+
+  createAllAmountChart(ctx: CanvasRenderingContext2D) {
+    if (!this.marketData.length) return;
+
+    const colors = [
+      'rgb(59, 130, 246)',
+      'rgb(16, 185, 129)',
+      'rgb(239, 68, 68)',
+      'rgb(245, 158, 11)',
+      'rgb(139, 92, 246)',
+      'rgb(236, 72, 153)',
+    ];
+
+    const filteredData = this.getFilteredMarketData();
+    const allLabels = [
+      ...new Set(
+        filteredData.flatMap((m) => m.history.map((h) => h.market_time))
+      ),
+    ].sort();
+
+    const datasets = filteredData.map((market, index) => {
+      const amountMap = new Map(
+        market.history.map((h) => [h.market_time, h.effective_amount])
+      );
+      const data = allLabels.map((label) => amountMap.get(label) ?? null);
+
+      return {
+        label: market.symbol,
+        data: data,
+        borderColor: colors[index % colors.length],
+        backgroundColor: colors[index % colors.length]
+          .replace('rgb', 'rgba')
+          .replace(')', ', 0.1)'),
+        tension: 0.4,
+        fill: false,
+        pointRadius: 2,
+        pointHoverRadius: 5,
+        borderWidth: 2,
+      };
+    });
+
+    const config: ChartConfiguration = {
+      type: 'line',
+      data: { labels: allLabels, datasets: datasets as any },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Monto Efectivo - Todos los Instrumentos',
+            font: {
+              size: 16,
+              weight: 'bold',
+            },
+          },
+          tooltip: {
+            mode: 'index',
+            intersect: false,
+          },
+        },
+        scales: {
+          y: {
+            beginAtZero: false,
+            ticks: {
+              callback: (value) =>
+                '$' +
+                (typeof value === 'number'
+                  ? (value / 1000).toFixed(0) + 'K'
+                  : value),
+            },
+          },
+          x: {
+            ticks: {
+              maxRotation: 45,
+              minRotation: 45,
+            },
+          },
+        },
+      },
+    };
+
+    this.amountChart = new Chart(ctx, config);
+  }
+
+  createMultipleAmountChart(ctx: CanvasRenderingContext2D) {
+    if (!this.selectedMarkets.length) return;
+
+    const colors = [
+      'rgb(59, 130, 246)',
+      'rgb(16, 185, 129)',
+      'rgb(239, 68, 68)',
+      'rgb(245, 158, 11)',
+      'rgb(139, 92, 246)',
+      'rgb(236, 72, 153)',
+    ];
+
+    const filteredMarkets = this.selectedMarkets.map((m) =>
+      this.getFilteredMarket(m)
+    );
+    const allLabels = [
+      ...new Set(
+        filteredMarkets.flatMap((m) => m.history.map((h) => h.market_time))
+      ),
+    ].sort();
+
+    const datasets = filteredMarkets.map((market, index) => {
+      const amountMap = new Map(
+        market.history.map((h) => [h.market_time, h.effective_amount])
+      );
+      const data = allLabels.map((label) => amountMap.get(label) ?? null);
+
+      return {
+        label: market.symbol,
+        data: data,
+        borderColor: colors[index % colors.length],
+        backgroundColor: colors[index % colors.length]
+          .replace('rgb', 'rgba')
+          .replace(')', ', 0.1)'),
+        tension: 0.4,
+        fill: false,
+        pointRadius: 3,
+        pointHoverRadius: 6,
+        borderWidth: 2,
+      };
+    });
+
+    const config: ChartConfiguration = {
+      type: 'line',
+      data: { labels: allLabels, datasets: datasets as any },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: `Monto Efectivo - ${this.selectedSymbols.length} Instrumentos`,
+            font: {
+              size: 16,
+              weight: 'bold',
+            },
+          },
+          tooltip: {
+            mode: 'index',
+            intersect: false,
+          },
+        },
+        scales: {
+          y: {
+            beginAtZero: false,
+            ticks: {
+              callback: (value) =>
+                '$' +
+                (typeof value === 'number'
+                  ? (value / 1000).toFixed(0) + 'K'
+                  : value),
+            },
+          },
+          x: {
+            ticks: {
+              maxRotation: 45,
+              minRotation: 45,
+            },
+          },
+        },
+      },
+    };
+
+    this.amountChart = new Chart(ctx, config);
   }
 
   // Métodos para mostrar todos los instrumentos
