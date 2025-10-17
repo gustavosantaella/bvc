@@ -83,6 +83,7 @@ export class AppComponent implements OnInit {
   removeMarketDataIfBetweenHours(startHour: number, endHour: number) {
     const now = new Date();
     const currentHour = now.getHours();
+    console.log('currentHour', currentHour);
     if (currentHour >= startHour && currentHour < endHour) {
       localStorage.removeItem('marketData');
     }
