@@ -42,9 +42,9 @@ export class TranslationService {
 
     // Info Banners
     'banner.freeSystem': {
-      es: 'Este sistema es de uso libre y gratuito para la comunidad. Los datos son extraidos desde la pagina oficial de la Bolsa de Valores de Caracas',
-      en: 'This system is free and open for the community. Data is extracted from the official Caracas Stock Exchange website',
-    },
+  "es": "Plataforma de acceso gratuito destinada únicamente a la visualización y análisis de datos. La información es obtenida directamente de la Bolsa de Valores de Caracas, institución que detenta todos los derechos de propiedad sobre los datos financieros aquí presentados. Este sistema no proporciona recomendaciones de inversión ni asesoramiento financiero.",
+  "en": "Free-access platform intended solely for data visualization and analysis. Information is sourced directly from the Caracas Stock Exchange, which holds all proprietary rights to the financial data displayed. This system does not provide investment recommendations or financial advice."
+},
     'banner.officialSite': {
       es: '(Ver sitio oficial)',
       en: '(View official site)',
