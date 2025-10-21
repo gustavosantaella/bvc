@@ -128,7 +128,7 @@ export class AppComponent implements OnInit {
         this.filteredMarketData = this.marketData.filter((market) =>
           this.hasDataFromToday(market)
         );
-        localStorage.setItem('marketData', JSON.stringify(this.marketData));
+        // localStorage.setItem('marketData', JSON.stringify(this.marketData));
 
         this.loading = false;
       },
