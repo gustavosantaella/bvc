@@ -72,7 +72,6 @@ export class AppComponent implements OnInit {
     inject();
     injectSpeedInsights();
 
-    this.removeMarketDataIfBetweenHours(9, 13);
 
     this.getMarketData();
     this.updateTime();
@@ -84,7 +83,7 @@ export class AppComponent implements OnInit {
     const now = new Date();
     const currentHour = now.getHours();
     console.log('currentHour', currentHour);
-    if (currentHour >= startHour && currentHour < endHour) {
+    if (currentHour >= startHour && currentHour <= endHour) {
       localStorage.removeItem('marketData');
     }
   }
