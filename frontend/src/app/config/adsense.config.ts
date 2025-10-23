@@ -13,19 +13,19 @@ export const ADSENSE_CONFIG = {
   // IDs de bloques de anuncios específicos
   adSlots: {
     // Banner horizontal superior (debajo del header)
-    headerBanner: 'XXXXXXXXXX',
+    headerBanner: '5476314402',
 
     // Anuncio entre secciones de contenido
-    inFeedMain: 'XXXXXXXXXX',
+    inFeedMain: '5476314402',
 
     // Anuncio en la sección de gráficos
-    chartsInFeed: 'XXXXXXXXXX',
+    chartsInFeed: '5476314402',
 
     // Banner antes del footer
-    footerBanner: 'XXXXXXXXXX',
+    footerBanner: '5476314402',
 
     // Sidebar flotante (visible en desktop)
-    sidebarFloat: 'XXXXXXXXXX',
+    sidebarFloat: '5476314402',
   },
 
   // Configuraciones de formato de anuncios

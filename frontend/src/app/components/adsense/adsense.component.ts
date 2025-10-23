@@ -16,7 +16,7 @@ import { isPlatformBrowser } from '@angular/common';
   styleUrl: './adsense.component.css',
 })
 export class AdsenseComponent implements OnInit, AfterViewInit {
-  @Input() adClient: string = 'ca-pub-XXXXXXXXXXXXXXXX'; // Reemplazar con tu ID de AdSense
+  @Input() adClient: string = 'ca-pub-7887143920740339'; // Reemplazar con tu ID de AdSense
   @Input() adSlot: string = '';
   @Input() adFormat: string = 'auto';
   @Input() fullWidthResponsive: boolean = true;
