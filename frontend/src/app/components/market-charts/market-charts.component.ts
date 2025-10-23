@@ -22,6 +22,7 @@ import {
   HistoryInterface,
 } from '../../services/http/market.service';
 import { TranslationService } from '../../services/translation.service';
+import { AdsenseComponent } from '../adsense/adsense.component';
 
 // Registrar todos los componentes de Chart.js incluyendo candlestick
 Chart.register(...registerables, CandlestickController, CandlestickElement);
@@ -29,7 +30,7 @@ Chart.register(...registerables, CandlestickController, CandlestickElement);
 @Component({
   selector: 'app-market-charts',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgSelectModule],
+  imports: [CommonModule, FormsModule, NgSelectModule, AdsenseComponent],
   templateUrl: './market-charts.component.html',
   styleUrl: './market-charts.component.css',
 })

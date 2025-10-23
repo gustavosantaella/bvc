@@ -266,6 +266,17 @@
     </div>
   </div>
 
+  <!-- Ad In-Feed - En componente de gráficos -->
+  <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+    <div class="flex justify-center">
+      <app-adsense
+        adSlot="XXXXXXXXXX"
+        adFormat="rectangle"
+        [adStyle]="'display:block; width:100%; max-width:336px; height:280px;'"
+      ></app-adsense>
+    </div>
+  </div>
+
   <!-- Gráficos con Carrusel -->
   <div
     *ngIf="

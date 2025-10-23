@@ -1,0 +1,26 @@
+.adsbygoogle {
+  display: block;
+  min-height: 50px;
+  background: #f5f5f5;
+  border: 1px dashed #ddd;
+  position: relative;
+}
+
+.adsbygoogle::before {
+  content: 'Publicidad';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #999;
+  font-size: 12px;
+  font-family: Arial, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Cuando el anuncio está cargado, ocultar el placeholder */
+.adsbygoogle[data-ad-status="filled"]::before {
+  display: none;
+}
+

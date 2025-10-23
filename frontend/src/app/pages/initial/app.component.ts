@@ -6,6 +6,7 @@ import {
   HistoryInterface,
 } from '../../services/http/market.service';
 import { MarketChartsComponent } from '../../components/market-charts/market-charts.component';
+import { AdsenseComponent } from '../../components/adsense/adsense.component';
 import { inject } from '@vercel/analytics';
 import { injectSpeedInsights } from '@vercel/speed-insights';
 import {
@@ -16,7 +17,7 @@ import {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, MarketChartsComponent],
+  imports: [CommonModule, MarketChartsComponent, AdsenseComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
@@ -71,7 +72,6 @@ export class AppComponent implements OnInit {
     // Inicializar Vercel Analytics y Speed Insights
     inject();
     injectSpeedInsights();
-
 
     this.getMarketData();
     this.updateTime();
