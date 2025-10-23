@@ -7,7 +7,8 @@
 
 export const ADSENSE_CONFIG = {
   // Tu ID de cliente de AdSense (obtenerlo de https://www.google.com/adsense)
-  clientId: 'ca-pub-XXXXXXXXXXXXXXXX',
+  //   clientId: 'ca-pub-XXXXXXXXXXXXXXXX',
+  clientId: 'ca-pub-7887143920740339',
 
   // IDs de bloques de anuncios específicos
   adSlots: {
