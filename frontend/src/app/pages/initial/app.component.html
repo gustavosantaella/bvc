@@ -276,9 +276,10 @@
 <div class="bg-gray-100 py-4 sticky top-16 z-40">
   <div class="max-w-7xl mx-auto px-4 flex justify-center">
     <app-adsense
-      adSlot="XXXXXXXXXX"
-      adFormat="horizontal"
-      [adStyle]="'display:block; max-width:970px; width:100%; height:90px;'"
+      adSlot=""
+      adFormat="auto"
+      [fullWidthResponsive]="true"
+      [adStyle]="'display:block; min-height:90px;'"
     ></app-adsense>
   </div>
 </div>
@@ -906,9 +907,10 @@
     <div class="bg-white rounded-xl shadow-lg p-6">
       <div class="flex justify-center">
         <app-adsense
-          adSlot="XXXXXXXXXX"
-          adFormat="rectangle"
-          [adStyle]="'display:block; width:100%; max-width:728px; height:90px;'"
+          adSlot=""
+          adFormat="auto"
+          [fullWidthResponsive]="true"
+          [adStyle]="'display:block; min-height:90px;'"
         ></app-adsense>
       </div>
     </div>
@@ -1704,9 +1706,10 @@
     <div class="bg-white rounded-xl shadow-lg p-6">
       <div class="flex justify-center">
         <app-adsense
-          adSlot="XXXXXXXXXX"
-          adFormat="horizontal"
-          [adStyle]="'display:block; width:100%; max-width:970px; height:90px;'"
+          adSlot=""
+          adFormat="auto"
+          [fullWidthResponsive]="true"
+          [adStyle]="'display:block; min-height:90px;'"
         ></app-adsense>
       </div>
     </div>
@@ -1717,11 +1720,12 @@
 <div
   class="hidden xl:block fixed right-4 top-1/2 transform -translate-y-1/2 z-30"
 >
-  <div class="bg-white rounded-xl shadow-2xl p-4">
+  <div class="bg-white rounded-xl shadow-2xl p-4" style="width: 160px">
     <app-adsense
-      adSlot="XXXXXXXXXX"
-      adFormat="vertical"
-      [adStyle]="'display:block; width:160px; height:600px;'"
+      adSlot=""
+      adFormat="auto"
+      [fullWidthResponsive]="false"
+      [adStyle]="'display:block; width:160px; min-height:600px;'"
     ></app-adsense>
   </div>
 </div>

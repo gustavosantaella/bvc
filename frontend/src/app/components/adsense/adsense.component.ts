@@ -31,12 +31,19 @@ export class AdsenseComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
-      try {
-        // @ts-ignore
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-      } catch (e) {
-        console.error('Error al cargar AdSense:', e);
-      }
+      // Esperar a que el DOM esté completamente renderizado
+      setTimeout(() => {
+        try {
+          // @ts-ignore
+          (window.adsbygoogle = window.adsbygoogle || []).push({});
+        } catch (e) {
+          // Solo mostrar error si no es un problema de dimensiones
+          if (e instanceof Error && !e.message.includes('No slot size')) {
+            console.error('Error al cargar AdSense:', e);
+          }
+          // Los errores de "No slot size" son normales durante desarrollo
+        }
+      }, 100);
     }
   }
 }
