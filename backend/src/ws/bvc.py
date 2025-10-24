@@ -397,7 +397,7 @@ if __name__ == "__main__":
             
             time = get_current_time()
             hour = time.hour
-            if hour >= 9 and hour <= 13:
+            if hour >= 9 and hour <= 2:
                 asyncio.run(connect_to_ws_bvc())
             else:
                 print(f"Waiting to open marketp current hour -> {hour}")
