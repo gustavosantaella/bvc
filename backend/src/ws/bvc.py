@@ -295,9 +295,7 @@ class BVCWebSocketClient:
                                 print(
                                     f"The time must be between 9am and 1pm. {get_current_time()}"
                                 )
-                                print(
-                                    f"The time must be between 9am and 1pm. {get_current_time()}"
-                                )
+
                             # self.is_running = False
                             continue
                         else:

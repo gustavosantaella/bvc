@@ -272,6 +272,18 @@
   </nav>
 </header>
 
+<!-- Ad Banner Horizontal - Después del Header -->
+<div class="bg-gray-100 py-4 sticky top-16 z-40">
+  <div class="max-w-7xl mx-auto px-4 flex justify-center">
+    <app-adsense
+      adSlot="2427056665"
+      adFormat="auto"
+      [fullWidthResponsive]="true"
+      [adStyle]="'display:block; min-height:90px;'"
+    ></app-adsense>
+  </div>
+</div>
+
 <!-- Breadcrumb Sticky -->
 <div class="fixed top-20 right-4 z-50 hidden lg:block">
   <div
@@ -889,6 +901,21 @@
       </div>
     </div>
   </section>
+
+  <!-- Ad Intermedio - Entre Secciones -->
+  <div class="max-w-7xl mx-auto my-8">
+    <div class="bg-white rounded-xl shadow-lg p-6">
+      <div class="flex justify-center">
+        <app-adsense
+          adSlot="7099168533"
+          adFormat="auto"
+          [fullWidthResponsive]="true"
+          [adStyle]="'display:block; min-height:90px;'"
+        ></app-adsense>
+      </div>
+    </div>
+  </div>
+
   <section id="table-market-data">
     <div class="max-w-7xl mx-auto">
       <!-- Header -->
@@ -1673,6 +1700,34 @@
       </div>
     </div>
   </section>
+
+  <!-- Ad Antes del Footer -->
+  <div class="max-w-7xl mx-auto my-8">
+    <div class="bg-white rounded-xl shadow-lg p-6">
+      <div class="flex justify-center">
+        <app-adsense
+          adSlot="6170860556"
+          adFormat="auto"
+          [fullWidthResponsive]="true"
+          [adStyle]="'display:block; min-height:90px;'"
+        ></app-adsense>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Sidebar Ad - Flotante en Desktop -->
+<div
+  class="hidden xl:block fixed right-4 top-1/2 transform -translate-y-1/2 z-30"
+>
+  <div class="bg-white rounded-xl shadow-2xl p-4" style="width: 160px">
+    <app-adsense
+      adSlot="9810722664"
+      adFormat="auto"
+      [fullWidthResponsive]="false"
+      [adStyle]="'display:block; width:160px; min-height:600px;'"
+    ></app-adsense>
+  </div>
 </div>
 
 <!-- Footer -->

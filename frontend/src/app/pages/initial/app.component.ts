@@ -6,6 +6,7 @@ import {
   HistoryInterface,
 } from '../../services/http/market.service';
 import { MarketChartsComponent } from '../../components/market-charts/market-charts.component';
+import { AdsenseComponent } from '../../components/adsense/adsense.component';
 import { inject } from '@vercel/analytics';
 import { injectSpeedInsights } from '@vercel/speed-insights';
 import {
@@ -16,7 +17,7 @@ import {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, MarketChartsComponent],
+  imports: [CommonModule, MarketChartsComponent, AdsenseComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
@@ -72,8 +73,6 @@ export class AppComponent implements OnInit {
     inject();
     injectSpeedInsights();
 
-    this.removeMarketDataIfBetweenHours(9, 13);
-
     this.getMarketData();
     this.updateTime();
     setInterval(() => this.updateTime(), 1000);
@@ -83,7 +82,8 @@ export class AppComponent implements OnInit {
   removeMarketDataIfBetweenHours(startHour: number, endHour: number) {
     const now = new Date();
     const currentHour = now.getHours();
-    if (currentHour >= startHour && currentHour < endHour) {
+    console.log('currentHour', currentHour);
+    if (currentHour >= startHour && currentHour <= endHour) {
       localStorage.removeItem('marketData');
     }
   }
@@ -128,7 +128,7 @@ export class AppComponent implements OnInit {
         this.filteredMarketData = this.marketData.filter((market) =>
           this.hasDataFromToday(market)
         );
-        localStorage.setItem('marketData', JSON.stringify(this.marketData));
+        // localStorage.setItem('marketData', JSON.stringify(this.marketData));
 
         this.loading = false;
       },
