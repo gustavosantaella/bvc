@@ -381,6 +381,7 @@ async def connect_to_ws_bvc() -> None:
 if __name__ == "__main__":
     try:
         from database.mongo import start_db
+        from time import sleep
 
         db = start_db()
         print("[OK] Database connected successfully")
@@ -391,7 +392,16 @@ if __name__ == "__main__":
     # Start the WebSocket client
     print("Starting BVC WebSocket client...")
     try:
-        asyncio.run(connect_to_ws_bvc())
+        running = False
+        while True:
+            
+            time = get_current_time()
+            hour = time.hour
+            if hour >= 9 and hour <= 13:
+                asyncio.run(connect_to_ws_bvc())
+            else:
+                print(f"Waiting to open marketp current hour -> {hour}")
+                sleep(3600)
     except Exception as e:
         print(f"[ERROR] Error starting BVC WebSocket client: {e}")
         sys.exit(1)
