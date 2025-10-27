@@ -35,6 +35,10 @@ export class TranslationService {
       es: 'Datos',
       en: 'Data',
     },
+    'header.history': {
+      es: 'Histórico BCV',
+      en: 'BCV History',
+    },
     'header.status': {
       es: 'Estado: En línea',
       en: 'Status: Online',
@@ -42,9 +46,9 @@ export class TranslationService {
 
     // Info Banners
     'banner.freeSystem': {
-  "es": "Plataforma de acceso gratuito destinada únicamente a la visualización y análisis de datos. La información es obtenida directamente de la Bolsa de Valores de Caracas, institución que detenta todos los derechos de propiedad sobre los datos financieros aquí presentados. Este sistema no proporciona recomendaciones de inversión ni asesoramiento financiero.",
-  "en": "Free-access platform intended solely for data visualization and analysis. Information is sourced directly from the Caracas Stock Exchange, which holds all proprietary rights to the financial data displayed. This system does not provide investment recommendations or financial advice."
-},
+      es: 'Plataforma de acceso gratuito destinada únicamente a la visualización y análisis de datos. La información es obtenida directamente de la Bolsa de Valores de Caracas, institución que detenta todos los derechos de propiedad sobre los datos financieros aquí presentados. Este sistema no proporciona recomendaciones de inversión ni asesoramiento financiero.',
+      en: 'Free-access platform intended solely for data visualization and analysis. Information is sourced directly from the Caracas Stock Exchange, which holds all proprietary rights to the financial data displayed. This system does not provide investment recommendations or financial advice.',
+    },
     'banner.officialSite': {
       es: '(Ver sitio oficial)',
       en: '(View official site)',
@@ -448,6 +452,10 @@ export class TranslationService {
     'footer.dataLink': {
       es: 'Datos del Mercado',
       en: 'Market Data',
+    },
+    'footer.historyLink': {
+      es: 'Histórico BCV',
+      en: 'BCV History',
     },
     'footer.infoTitle': {
       es: 'Información',
